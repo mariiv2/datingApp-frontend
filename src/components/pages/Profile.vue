@@ -18,7 +18,7 @@
           <div class="imageBorder"></div>
           <img src="../images/eva.png" class="photo"/>
           <div v-if="editMode">
-            <button class="photoButton" v-on:click = "changePhoto">
+            <button class="photoButton">
               <p class="buttonText">Change photo</p>
             </button>
             <button class="saveButton" v-on:click="saveInfo">
@@ -73,6 +73,7 @@
 </template>
 
 <script>
+    /* eslint-disable */
     import {AXIOS} from './http-config'
     export default {
         name: 'profile',
@@ -101,7 +102,15 @@
                 this.editMode = false
             },
             saveInfo: function () {
-                AXIOS.put('/users/' + this.user)
+                this.editMode = false
+                AXIOS.put('/users/', this.user)
+                    .then(response => {
+                        console.log(response);
+                    })
+                    .catch(error => {
+                        console.log(error);
+                    });
+
             },
             getUser: function () {
                 AXIOS.get('/users/' + this.id)
