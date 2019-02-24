@@ -1,45 +1,32 @@
 <template>
-  <div class="main">
-    <h2>Chat</h2>
-    <div class="menu">
-      <nav>
-        <div class="navcontent">
-          <router-link to="/home" class="link">Home</router-link>
-          <router-link to="/chat" class="link">Chat</router-link>
-          <router-link to="/profile" class="link">Profile</router-link>
+  <div id="page">
+    <div id="navigation">
+      <nav class="nav">
+        <div class="navContent">
+          <router-link to="/home" class="link">HOME</router-link>
+          <router-link to="/chat" class="link">CHATS</router-link>
+          <router-link to="/profile" class="link">PROFILE</router-link>
+          <router-link to="/browse" class="link">BROWSE</router-link>
+          <router-link to="/stats" class="link">STATS</router-link>
+          <img src="../images/gear.png" class="icon"/>
         </div>
       </nav>
-      <router-view/>
     </div>
+
     <div>
-      Here should be chat.
-      <div class="activeChat">
-        <div class="search">
-          Search person from chat.
-        </div>
-        <div class="availableForChat">
-          Available users for chat.
-        </div>
-      </div>
-      <div class="messages">
-        <div class="body">
-          Here should be messages.
-          <div class="textFiled">
-            Here should be text body.
-          </div>
-        </div>
-      </div>
+      <h1>Chat</h1>
     </div>
+
     <div class="footer">
-      Here should be footer.
+      <div class="navContent"><p class="footerText">About Press Blog Privacy Terms Contact</p></div>
     </div>
   </div>
 </template>
 
 <script>
-  export default {
-    name: 'Chat'
-  }
+    export default {
+        name: 'Chat'
+    }
 </script>
 
 <style src="../style/MainStyle.css" scoped>

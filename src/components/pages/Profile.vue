@@ -4,9 +4,10 @@
       <nav class="nav">
         <div class="navContent">
           <router-link to="/home" class="link">HOME</router-link>
-          <router-link to="/chat" class="link">MESSAGES</router-link>
+          <router-link to="/chat" class="link">CHATS</router-link>
           <router-link to="/profile" class="link">PROFILE</router-link>
-          <router-link to="/profile" class="link">EXPLORE</router-link>
+          <router-link to="/browse" class="link">BROWSE</router-link>
+          <router-link to="/stats" class="link">STATS</router-link>
           <img src="../images/gear.png" class="icon"/>
         </div>
       </nav>
@@ -22,9 +23,9 @@
               <p class="buttonText">Change photo</p>
             </button>
             <button class="saveButton" v-on:click="saveInfo">
-              <p class="buttonText">Save changes</p>
+              <p class="buttonText">Save</p>
             </button>
-            <img class="arrowImg" v-on:click="profileHTML" src="../images/arrow.png"/>
+            <!--<img class="arrowImg" v-on:click="profileHTML" src="../images/arrow.png"/>-->
           </div>
           <div v-else>
             <button class="buttonEdit" v-on:click = "editHTML">
@@ -34,32 +35,32 @@
         </div>
         <div class="info">
           <div class="infoBox" v-if="editMode">
-            <p>First name</p>
+            <p class="capitalize">First name</p>
             <input type="text" v-model="user.name"/>
-            <p>Last name</p>
+            <p class="capitalize">Last name</p>
             <input type="text" v-model="user.surname"/>
-            <p>Gender</p>
+            <p class="capitalize">Gender</p>
             <input type="text" v-model="user.gender"/>
-            <p>Country</p>
+            <p class="capitalize">Country</p>
             <input type="text" v-model="user.country"/>
-            <p>City</p>
+            <p class="capitalize">City</p>
             <input type="text" v-model="user.city"/>
-            <p>Hobby</p>
+            <p class="capitalize">Hobby</p>
             <input type="text" placeholder="Placeholder text" value="hobby here"/>
-            <p class="boldText">Bio</p>
-            <input/>
+            <p class="boldText">BIO</p>
+            <input type="text" v-model="user.bio"/>
           </div>
           <div class="infoBox" v-else>
-            <p class="boldText">{{user.name}}</p>
-            <p>Full name: {{user.name}} {{user.surname}}</p>
-            <p>Age: 23</p>
-            <p>Gender: {{user.gender}}</p>
-            <p>Country: {{user.country}}</p>
-            <p>City: {{user.city}}</p>
-            <p>Hobby: #photography</p>
-            <p class="boldText">Bio</p>
-            <p>I love animals</p>
-            <p class="boldText">Likes</p>
+            <p class="boldText capitalize">{{user.name}}</p>
+            <p>FULL NAME: {{user.name}} {{user.surname}}</p>
+            <p>AGE: 23</p>
+            <p>GENDER: {{user.gender}}</p>
+            <p>COUNTRY: {{user.country}}</p>
+            <p>CITY: {{user.city}}</p>
+            <p>HOBBY: #photography</p>
+            <p class="boldText">BIO</p>
+            <p> {{user.bio}}</p>
+            <p class="boldText">LIKES</p>
             <img src="../images/heart.png" class="heart"/>
             <p class="likes">{{user.likes}}</p>
           </div>
