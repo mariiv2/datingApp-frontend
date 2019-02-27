@@ -22,47 +22,6 @@ body {
 
 h1 {
     margin: 0;
-    color: #1D1C1D;
-    font-family: 'Open Sans', sans-serif;
-    text-align: center;
-    padding: 40px 20px 20px 20px;
-}
-
-h2 {
-    margin: 0;
-    color: #1D1C1D;
-    text-align: center;
-    font-family: 'Open Sans', sans-serif;
-    padding: 0 20px 20px 20px;
-}
-
-p {
-    margin: 0;
-    color: #1D1C1D;
-    text-align: center;
-    font-size: 14px;
-    font-family: 'Open Sans', sans-serif;
-    padding-bottom: 20px;
-}
-
-.getStarted1 {
-    float: left;
-    padding: 20px 10px 20px 40px;
-    width: 315px;
-    text-align: center;
-}
-
-.getStarted2 {
-    float: left;
-    padding: 20px 10px 20px 10px;
-    width: 315px;
-    text-align: center;
-}
-.getStarted3 {
-    float: left;
-    padding: 20px 40px 20px 10px;
-    width: 315px;
-    text-align: center;
 }
 
 a {
@@ -286,24 +245,13 @@ button {
     padding: 20px 20px 20px 20px;
 }
 
-.mainButton {
-    display: inline-block;
-    position: relative;
-    text-align: center;
-    background: #f93d7b;
-    font-size: 20px;
-    width: 200px;
-    color: #F4F4F4;
-    height: 40px;
-}
-
 .likeDislikeButtons{
     position: relative;
     padding: 20px 20px 20px 20px;
     float: left;
 }
 
-button:hover, .mainButton:hover {
+button:hover {
     background-color: #EAE3EA;
     opacity: 0.8;
     transition: 0.3s;
@@ -321,4 +269,29 @@ button:hover, .mainButton:hover {
 .dislike {
     margin-right: 10px;
 }
-/* Buttons css */
+
+.tableDesign {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+
+.thTdDesign {
+    text-align: center;
+}
+
+th, td {
+    padding: 5px;
+
+}
+
+
+
+h1 {
+    font-family: 'Open Sans', sans-serif;
+}
+
+.capitalize {
+    text-transform: uppercase;
+    font-weight: bold;
+}
+

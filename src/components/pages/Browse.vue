@@ -20,40 +20,40 @@
                 <div class="info">
                     <table class="box">
                         <tr>
-                            <td class="decorated">{{user.name}}</td>
+                            <td class="decorated capitalize">{{user.name}}</td>
                         </tr>
                         <tr>
-                            <td>Full name:</td>
+                            <td class="capitalize">FULL NAME:</td>
                             <td>{{user.name}} {{user.surname}}</td>
                         </tr>
                         <tr>
-                            <td>Age:</td>
-                            <td>23</td>
+                            <td class="capitalize">AGE:</td>
+                            <td>21</td>
                         </tr>
                         <tr>
-                            <td>Gender:</td>
+                            <td class="capitalize">GENDER:</td>
                             <td>{{user.gender}}</td>
                         </tr>
                         <tr>
-                            <td>City:</td>
+                            <td class="capitalize">CITY:</td>
                             <td>{{user.city}}</td>
                         </tr>
                         <tr>
-                            <td>Country:</td>
+                            <td class="capitalize">COUNTRY:</td>
                             <td>{{user.country}}</td>
                         </tr>
                         <tr>
-                            <td>Hobby:</td>
+                            <td class="capitalize">HOBBY:</td>
                             <td>#photography</td>
                         </tr>
                         <tr>
-                            <td class="decorated">Bio</td>
+                            <td class="decorated">BIO</td>
                         </tr>
                         <tr>
                             <td colspan="2">{{user.bio}}</td>
                         </tr>
                         <tr>
-                            <td class="decorated">Likes</td>
+                            <td class="decorated">LIKES</td>
                         </tr>
                         <tr>
                             <td class="decoratedSmall">
