@@ -151,7 +151,7 @@
             }
         },
         created: function() {
-            this.getUser()
+            this.getUser();
         },
         // methods that implement data logic.
         // note there's no DOM manipulation here at all.
@@ -171,7 +171,7 @@
                     .then(response => {
                     this.user = response.data
                 console.log(response.data)
-            })
+                });
             }
         }
     }

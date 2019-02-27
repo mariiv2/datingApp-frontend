@@ -14,7 +14,20 @@
     </nav>
 
     <div class="container">
-      <h1>Home</h1>
+      <h1>Welcome!</h1>
+      <h2>We help you to find someone special!</h2>
+      <div class="getStarted1">
+        <p>You can edit personal information in Profile.</p>
+        <router-link to="/profile" class="mainButton">Go to profile</router-link>
+      </div>
+      <div class="getStarted2">
+        <p>To start searching a perfect date go to Browse.</p>
+        <router-link to="/browse" class="mainButton">Go to browse</router-link>
+      </div>
+      <div class="getStarted3">
+        <p>Explore charts with most popular people in the app.</p>
+        <router-link to="/stats" class="mainButton">Go to stats</router-link>
+      </div>
     </div>
 
     <footer>
