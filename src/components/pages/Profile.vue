@@ -60,7 +60,7 @@
               </tr>
               <tr>
                 <td colspan="2">
-                  <textarea v-model="user.bio" class="input" id="bio" placeholder="Lorem ispum is a dummy text!"></textarea>
+                  <textarea v-model="user.bio" class="input" id="bio"></textarea>
                 </td>
               </tr>
             </table>
@@ -98,7 +98,7 @@
                 <td class="decorated">Bio</td>
               </tr>
               <tr>
-                <td colspan="2">Lorem ipsum is a dummy text!</td>
+                <td colspan="2">{{user.bio}}</td>
               </tr>
               <tr>
                 <td class="decorated">Likes</td>
@@ -163,15 +163,8 @@
                 this.editMode = false
             },
             saveInfo: function () {
-                this.editMode = false
+                this.editMode = false;
                 AXIOS.put('/users/', this.user)
-                    .then(response => {
-                        console.log(response);
-                    })
-                    .catch(error => {
-                        console.log(error);
-                    });
-
             },
             getUser: function () {
                 AXIOS.get('/users/' + this.id)
