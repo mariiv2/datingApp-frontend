@@ -1,54 +1,123 @@
 <template>
     <div id="page">
-        <div id="navigation">
-            <nav class="nav">
-                <div class="navContent">
-                    <router-link to="/home" class="link">HOME</router-link>
-                    <router-link to="/chat" class="link">CHATS</router-link>
-                    <router-link to="/profile" class="link">PROFILE</router-link>
-                    <router-link to="/browse" class="link">BROWSE</router-link>
-                    <router-link to="/stats" class="link">STATS</router-link>
-                    <img src="../images/gear.png" class="icon"/>
-                </div>
-            </nav>
-        </div>
-        <div class="container">
-            <img src="../images/bg.png" style="width:100%;">
-            <div class="centered">
-                <div class="imageContainer">
-                    <div class="imageBorder"></div>
-                    <img src="../images/eva.png" class="photo"/>
-                    <img src="../images/like.png" class="like"/>
-                    <img src="../images/dislike.png" class="dislike"/>
-                </div>
-                <div class="info">
-                    <div class="infoBox">
-                        <p class="boldText capitalize">Eva</p>
-                        <p>- 23 y.o</p>
-                        <p>- Female</p>
-                        <p>- Tallinn</p>
-                        <p>- Status: I love animals</p>
-                        <p class="boldText capitalize">Interested in</p>
-                        <p>- Male</p>
-                        <p>- From Tallinn</p>
-                        <p>- under 30 y.o.</p>
-                        <img src="../images/heart.png" class="heart"/>
-                        <p class="likes">316</p>
-                    </div>
+        <nav>
+            <div class="wrapper">
+                <div class="menu">
+                    <router-link to="/home" class="link">Home</router-link>
+                    <router-link to="/chat" class="link">Chats</router-link>
+                    <router-link to="/profile" class="link">My Profile</router-link>
+                    <router-link to="/browse" class="link" id="active">Browse</router-link>
+                    <router-link to="/stats" class="link">Stats</router-link>
+                    <img src="../images/gear.png" />
                 </div>
             </div>
+        </nav>
+        <div class="container">
+            <div>
+                <div class="imageContainer">
+                    <img style="border: 15px solid #f93d7b;" src="../images/eva.png" />
+                </div>
+                <div class="info">
+                    <table class="box">
+                        <tr>
+                            <td class="decorated">{{user.name}}</td>
+                        </tr>
+                        <tr>
+                            <td>Full name:</td>
+                            <td>{{user.name}} {{user.surname}}</td>
+                        </tr>
+                        <tr>
+                            <td>Age:</td>
+                            <td>23</td>
+                        </tr>
+                        <tr>
+                            <td>Gender:</td>
+                            <td>{{user.gender}}</td>
+                        </tr>
+                        <tr>
+                            <td>City:</td>
+                            <td>{{user.city}}</td>
+                        </tr>
+                        <tr>
+                            <td>Country:</td>
+                            <td>{{user.country}}</td>
+                        </tr>
+                        <tr>
+                            <td>Hobby:</td>
+                            <td>#photography</td>
+                        </tr>
+                        <tr>
+                            <td class="decorated">Bio</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">Lorem ipsum is a dummy text!</td>
+                        </tr>
+                        <tr>
+                            <td class="decorated">Likes</td>
+                        </tr>
+                        <tr>
+                            <td class="decoratedSmall">
+                                <img src="../images/heart.png" class="heart"/>
+                                {{user.likes}}
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="likeDislikeButtons">
+                <button class="dislike">DISLIKE</button>
+                <button class="like" v-on:click="toLike">LIKE</button>
+            </div>
         </div>
-        <div class="footer">
-            <div class="navContent"><p class="footerText">About Press Blog Privacy Terms Contact</p></div>
-        </div>
+        <footer>
+            <div class="wrapper">
+                <div class="menu">
+                    <a class="footerLink">About</a>
+                    <a class="footerLink">Press</a>
+                    <a class="footerLink">Blog</a>
+                    <a class="footerLink">Privacy</a>
+                    <a class="footerLink">Terms</a>
+                </div>
+            </div>
+        </footer>
     </div>
 </template>
 
 <script>
+    import {AXIOS} from './http-config'
     export default {
-        name: 'Browse'
+        name: 'Browse',
+        props: {
+            activeUser: Object
+        },
+        // app initial state
+        data() {
+            return {
+                info: [],
+                editMode: false,
+                user: {},
+                id: 1
+            }
+        },
+        created: function() {
+            this.getUser()
+        },
+        // methods that implement data logic.
+        // note there's no DOM manipulation here at all.
+        methods: {
+            getUser: function () {
+                AXIOS.get('/users/' + this.id)
+                    .then(response => {
+                        this.user = response.data
+                    })
+            },
+            toLike: function () {
+                this.user.likes = this.user.likes + 1;
+                AXIOS.put('/users', this.user
+            )}
+        }
     }
 </script>
 
-<style src="../style/MainStyle.css" scoped>
+<style src="../style/MainStyle.css">
 </style>
