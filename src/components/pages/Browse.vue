@@ -50,7 +50,7 @@
                             <td class="decorated">Bio</td>
                         </tr>
                         <tr>
-                            <td colspan="2">Lorem ipsum is a dummy text!</td>
+                            <td colspan="2">{{user.bio}}</td>
                         </tr>
                         <tr>
                             <td class="decorated">Likes</td>
