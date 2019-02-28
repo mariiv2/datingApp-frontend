@@ -22,6 +22,18 @@ body {
 
 h1 {
     margin: 0;
+    padding: 40px 20px 20px 20px;
+    font-family: 'Open Sans', sans-serif;
+    text-align: center;
+    color: #1D1C1D;
+}
+
+h2 {
+    margin: 0;
+    padding: 0 20px 20px 20px;
+    font-family: 'Open Sans', sans-serif;
+    text-align: center;
+    color: #1D1C1D;
 }
 
 a {
@@ -30,6 +42,30 @@ a {
 /* General */
 
 /*Navigation*/
+
+/*Home page*/
+.getStarted1 {
+    float: left;
+    width: 315px;
+    padding: 20px 10px 20px 40px;
+    text-align: center;
+}
+
+.getStarted2 {
+    float: left;
+    width: 315px;
+    padding: 20px 10px 20px 10px;
+    text-align: center;
+}
+
+.getStarted3 {
+    float: left;
+    width: 315px;
+    padding: 20px 40px 20px 10px;
+    text-align: center;
+}
+
+/*Home page*/
 nav {
     position: relative;
     display: block;
@@ -149,10 +185,10 @@ footer .footerLink:hover {
     font-size: 14px;
 }
 
-td {
+.box td {
     width: 160px;
     min-height: 25px;
-    padding: 0;
+    padding: 2px;
 }
 
 .input {
@@ -239,6 +275,19 @@ button {
     color: #f93d7b;
     height: 40px;
 }
+
+.mainButton {
+    display: inline-block;
+    position: relative;
+    text-align: center;
+    background: #f93d7b;
+    font-size: 20px;
+    line-height: 40px;
+    width: 200px;
+    color: #F4F4F4;
+    height: 40px;
+}
+
 .changePhoto {
     position: relative;
     text-align: center;
@@ -247,11 +296,11 @@ button {
 
 .likeDislikeButtons{
     position: relative;
-    padding: 20px 20px 20px 20px;
+    padding: 20px 40px 20px 40px;
     float: left;
 }
 
-button:hover {
+button:hover, .mainButton:hover {
     background-color: #EAE3EA;
     opacity: 0.8;
     transition: 0.3s;
@@ -269,7 +318,10 @@ button:hover {
 .dislike {
     margin-right: 10px;
 }
+/* Buttons css */
 
+
+/* Stats css */
 .tableDesign {
     border: 1px solid black;
     border-collapse: collapse;
@@ -283,15 +335,20 @@ th, td {
     padding: 5px;
 
 }
-
-
-
-h1 {
-    font-family: 'Open Sans', sans-serif;
-}
+/* Stats css */
 
 .capitalize {
     text-transform: uppercase;
     font-weight: bold;
+}
+
+.selectOption {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 14px;
+    width: 160px;
+    padding: 0;
+    color: #1D1C1D;
+    background-color: white;
+    border: 1px solid #CDC0C0;
 }
 

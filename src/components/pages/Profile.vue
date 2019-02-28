@@ -40,7 +40,9 @@
                         <tr>
                             <td class="capitalize">CITY:</td>
                             <td>
-                                <input class="input" type="text" v-model="user.city"/>
+                                <select v-model="user.city" class="selectOption">
+                                    <option class="selectOption" v-for="c in city" :value="c.value" :key="c.value">{{c}}</option>
+                                </select>
                             </td>
                         </tr>
                         <tr>
@@ -101,7 +103,7 @@
                             <td colspan="2">{{user.bio}}</td>
                         </tr>
                         <tr>
-                            <td class="decorated">Likes</td>
+                            <td class="decorated">LIKES</td>
                         </tr>
                         <tr>
                             <td class="decoratedSmall">
@@ -136,6 +138,7 @@
 <script>
     /* eslint-disable */
     import {AXIOS} from './http-config'
+
     export default {
         name: 'profile',
         props: {
@@ -147,9 +150,11 @@
                 info: [],
                 editMode: false,
                 user: {},
-                id: 1
+                id: 1,
+                city: ['', 'Tallinn', 'Maardu', 'Keila', 'Narva', 'Parnu', 'Kohtla', 'Lasna'],
             }
         },
+
         created: function() {
             this.getUser()
         },
@@ -175,6 +180,7 @@
             }
         }
     }
+
 </script>
 
 <style src="../style/MainStyle.css">

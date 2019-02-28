@@ -12,7 +12,6 @@
         </div>
       </div>
     </nav>
-
     <div class="container">
       <h1>Welcome!</h1>
       <h2>We help you to find someone special!</h2>
@@ -50,5 +49,5 @@
   }
 </script>
 
-<style src="../style/MainStyle.css" scoped>
+<style src="../style/MainStyle.css">
 </style>
