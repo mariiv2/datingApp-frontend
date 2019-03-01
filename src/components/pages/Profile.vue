@@ -38,6 +38,12 @@
                             </td>
                         </tr>
                         <tr>
+                            <td class="capitalize">EMAIL:</td>
+                            <td>
+                                <input class="input" type="text" v-model="user.email"/>
+                            </td>
+                        </tr>
+                        <tr>
                             <td class="capitalize">CITY:</td>
                             <td>
                                 <select v-model="user.city" class="selectOption">
@@ -75,6 +81,10 @@
                         <tr>
                             <td class="capitalize">FULL NAME:</td>
                             <td>{{user.name}} {{user.surname}}</td>
+                        </tr>
+                        <tr>
+                            <td class="capitalize">EMAIL:</td>
+                            <td>{{user.email}}</td>
                         </tr>
                         <tr>
                             <td class="capitalize">AGE:</td>
@@ -174,7 +184,7 @@
             getUser: function () {
                 AXIOS.get('/users/' + this.id)
                     .then(response => {
-                        this.user = response.data
+                        this.user = response.data;
                         console.log(response.data)
                     })
             }
