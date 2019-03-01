@@ -44,17 +44,19 @@
                             </td>
                         </tr>
                         <tr>
-                            <td class="capitalize">CITY:</td>
+                            <td class="capitalize">COUNTRY:</td>
                             <td>
-                                <select v-model="user.city" class="selectOption">
-                                    <option class="selectOption" v-for="c in city" :value="c.value" :key="c.value">{{c}}</option>
+                                <select v-model="user.country" class="selectOption">
+                                    <option class="selectOption" v-for="(value, key) in Countries" :key="key">{{ key }} </option>
                                 </select>
                             </td>
                         </tr>
                         <tr>
-                            <td class="capitalize">COUNTRY:</td>
+                            <td class="capitalize">CITY:</td>
                             <td>
-                                <input class="input" type="text" v-model="user.country"/>
+                                <select v-model="user.city" class="selectOption">
+                                    <option class="selectOption" v-for="cities in getCities()" :key="cities">{{ cities }} </option>
+                                </select>
                             </td>
                         </tr>
                         <tr>
@@ -148,6 +150,7 @@
 <script>
     /* eslint-disable */
     import {AXIOS} from './http-config'
+    import Countries from '../resources/countries.json'
 
     export default {
         name: 'profile',
@@ -161,12 +164,12 @@
                 editMode: false,
                 user: {},
                 id: 1,
-                city: ['', 'Tallinn', 'Maardu', 'Keila', 'Narva', 'Parnu', 'Kohtla', 'Lasna'],
+                Countries
             }
         },
 
         created: function() {
-            this.getUser()
+            this.getUser();
         },
         // methods that implement data logic.
         // note there's no DOM manipulation here at all.
@@ -187,6 +190,10 @@
                         this.user = response.data;
                         console.log(response.data)
                     })
+            },
+            getCities: function() {
+                let country = this.user.country;
+                return Countries[country]
             }
         }
     }
