@@ -14,11 +14,16 @@
         </nav>
         <div class="container">
             <div class="imageContainer">
-                <img style="border: 15px solid #f93d7b;" src="../images/eva.png" />
+                <!--<img style="border: 15px solid #f93d7b;" src="../images/eva.png" />-->
+                <img style="border: 15px solid #f93d7b;" v-bind:src="'data:image/jpeg;base64,' + user.image"/>
                 <div v-if="editMode" class="changePhoto">
                     <button class="photoButton">Change photo</button>
                 </div>
             </div>
+            <form method="POST" enctype="multipart/form-data" action="http://localhost:8081/users/images">
+                <input type="file" name="file"/>
+                <input type="submit" value="Upload"/>
+            </form>
             <div class="info">
                 <div class="infoBox" v-if="editMode">
                     <table class="box">
@@ -77,7 +82,7 @@
                 </div>
                 <div class="infoBox" v-else>
                     <table class="box">
-                        <tr >
+                        <tr>
                             <td class="decorated capitalize">{{user.name}}</td>
                         </tr>
                         <tr>
@@ -90,7 +95,7 @@
                         </tr>
                         <tr>
                             <td class="capitalize">AGE:</td>
-                            <td>21</td>
+                            <td>{{user.age}}</td>
                         </tr>
                         <tr>
                             <td class="capitalize">GENDER:</td>
@@ -107,6 +112,10 @@
                         <tr>
                             <td class="capitalize">HOBBY:</td>
                             <td>#photography</td>
+                        </tr>
+                        <tr>
+                            <td class="capitalize">MEMBER SINCE:</td>
+                            <td>{{user.registerDate}}</td>
                         </tr>
                         <tr>
                             <td colspan="2" class="decorated capitalize">Bio</td>
