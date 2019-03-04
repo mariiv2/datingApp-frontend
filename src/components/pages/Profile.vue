@@ -55,7 +55,7 @@
                             <td class="capitalize">CITY:</td>
                             <td>
                                 <select v-model="user.city" class="selectOption">
-                                    <option class="selectOption" v-for="cities in getCities()" :key="cities">{{ cities }} </option>
+                                    <option class="selectOption" v-for="cities in getCities()" :key="cities" v-on:click="checkCity()">{{ cities }} </option>
                                 </select>
                             </td>
                         </tr>
@@ -133,6 +133,12 @@
                 <button v-on:click="saveInfo">SAVE</button>
             </div>
         </div>
+        <div>
+            <modal
+                    v-show="isModalVisible"
+                    @close="closeModal"
+            />
+        </div>
         <footer>
             <div class="wrapper">
                 <div class="menu">
@@ -151,11 +157,15 @@
     /* eslint-disable */
     import {AXIOS} from './http-config'
     import Countries from '../resources/countries.json'
+    import modal from './Modal.vue'
 
     export default {
         name: 'profile',
         props: {
             activeUser: Object
+        },
+        components:{
+            modal,
         },
         // app initial state
         data() {
@@ -164,6 +174,7 @@
                 editMode: false,
                 user: {},
                 id: 1,
+                isModalVisible: false,
                 Countries
             }
         },
@@ -181,8 +192,15 @@
                 this.editMode = false
             },
             saveInfo: function () {
-                this.editMode = false;
-                AXIOS.put('/users/', this.user)
+                this.checkCity();
+                //Show popup if city does not match to selected country.
+                if (this.user.city === "") {
+                    this.showModal();
+
+                } else {
+                    this.editMode = false;
+                    AXIOS.put('/users/', this.user)
+                }
             },
             getUser: function () {
                 AXIOS.get('/users/' + this.id)
@@ -193,7 +211,19 @@
             },
             getCities: function() {
                 let country = this.user.country;
+
                 return Countries[country]
+            },
+            checkCity: function() {
+                let country = this.user.country;
+                let city = this.user.city;
+                if (!Countries[country].includes(city)) this.user.city = "";
+            },
+            showModal: function() {
+                this.isModalVisible = true;
+            },
+            closeModal: function() {
+                this.isModalVisible = false;
             }
         }
     }
