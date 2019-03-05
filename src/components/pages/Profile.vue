@@ -14,16 +14,11 @@
         </nav>
         <div class="container">
             <div class="imageContainer">
-                <!--<img style="border: 15px solid #f93d7b;" src="../images/eva.png" />-->
-                <img style="border: 15px solid #f93d7b;" v-bind:src="'data:image/jpeg;base64,' + user.image"/>
+                <img style="border: 15px solid #f93d7b; height: 361px" v-bind:src="'data:image/jpeg;base64,' + user.image"/>
                 <div v-if="editMode" class="changePhoto">
-                    <button class="photoButton">Change photo</button>
+                    <button class="photoButton" v-on:click="showPhotoLoadingModal">Change photo</button>
                 </div>
             </div>
-            <form method="POST" enctype="multipart/form-data" action="http://localhost:8081/users/images">
-                <input type="file" name="file"/>
-                <input type="submit" value="Upload"/>
-            </form>
             <div class="info">
                 <div class="infoBox" v-if="editMode">
                     <table class="box">
@@ -143,10 +138,10 @@
             </div>
         </div>
         <div>
-            <modal
-                    v-show="isModalVisible"
-                    @close="closeModal"
-            />
+            <modal v-show="isModalVisible" @close="closeModal"/>
+        </div>
+        <div>
+            <photo-load-modal v-show="changePhotoMode" @close="closePhotoLoadingModal"/>
         </div>
         <footer>
             <div class="wrapper">
@@ -167,6 +162,7 @@
     import {AXIOS} from './http-config'
     import Countries from '../resources/countries.json'
     import modal from './Modal.vue'
+    import photoLoadModal from './LoadPhotoModal.vue'
 
     export default {
         name: 'profile',
@@ -175,12 +171,14 @@
         },
         components:{
             modal,
+            photoLoadModal
         },
         // app initial state
         data() {
             return {
                 info: [],
                 editMode: false,
+                changePhotoMode: false,
                 user: {},
                 id: 1,
                 isModalVisible: false,
@@ -211,6 +209,12 @@
                     AXIOS.put('/users/', this.user)
                 }
             },
+            showPhotoLoadingModal: function() {
+                this.changePhotoMode = true
+            },
+            closePhotoLoadingModal: function() {
+                this.changePhotoMode = false
+            },
             getUser: function () {
                 AXIOS.get('/users/' + this.id)
                     .then(response => {
@@ -220,7 +224,6 @@
             },
             getCities: function() {
                 let country = this.user.country;
-
                 return Countries[country]
             },
             checkCity: function() {
