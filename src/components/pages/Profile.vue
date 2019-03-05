@@ -14,7 +14,8 @@
         </nav>
         <div class="container">
             <div class="imageContainer">
-                <img style="border: 15px solid #f93d7b; height: 361px" v-bind:src="'data:image/jpeg;base64,' + user.image"/>
+                <!--<img style="border: 15px solid #f93d7b; height: 361px" v-bind:src="'data:image/jpeg;base64,' + user.image"/>-->
+                <img style="border: 15px solid #f93d7b; width: 300px; height: 300px" v-bind:src="pic"/>
                 <div v-if="editMode" class="changePhoto">
                     <button class="photoButton" v-on:click="showPhotoLoadingModal">Change photo</button>
                 </div>
@@ -180,6 +181,7 @@
                 editMode: false,
                 changePhotoMode: false,
                 user: {},
+                pic: {},
                 id: 1,
                 isModalVisible: false,
                 Countries
@@ -219,7 +221,9 @@
                 AXIOS.get('/users/' + this.id)
                     .then(response => {
                         this.user = response.data;
-                        console.log(response.data)
+                        console.log(response.data);
+                        this.pic = this.user.image[0].name;
+                        console.log(this.user);
                     })
             },
             getCities: function() {
