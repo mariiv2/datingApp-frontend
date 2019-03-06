@@ -14,12 +14,10 @@
     name: 'DatingApp',
     data () {
       return {
-        msg: 'Welcome to Your Vue.js App'
       }
     }
   }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style src="../style/MainStyle.css" scoped>
 </style>

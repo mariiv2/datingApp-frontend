@@ -15,7 +15,9 @@
         <div class="container">
             <div>
                 <div class="imageContainer">
-                    <img style="border: 15px solid #f93d7b;" src="../images/eva.png" />
+                    <div class="imageHolder">
+                        <img class="profileImage" src="../images/eva.png" />
+                    </div>
                 </div>
                 <div class="info">
                     <table class="box">
@@ -27,8 +29,12 @@
                             <td>{{user.name}} {{user.surname}}</td>
                         </tr>
                         <tr>
+                            <td class="capitalize">EMAIL:</td>
+                            <td>{{user.email}}</td>
+                        </tr>
+                        <tr>
                             <td class="capitalize">AGE:</td>
-                            <td>21</td>
+                            <td>{{user.age}}</td>
                         </tr>
                         <tr>
                             <td class="capitalize">GENDER:</td>
@@ -47,7 +53,11 @@
                             <td>#photography</td>
                         </tr>
                         <tr>
-                            <td class="decorated">BIO</td>
+                            <td class="capitalize">MEMBER SINCE:</td>
+                            <td>{{user.registerDate}}</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="decorated capitalize">Bio</td>
                         </tr>
                         <tr>
                             <td colspan="2">{{user.bio}}</td>
@@ -119,5 +129,5 @@
     }
 </script>
 
-<style src="../style/MainStyle.css">
+<style src="../style/MainStyle.css" scoped>
 </style>

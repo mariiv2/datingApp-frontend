@@ -15,7 +15,10 @@
         <div class="container">
             <div class="imageContainer">
                 <!--<img style="border: 15px solid #f93d7b; height: 361px" v-bind:src="'data:image/jpeg;base64,' + user.image"/>-->
-                <img style="border: 15px solid #f93d7b; width: 300px; height: 300px" v-bind:src="pic"/>
+                <div class="imageHolder">
+                    <img class="profileImage" v-bind:src="pic"/>
+                </div>
+
                 <div v-if="editMode" class="changePhoto">
                     <button class="photoButton" v-on:click="showPhotoLoadingModal">Change photo</button>
                 </div>
@@ -246,5 +249,5 @@
 
 </script>
 
-<style src="../style/MainStyle.css">
+<style src="../style/MainStyle.css" scoped>
 </style>

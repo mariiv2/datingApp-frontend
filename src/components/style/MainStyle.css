@@ -176,11 +176,12 @@ footer .footerLink:hover {
 /* Users info box */
 .info {
     float: left;
+    position: relative;
+    display: block;
+    padding: 40px 0 40px 0;
 }
 
 .box {
-    padding-top: 40px;
-    padding-bottom: 40px;
     font-family: 'Open Sans', sans-serif;
     font-size: 14px;
 }
@@ -228,7 +229,7 @@ footer .footerLink:hover {
 .imageContainer {
     position: relative;
     display: block;
-    padding: 40px 20px 40px 40px;
+    padding: 40px 20px 20px 40px;
     float: left;
 }
 /* Users image container */
@@ -296,7 +297,7 @@ button {
 
 .likeDislikeButtons{
     position: relative;
-    padding: 20px 40px 20px 40px;
+    padding: 20px 40px 20px 75px;
     float: left;
 }
 
@@ -350,4 +351,18 @@ th, td {
     color: #1D1C1D;
     background-color: white;
     border: 1px solid #CDC0C0;
+}
+
+.profileImage {
+    width: 300px;
+    height: 300px;
+    margin: 0;
+    padding: 0;
+    position: relative;
+}
+
+.imageHolder {
+    height: 330px;
+    width: 330px;
+    border: 15px solid #f93d7b;
 }

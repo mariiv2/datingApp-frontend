@@ -49,5 +49,5 @@
   }
 </script>
 
-<style src="../style/MainStyle.css">
+<style src="../style/MainStyle.css" scoped>
 </style>
