@@ -36,8 +36,25 @@ h2 {
     color: #1D1C1D;
 }
 
+p {
+    text-align: center;
+    font-family: 'Open Sans', sans-serif;
+    color: #1D1C1D;
+    font-size: 14px;
+}
+
 a {
     text-decoration: none;
+}
+
+.clearfix:before,
+.clearfix:after {
+    content: " ";
+    display: table;
+}
+
+.clearfix:after {
+    clear: both;
 }
 /* General */
 
@@ -126,6 +143,10 @@ nav img {
     height: calc(100vh - 140px);
 }
 
+#main {
+    height: calc(100vh - 80px);
+}
+
 .container:after {
     clear: both;
     content: '';
@@ -192,14 +213,16 @@ footer .footerLink:hover {
     padding: 2px;
 }
 
-.input {
+input[type="text"], input[type="password"] {
     font-family: 'Open Sans', sans-serif;
     font-size: 14px;
-    width: 160px;
-    padding: 0;
+    width: 170px;
+    padding-left: 8px;
+    height: 24px;
     color: #1D1C1D;
     background-color: white;
     border: 1px solid #CDC0C0;
+    border-radius: 4px;
 }
 
 #bio {
@@ -277,7 +300,7 @@ button {
     height: 40px;
 }
 
-.mainButton {
+.mainButton, .button {
     display: inline-block;
     position: relative;
     text-align: center;
@@ -301,7 +324,28 @@ button {
     float: left;
 }
 
-button:hover, .mainButton:hover {
+.signUpLogIn {
+    text-align: center;
+    display: block;
+    position: relative;
+    margin: 0 auto;
+    width: 980px;
+    padding: 20px 40px 20px 75px;
+}
+
+.login, .signup {
+    display: inline-block;
+}
+
+.login {
+    margin-right: 10px;
+}
+
+.signup {
+    margin-left: 10px;
+}
+
+button:hover, .mainButton:hover, .button:hover {
     background-color: #EAE3EA;
     opacity: 0.8;
     transition: 0.3s;
@@ -346,7 +390,7 @@ th, td {
 .selectOption {
     font-family: 'Open Sans', sans-serif;
     font-size: 14px;
-    width: 160px;
+    width: 170px;
     padding: 0;
     color: #1D1C1D;
     background-color: white;
@@ -366,3 +410,49 @@ th, td {
     width: 330px;
     border: 15px solid #f93d7b;
 }
+
+.form {
+    width: 425px;
+    margin: 0 auto;
+    position: relative;
+}
+
+.firstName, .lastName, .country, .city {
+    width: 200px;
+    float: left;
+}
+
+.firstName input, .lastName input, .country select, .city select {
+    width: 100%;
+}
+
+.firstName, .country {
+    margin-right: 25px;
+}
+
+label {
+    display: block;
+}
+
+.gender {
+    width: 80px;
+    margin: 0 auto;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.input {
+    width: 170px;
+    margin: 0 auto;
+}
+form input {
+    margin-bottom: 5px;
+    margin-top: 5px;
+}
+
+.register {
+    width: 200px;
+    margin: 0 auto;
+    padding-top: 20px;
+}
+

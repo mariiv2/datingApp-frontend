@@ -32,25 +32,26 @@
                         <tr>
                             <td class="capitalize">NAME:</td>
                             <td>
-                                <input class="input" type="text" v-model="user.name"/>
+                                <input type="text" v-model="user.name"/>
                             </td>
                         </tr>
                         <tr>
                             <td class="capitalize">SURNAME:</td>
                             <td>
-                                <input class="input" type="text" v-model="user.surname"/>
+                                <input type="text" v-model="user.surname"/>
                             </td>
                         </tr>
                         <tr>
                             <td class="capitalize">EMAIL:</td>
                             <td>
-                                <input class="input" type="text" v-model="user.email"/>
+                                <input type="text" v-model="user.email"/>
                             </td>
                         </tr>
                         <tr>
                             <td class="capitalize">COUNTRY:</td>
                             <td>
                                 <select v-model="user.country" class="selectOption">
+                                    <option class="disabled" value="" disabled selected>Select country</option>
                                     <option class="selectOption" v-for="(value, key) in Countries" :key="key">{{ key }} </option>
                                 </select>
                             </td>
@@ -59,6 +60,7 @@
                             <td class="capitalize">CITY:</td>
                             <td>
                                 <select v-model="user.city" class="selectOption">
+                                    <option class="disabled" value="" disabled selected>Select city</option>
                                     <option class="selectOption" v-for="cities in getCities()" :key="cities" v-on:click="checkCity()">{{ cities }} </option>
                                 </select>
                             </td>
@@ -236,7 +238,9 @@
             checkCity: function() {
                 let country = this.user.country;
                 let city = this.user.city;
-                if (!Countries[country].includes(city)) this.user.city = "";
+                if (!Countries[country].includes(city) || city === "Select city" || country === "Select country") {
+                    this.user.city = "";
+                }
             },
             showModal: function() {
                 this.isModalVisible = true;

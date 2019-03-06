@@ -16,7 +16,6 @@
                             <input type="submit" value="Upload" v-on:click="changedPhotoSave"/>
                             <p v-if="complete">Photo loading is completed!</p>
                         </div>
-
                     </slot>
                 </section>
             </div>
