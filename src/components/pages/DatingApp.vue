@@ -74,7 +74,7 @@
 
                   <div class="input">
                       <label>Repeat your password</label>
-                      <input type="password"v-model="user.password2" placeholder="Your password">
+                      <input type="password" v-model="user.password2" placeholder="Your password">
                   </div>
 
                   <div class="register">
