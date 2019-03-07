@@ -213,7 +213,7 @@ footer .footerLink:hover {
     padding: 2px;
 }
 
-input[type="text"], input[type="password"] {
+input[type="text"], input[type="password"], input[type='date'], textarea {
     font-family: 'Open Sans', sans-serif;
     font-size: 14px;
     width: 170px;
@@ -330,7 +330,7 @@ button {
     position: relative;
     margin: 0 auto;
     width: 980px;
-    padding: 20px 40px 20px 75px;
+    padding: 20px 40px 20px 40px;
 }
 
 .login, .signup {
@@ -343,6 +343,12 @@ button {
 
 .signup {
     margin-left: 10px;
+}
+
+.login:active, .signup:active {
+    background-color: #EAE3EA;
+    color: #f93d7b;
+    opacity: 0.8;
 }
 
 button:hover, .mainButton:hover, .button:hover {
@@ -398,7 +404,7 @@ th, td {
 }
 
 .profileImage {
-    width: 300px;
+    width: 230px;
     height: 300px;
     margin: 0;
     padding: 0;
@@ -407,7 +413,7 @@ th, td {
 
 .imageHolder {
     height: 330px;
-    width: 330px;
+    width: 260px;
     border: 15px solid #f93d7b;
 }
 
@@ -418,12 +424,12 @@ th, td {
 }
 
 .firstName, .lastName, .country, .city {
-    width: 200px;
+    width: 120px;
     float: left;
 }
 
 .firstName input, .lastName input, .country select, .city select {
-    width: 100%;
+    width: 120px;
 }
 
 .firstName, .country {
@@ -438,11 +444,10 @@ label {
     width: 80px;
     margin: 0 auto;
     padding-top: 10px;
-    padding-bottom: 10px;
 }
 
 .input {
-    width: 170px;
+    width: 265px;
     margin: 0 auto;
 }
 form input {
@@ -454,5 +459,24 @@ form input {
     width: 200px;
     margin: 0 auto;
     padding-top: 20px;
+}
+
+.form .smallInput {
+    width: 120px;
+    height: 24px;
+}
+.form .bigInput {
+    width: 265px;
+    height: 24px;
+}
+
+.form .selectOption .disabled .smallInput {
+    width: 120px;
+    height: 24px;
+}
+
+.nearFields {
+    width: 265px;
+    margin: 0 auto;
 }
 

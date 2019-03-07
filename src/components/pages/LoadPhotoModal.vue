@@ -13,6 +13,7 @@
                         <div class="modalDiv">
                             <input type="file" @change="onFileChanged" id="file"/>
                             <label for="file">Choose file</label>
+                            <p>{{file.name}}</p>
                             <input type="submit" value="Upload" v-on:click="changedPhotoSave"/>
                             <p v-if="complete">Photo loading is completed!</p>
                         </div>
@@ -46,8 +47,10 @@
                 fd.append('file', this.file);
                 let config = {header : {'Content-Type' : 'multipart/form-data'}};
                 AXIOS.post('/users/images', fd, config);
-                this.complete = true
+                this.complete = true;
+                this.$emit('exit')
             }
+
         },
     };
 </script>

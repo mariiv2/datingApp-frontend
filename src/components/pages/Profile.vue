@@ -27,30 +27,30 @@
                 <div class="infoBox" v-if="editMode">
                     <table class="box">
                         <tr>
-                            <td class="decorated capitalize">{{user.name}}</td>
+                            <td colspan="2" class="decorated capitalize">{{user.username}}</td>
                         </tr>
                         <tr>
                             <td class="capitalize">NAME:</td>
                             <td>
-                                <input type="text" v-model="user.name"/>
+                                <input type="text" maxlength="20" v-model="user.name"/>
                             </td>
                         </tr>
                         <tr>
                             <td class="capitalize">SURNAME:</td>
                             <td>
-                                <input type="text" v-model="user.surname"/>
+                                <input type="text" maxlength="20" v-model="user.surname"/>
                             </td>
                         </tr>
                         <tr>
                             <td class="capitalize">EMAIL:</td>
                             <td>
-                                <input type="text" v-model="user.email"/>
+                                <input type="text" maxlength="30" v-model="user.email"/>
                             </td>
                         </tr>
                         <tr>
                             <td class="capitalize">COUNTRY:</td>
                             <td>
-                                <select v-model="user.country" class="selectOption">
+                                <select v-model="user.country" class="selectOption" v-on:click="checkCity">
                                     <option class="disabled" value="" disabled selected>Select country</option>
                                     <option class="selectOption" v-for="(value, key) in Countries" :key="key">{{ key }} </option>
                                 </select>
@@ -59,9 +59,9 @@
                         <tr>
                             <td class="capitalize">CITY:</td>
                             <td>
-                                <select v-model="user.city" class="selectOption">
+                                <select v-model="user.city" class="selectOption" v-on:click="checkCity">
                                     <option class="disabled" value="" disabled selected>Select city</option>
-                                    <option class="selectOption" v-for="cities in getCities()" :key="cities" v-on:click="checkCity()">{{ cities }} </option>
+                                    <option class="selectOption" v-for="cities in getCities()" :key="cities">{{ cities }} </option>
                                 </select>
                             </td>
                         </tr>
@@ -76,7 +76,7 @@
                         </tr>
                         <tr>
                             <td colspan="2">
-                                <textarea v-model="user.bio" class="input" id="bio"></textarea>
+                                <textarea v-model="user.bio" id="bio"></textarea>
                             </td>
                         </tr>
                     </table>
@@ -84,7 +84,7 @@
                 <div class="infoBox" v-else>
                     <table class="box">
                         <tr>
-                            <td class="decorated capitalize">{{user.name}}</td>
+                            <td colspan="2" class="decorated capitalize">{{user.name}}</td>
                         </tr>
                         <tr>
                             <td class="capitalize">FULL NAME:</td>
@@ -186,6 +186,7 @@
                 editMode: false,
                 changePhotoMode: false,
                 user: {},
+                username: "",
                 pic: {},
                 id: 1,
                 isModalVisible: false,
@@ -208,7 +209,7 @@
             saveInfo: function () {
                 this.checkCity();
                 //Show popup if city does not match to selected country.
-                if (this.user.city === "") {
+                if (this.user.city === "Select city") {
                     this.showModal();
 
                 } else {
@@ -228,6 +229,7 @@
                         this.user = response.data;
                         console.log(response.data);
                         this.pic = this.user.image[0].name;
+                        this.username = this.user.name;
                         console.log(this.user);
                     })
             },
@@ -239,8 +241,10 @@
                 let country = this.user.country;
                 let city = this.user.city;
                 if (!Countries[country].includes(city) || city === "Select city" || country === "Select country") {
-                    this.user.city = "";
+                    this.user.city = "Select city";
                 }
+                console.log(country);
+                console.log(city);
             },
             showModal: function() {
                 this.isModalVisible = true;
