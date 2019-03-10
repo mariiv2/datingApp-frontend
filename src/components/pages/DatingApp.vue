@@ -63,8 +63,8 @@
 
                   <div class="gender">
                       <label>Gender</label>
-                      <input type="radio" value="Female" class="styled" v-model="user.gender">Female<br>
-                      <input type="radio" value="Male" class="styled" v-model="user.gender">Male<br>
+                      <input type="radio" value="FEMALE" class="styled" v-model="user.gender">FEMALE<br>
+                      <input type="radio" value="MALE" class="styled" v-model="user.gender">MALE<br>
                   </div>
 
                   <div class="input">
@@ -84,6 +84,9 @@
 
                   <div class="register">
                       <button v-on:click="register" class="button">Register</button>
+                  </div>
+                  <div id="errors">
+                      <p>{{error}}</p>
                   </div>
               </form>
           </div>
@@ -112,6 +115,7 @@
             return {
                 logIn: false,
                 signUp: false,
+                error: "",
                 user: {
                     name: "",
                     surname: "",
@@ -121,7 +125,7 @@
                     gender: "",
                     city: "",
                     country: "",
-                    birth: ""
+                    birth: "",
                 },
                 Countries
             }
@@ -148,7 +152,10 @@
                 AXIOS.post('/', this.user)
                     .then(response => {
                         this.user = response.data;
-                    })
+                    }).catch(error => {
+                        this.error = error.response.data.errors;
+                        console.log(error.response.data.errors)
+                });
             }
         }
     }
