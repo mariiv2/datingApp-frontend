@@ -36,6 +36,10 @@ h2 {
     color: #1D1C1D;
 }
 
+hr {
+    background: #f93d7b;
+}
+
 p {
     text-align: center;
     font-family: 'Open Sans', sans-serif;
@@ -298,6 +302,7 @@ button {
     width: 120px;
     color: #f93d7b;
     height: 40px;
+    margin: 5px;
 }
 
 .mainButton, .button {
@@ -479,4 +484,6 @@ form input {
     width: 265px;
     margin: 0 auto;
 }
+
+
 
