@@ -23,7 +23,7 @@
             <div v-if="basic" style="display: flex;">
                 <div style="margin: 10px;">
                     <p style="font-weight:bold;"> GENDER PROPORTION</p>
-                    <pie-chart :width="300" :height="300" :data="chartData"></pie-chart>
+                    <pie-chart v-if="loaded" :width="300" :height="300" :data="chartData"></pie-chart>
                 </div>
                 <div style="margin: 10px;">
                     <table class="tableDesign" style="width: 45%">
@@ -42,8 +42,7 @@
                 </div>
             </div>
             <div v-if="actions">
-                <line-chart :width="300" :height="300" :chart-data="lineChartData"></line-chart>
-                <button @click="fillData()">Randomize</button>
+                <line-chart :width="400" :height="100" :options="options" :data="lineChartData"></line-chart>
             </div>
         </div>
 
@@ -87,6 +86,12 @@
                 user: {},
                 mostLikeableUsers: [],
                 id: 1,
+                options: {
+                    legend: {
+                        display: false
+                    }
+                },
+                loaded: false,
                 lineChartData: null,
                 chartData: {
                     labels: ["FEMALE", "MALE"],
@@ -107,10 +112,11 @@
         },
         created: function () {
             this.getMostLikeableUsers();
-            this.getUser();
         },
+
         mounted () {
             this.fillLineData();
+            this.getUser();
         },
         // methods that implement data logic.
         // note there's no DOM manipulation here at all.
@@ -144,9 +150,8 @@
                 AXIOS.get('/stats/')
                     .then(response => {
                         this.user = response.data;
-                        console.log(PieChart);
                         this.chartData.datasets[0].data = [this.user[0], this.user[1]];
-                        console.log(this.user[0])
+                        this.loaded = true;
                     })
             },
             getMostLikeableUsers: function () {

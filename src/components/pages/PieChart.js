@@ -6,10 +6,5 @@ export default {
     props: ["data", "options", "chartData"],
     mounted() {
         this.renderChart(this.data, this.options);
-    },
-    watch: {
-        chartData () {
-            this.$data._chart.update()
-        }
     }
 };
