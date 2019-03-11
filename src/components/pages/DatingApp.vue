@@ -63,8 +63,8 @@
 
                   <div class="gender">
                       <label>Gender</label>
-                      <input type="radio" value="FEMALE" class="styled" v-model="user.gender">FEMALE<br>
-                      <input type="radio" value="MALE" class="styled" v-model="user.gender">MALE<br>
+                      <input type="radio" value="FEMALE" class="styled" v-model="user.gender">Female<br>
+                      <input type="radio" value="MALE" class="styled" v-model="user.gender">Male<br>
                   </div>
 
                   <div class="input">
@@ -85,10 +85,12 @@
                   <div class="register">
                       <button v-on:click="register" class="button">Register</button>
                   </div>
-                  <div id="errors">
-                      <p>{{error}}</p>
-                  </div>
               </form>
+          </div>
+          <div>
+              <div>
+                  <error-modal v-show="errorModal" :errors="error" @close="closeErrorModal"></error-modal>
+              </div>
           </div>
       </div>
       <footer>
@@ -108,14 +110,24 @@
 <script>
     import Countries from '../resources/countries.json'
     import {AXIOS} from './http-config'
+    import errorModal from './ErrorModal.vue'
 
     export default {
         name: 'DatingApp',
+        components: {
+            errorModal,
+        },
+        computed: {
+            send: function() {
+                return this.error
+            }
+        },
         data () {
             return {
                 logIn: false,
                 signUp: false,
-                error: "",
+                error: {},
+                errorModal: false,
                 user: {
                     name: "",
                     surname: "",
@@ -154,8 +166,14 @@
                         this.user = response.data;
                     }).catch(error => {
                         this.error = error.response.data.errors;
-                        console.log(error.response.data.errors)
+                        this.errorModal = true;
                 });
+                if (!this.errorModal) {
+                    this.$router.push('Profile')
+                }
+            },
+            closeErrorModal: function() {
+                this.errorModal = false;
             }
         }
     }

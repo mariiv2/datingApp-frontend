@@ -410,7 +410,7 @@ th, td {
 }
 
 .profileImage {
-    width: 230px;
+    width: 260px;
     height: 300px;
     margin: 0;
     padding: 0;
@@ -419,7 +419,7 @@ th, td {
 
 .imageHolder {
     height: 330px;
-    width: 260px;
+    width: 290px;
     border: 15px solid #f93d7b;
 }
 
