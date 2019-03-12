@@ -51,6 +51,14 @@ a {
     text-decoration: none;
 }
 
+#app {
+    height: 100vh;
+}
+
+.page {
+    height: 100%;
+}
+
 .clearfix:before,
 .clearfix:after {
     content: " ";
@@ -140,15 +148,15 @@ nav img {
 /* Container holding the image and the text */
 .container {
     position: relative;
-    display: block;
     width: 980px;
     margin: 0 auto;
-    background: #F4F4F4;
-    height: calc(100vh - 140px);
+    background: #F4F4F4 repeat-y;
+    height: 100%;
 }
 
-#main {
-    height: calc(100vh - 80px);
+.beforeFooter {
+    height: 80px;
+    background: #F4F4F4;
 }
 
 .container:after {
@@ -158,38 +166,33 @@ nav img {
 }
 /* Container holding the image and the text */
 
-/*Footer*/
 footer {
     position: fixed;
     right: 0;
     left: 0;
     display: block;
     background: #f93d7b;
-    height: 80px;
+    height: 50px;
     bottom: 0;
 }
 
 footer .wrapper {
     position: relative;
-    display: block;
+    display: flex;
+    height: 100%;
     width: 980px;
-    margin: 0 auto;
+    flex-flow: row-reverse;
+    align-items: center;
 }
 
 footer .menu {
-    float: right;
     padding-right: 20px;
+    color: white;
+    cursor: pointer;
+    font-size: 12px;
 }
 
 footer .footerLink {
-    float: left;
-    display: block;
-    cursor: pointer;
-    font-family: 'Open Sans', sans-serif;
-    color: #ffffff;
-    font-size: 12px;
-    height: 80px;
-    line-height: 80px;
     padding: 0 10px;
 }
 
@@ -307,15 +310,10 @@ button {
 }
 
 .mainButton, .button {
-    display: inline-block;
-    position: relative;
-    text-align: center;
     background: #f93d7b;
-    font-size: 20px;
-    line-height: 40px;
     width: 200px;
     color: #F4F4F4;
-    height: 40px;
+    margin: 0px;
 }
 
 .changePhoto {
