@@ -312,10 +312,12 @@ button {
     text-align: center;
     background: #f93d7b;
     font-size: 20px;
-    line-height: 40px;
+    line-height: 36px;
     width: 200px;
     color: #F4F4F4;
     height: 40px;
+    margin: 0;
+    padding: 0;
 }
 
 .changePhoto {

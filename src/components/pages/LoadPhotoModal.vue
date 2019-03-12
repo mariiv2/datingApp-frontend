@@ -48,7 +48,7 @@
                 let config = {header : {'Content-Type' : 'multipart/form-data'}};
                 AXIOS.post('/users/images', fd, config);
                 this.complete = true;
-                this.$emit('exit')
+
             }
 
         },
