@@ -185,7 +185,10 @@
                         this.user = response.data;
                         this.$router.push('Home')
                     }).catch(error => {
-                        this.error.push(error.response.data);
+                        let err = {
+                            defaultMessage: error.response.data['message']
+                        };
+                        this.error.push(err);
                         this.errorModal = true;
                 });
             },

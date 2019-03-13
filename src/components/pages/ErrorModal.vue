@@ -11,7 +11,7 @@
                 <section class="modal-body" id="modalDescription">
                     <slot name="body">
                         <div class="modalDiv">
-                            <p v-for="error in errors">{{error['code']}}</p>
+                            <p v-for="error in errors">{{error['defaultMessage']}}</p>
                         </div>
                     </slot>
                 </section>
