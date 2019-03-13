@@ -296,7 +296,8 @@ input[type="text"], input[type="password"], input[type='date'], textarea {
 
 /* Buttons css */
 
-button {
+button, .button {
+    display: block;
     position: relative;
     text-align: center;
     background: #F4F4F4;
@@ -306,14 +307,13 @@ button {
     color: #f93d7b;
     height: 40px;
     margin: 5px;
-    outline: none !important;
 }
 
 .mainButton, .button {
     background: #f93d7b;
     width: 200px;
     color: #F4F4F4;
-    margin: 0px;
+    margin: 0 auto;
 }
 
 .changePhoto {
