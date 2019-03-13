@@ -16,7 +16,7 @@
             <div>
                 <div class="imageContainer">
                     <div class="imageHolder">
-                        <img class="profileImage" src="../images/eva.png" />
+                        <img class="profileImage" v-bind:src="pic"/>
                     </div>
                 </div>
                 <div class="info">
@@ -75,7 +75,7 @@
                 </div>
             </div>
             <div class="likeDislikeButtons">
-                <button class="dislike">DISLIKE</button>
+                <button class="dislike" >DISLIKE</button>
                 <button class="like" v-on:click="toLike">LIKE</button>
             </div>
         </div>
@@ -106,25 +106,42 @@
                 info: [],
                 editMode: false,
                 user: {},
+                pic: {},
+                n: 0,
+                users: [],
                 id: 1
             }
         },
-        created: function() {
-            this.getUser()
+        mounted: function() {
+            this.getAllUsers();
         },
         // methods that implement data logic.
         // note there's no DOM manipulation here at all.
         methods: {
             getUser: function () {
-                AXIOS.get('/users/' + this.id)
-                    .then(response => {
-                        this.user = response.data
-                    })
+                this.user = this.users[this.n];
+                console.log(this.user);
+                this.pic = this.user.image[0].name;
+
+                // AXIOS.get('/users/' + this.id)
+                //     .then(response => {
+                //         this.user = response.data
+                //     })
             },
             toLike: function () {
-                this.user.likes = this.user.likes + 1;
-                AXIOS.put('/users', this.user
-            )}
+                this.n++;
+                this.getUser();
+                // this.user.likes = this.user.likes + 1;
+                // AXIOS.put('/users', this.user)
+            },
+
+            getAllUsers: function () {
+                AXIOS.get('/browse/all')
+                    .then(response => {
+                        this.users = response.data;
+                        this.getUser();
+                    })
+            }
         }
     }
 </script>
