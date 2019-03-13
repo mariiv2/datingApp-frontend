@@ -20,7 +20,7 @@
                 </div>
 
                 <div v-if="editMode" class="changePhoto">
-                    <button class="photoButton" "showPhotoLoadingModal">Change photo</button>
+                    <button class="photoButton" v-on:click="showPhotoLoadingModal">Change photo</button>
                 </div>
             </div>
             <div class="info">
