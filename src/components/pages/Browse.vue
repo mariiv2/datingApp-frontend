@@ -130,7 +130,12 @@
             },
             toLike: function () {
                 this.n++;
-                this.getUser();
+                if (this.n === this.users.length){
+                    this.user = {};
+                }
+                else {
+                    this.getUser();
+                }
                 // this.user.likes = this.user.likes + 1;
                 // AXIOS.put('/users', this.user)
             },
