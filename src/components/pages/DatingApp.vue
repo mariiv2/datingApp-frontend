@@ -1,5 +1,5 @@
 <template>
-  <div class="page">
+  <div id="page">
       <div class="container" id="main">
           <div class="welcome">
               <h1>Welcome to Dating App</h1>
@@ -94,7 +94,6 @@
                   <error-modal v-show="errorModal" :errors="error" @close="closeErrorModal"></error-modal>
               </div>
           </div>
-          <div class="beforeFooter"></div>
       </div>
       <footer>
           <div class="wrapper">

@@ -55,7 +55,7 @@ a {
     height: 100vh;
 }
 
-.page {
+#page {
     height: 100%;
 }
 
@@ -180,7 +180,7 @@ footer .wrapper {
     position: relative;
     display: flex;
     height: 100%;
-    width: 980px;
+    width: 80%;
     flex-flow: row-reverse;
     align-items: center;
 }
