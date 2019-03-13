@@ -12,41 +12,42 @@
               <form>
                   <div class="input">
                       <label>E-mail</label>
-                      <input type="text" v-model="user.email" class="bigInput" placeholder="E-mail">
+                      <input type="text" v-model="userLogIn.email" class="bigInput" placeholder="E-mail">
                   </div>
 
                   <div class="input">
                       <label>Your password</label>
-                      <input type="password" v-model="user.password" class="bigInput" placeholder="Your password">
-                  </div>
-
-                  <div class="register">
-                      <button class="button">Enter</button>
+                      <input type="password" v-model="userLogIn.password" class="bigInput" placeholder="Your password">
                   </div>
               </form>
+
+              <div class="register">
+                  <button v-on:click="enter" class="button">Enter</button>
+              </div>
+
           </div>
           <div v-if="signUp" class="form">
               <form>
                   <div class="nearFields clearfix">
                       <div class="firstName">
                           <label>First name</label>
-                          <input type="text" class="smallInput" v-model="user.name" placeholder="First name">
+                          <input type="text" class="smallInput" v-model="userRegister.name" placeholder="First name">
                       </div>
                       <div class="lastName">
                           <label>Last name</label>
-                          <input type="text" class="smallInput" v-model="user.surname" placeholder="Last name">
+                          <input type="text" class="smallInput" v-model="userRegister.surname" placeholder="Last name">
                       </div>
                   </div>
 
                   <div class="input">
                       <label>Your birthday</label>
-                      <input type="date"  data-date-format="YYYY-MM-DD" class="bigInput" v-model="user.birth" placeholder="yyyy-mm-dd">
+                      <input type="date"  data-date-format="YYYY-MM-DD" class="bigInput" v-model="userRegister.birth" placeholder="yyyy-mm-dd">
                   </div>
 
                   <div class="nearFields clearfix">
                       <div class="country">
                           <label>Country</label>
-                          <select v-model="user.country" class="selectOption smallInput" >
+                          <select v-model="userRegister.country" class="selectOption smallInput" >
                               <option class="disabled" value="" disabled selected>Select country</option>
                               <option class="selectOption" v-for="(value, key) in Countries" :key="key">{{ key }} </option>
                           </select>
@@ -54,7 +55,7 @@
 
                       <div class="city">
                           <label>City</label>
-                          <select v-model="user.city" class="selectOption smallInput">
+                          <select v-model="userRegister.city" class="selectOption smallInput">
                               <option class="disabled" value="" disabled selected>Select city</option>
                               <option class="selectOption" v-for="cities in getCities()" :key="cities" v-on:click="checkCity()">{{ cities }} </option>
                           </select>
@@ -63,29 +64,30 @@
 
                   <div class="gender">
                       <label>Gender</label>
-                      <input type="radio" value="FEMALE" class="styled" v-model="user.gender">Female<br>
-                      <input type="radio" value="MALE" class="styled" v-model="user.gender">Male<br>
+                      <input type="radio" value="FEMALE" class="styled" v-model="userRegister.gender">Female<br>
+                      <input type="radio" value="MALE" class="styled" v-model="userRegister.gender">Male<br>
                   </div>
 
                   <div class="input">
                       <label>E-mail</label>
-                      <input type="text" class="bigInput"  v-model="user.email" placeholder="E-mail">
+                      <input type="text" class="bigInput"  v-model="userRegister.email" placeholder="E-mail">
                   </div>
 
                   <div class="input">
                       <label>Your password</label>
-                      <input type="password" class="bigInput" v-model="user.password" placeholder="Your password">
+                      <input type="password" class="bigInput" v-model="userRegister.password" placeholder="Your password">
                   </div>
 
                   <div class="input">
                       <label>Repeat your password</label>
-                      <input type="password"  class="bigInput" v-model="user.password2" placeholder="Your password">
-                  </div>
-
-                  <div class="register">
-                      <button v-on:click="register" class="button">Register</button>
+                      <input type="password"  class="bigInput" v-model="userRegister.password2" placeholder="Your password">
                   </div>
               </form>
+
+              <div class="register">
+                  <button v-on:click="register" class="button">Register</button>
+              </div>
+
           </div>
           <div>
               <div>
@@ -127,9 +129,14 @@
             return {
                 logIn: false,
                 signUp: false,
-                error: {},
+                error: [],
+                user: {},
                 errorModal: false,
-                user: {
+                userLogIn: {
+                    email: "",
+                    password: ""
+                },
+                userRegister: {
                     name: "",
                     surname: "",
                     email: "",
@@ -153,29 +160,39 @@
                 this.signUp = true;
             },
             getCities: function() {
-                let country = this.user.country;
+                let country = this.userRegister.country;
                 return Countries[country]
             },
             checkCity: function() {
-                let country = this.user.country;
-                let city = this.user.city;
-                if (!Countries[country].includes(city)) this.user.city = "";
+                let country = this.userRegister.country;
+                let city = this.userRegister.city;
+                if (!Countries[country].includes(city)) this.userRegister.city = "";
             },
             register: function() {
-                AXIOS.post('/', this.user)
+                this.error = [];
+                AXIOS.post('/', this.userRegister)
                     .then(response => {
                         this.user = response.data;
+                        this.$router.push('Home')
                     }).catch(error => {
                         this.error = error.response.data.errors;
                         this.errorModal = true;
                 });
-                if (!this.errorModal) {
-                    this.$router.push('Profile')
-                }
+            },
+            enter: function() {
+                this.error = [];
+                AXIOS.post('/login', this.userLogIn)
+                    .then(response => {
+                        this.user = response.data;
+                        this.$router.push('Home')
+                    }).catch(error => {
+                        this.error.push(error.response.data);
+                        this.errorModal = true;
+                });
             },
             closeErrorModal: function() {
                 this.errorModal = false;
-            }
+            },
         }
     }
 </script>
