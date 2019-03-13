@@ -297,7 +297,6 @@ input[type="text"], input[type="password"], input[type='date'], textarea {
 /* Buttons css */
 
 button, .button {
-    display: block;
     position: relative;
     text-align: center;
     background: #F4F4F4;
@@ -310,6 +309,7 @@ button, .button {
 }
 
 .mainButton, .button {
+    display: block;
     background: #f93d7b;
     width: 200px;
     color: #F4F4F4;
@@ -408,7 +408,7 @@ th, td {
 }
 
 .profileImage {
-    width: 260px;
+    width: 230px;
     height: 300px;
     margin: 0;
     padding: 0;
@@ -417,7 +417,7 @@ th, td {
 
 .imageHolder {
     height: 330px;
-    width: 290px;
+    width: 260px;
     border: 15px solid #f93d7b;
 }
 
