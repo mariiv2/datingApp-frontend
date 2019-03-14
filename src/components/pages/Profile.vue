@@ -177,8 +177,7 @@
             activeUser: Object
         },
         components:{
-            modal,
-            photoLoadModal
+            modal
         },
         watch: {
             pic: function(val) {
@@ -224,7 +223,6 @@
                     AXIOS.put('/users/', this.user)
                 }
             },
-
             getUser: function () {
                 console.log("i am here");
                 AXIOS.get('/users/' + this.id)
