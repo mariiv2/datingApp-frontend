@@ -16,12 +16,16 @@
             <div class="imageContainer">
                 <!--<img style="border: 15px solid #f93d7b; height: 361px" v-bind:src="'data:image/jpeg;base64,' + user.image"/>-->
                 <div class="imageHolder">
-                    <img class="profileImage" v-bind:src="pic"/>
+                    <img class="profileImage" :src="pic"/>
                 </div>
 
                 <div v-if="editMode" class="changePhoto">
-                    <button class="photoButton" v-on:click="showPhotoLoadingModal">Change photo</button>
+                    <input type="file" @change="onFileChanged" id="file"/>
+                    <label for="file">Change photo</label>
+                    <p v-if="fileChosen">{{file.name}}</p>
+                    <button v-if="fileChosen" class="uploadFile" @click="onUpload">Upload</button>
                 </div>
+
             </div>
             <div class="info">
                 <div class="infoBox" v-if="editMode">
@@ -146,9 +150,7 @@
         <div>
             <modal v-show="isModalVisible" @close="closeModal"/>
         </div>
-        <div>
-            <photo-load-modal v-show="changePhotoMode" @close="closePhotoLoadingModal"/>
-        </div>
+
         <footer>
             <div class="wrapper">
                 <div class="menu">
@@ -168,7 +170,6 @@
     import {AXIOS} from './http-config'
     import Countries from '../resources/countries.json'
     import modal from './Modal.vue'
-    import photoLoadModal from './LoadPhotoModal.vue'
 
     export default {
         name: 'profile',
@@ -179,21 +180,27 @@
             modal,
             photoLoadModal
         },
+        watch: {
+            pic: function(val) {
+                this.pic = val;
+            }
+        },
         // app initial state
         data() {
             return {
                 info: [],
                 editMode: false,
+                fileChosen: false,
                 changePhotoMode: false,
                 user: {},
                 username: "",
-                pic: {},
+                pic: "",
+                file: "",
                 id: 1,
                 isModalVisible: false,
                 Countries
             }
         },
-
         created: function() {
             this.getUser();
         },
@@ -217,20 +224,15 @@
                     AXIOS.put('/users/', this.user)
                 }
             },
-            showPhotoLoadingModal: function() {
-                this.changePhotoMode = true
-            },
-            closePhotoLoadingModal: function() {
-                this.changePhotoMode = false
-            },
+
             getUser: function () {
+                console.log("i am here");
                 AXIOS.get('/users/' + this.id)
                     .then(response => {
                         this.user = response.data;
-                        console.log(response.data);
                         this.pic = this.user.image[0].name;
+                        console.log(this.pic);
                         this.username = this.user.name;
-                        console.log(this.user);
                     })
             },
             getCities: function() {
@@ -243,14 +245,27 @@
                 if (!Countries[country].includes(city) || city === "Select city" || country === "Select country") {
                     this.user.city = "Select city";
                 }
-                console.log(country);
-                console.log(city);
             },
             showModal: function() {
                 this.isModalVisible = true;
             },
             closeModal: function() {
                 this.isModalVisible = false;
+                console.log(this.pic)
+            },
+            onFileChanged (event) {
+                this.file = event.target.files[0];
+                this.fileChosen= true;
+            },
+            onUpload() {
+                let fd = new FormData();
+
+                fd.append('file', this.file);
+
+                let config = {header : {'Content-Type' : 'multipart/form-data'}};
+                AXIOS.post('/users/images', fd, config).then(this.getUser);
+
+                this.fileChosen = false;
             }
         }
     }

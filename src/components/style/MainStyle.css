@@ -319,7 +319,8 @@ button, .button {
 .changePhoto {
     position: relative;
     text-align: center;
-    padding: 20px 20px 20px 20px;
+    width: 260px;
+    padding: 20px 0 20px 0;
 }
 
 .likeDislikeButtons{
@@ -373,6 +374,33 @@ button:hover, .mainButton:hover, .button:hover {
 .dislike {
     margin-right: 10px;
 }
+
+[type="file"] {
+    height: 0;
+    overflow: hidden;
+    width: 0;
+}
+
+[type="file"] + label, .uploadFile {
+    background: #f93d7b;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    display: inline-block;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 14px;
+    position: relative;
+    width: 150px;
+    height: 40px;
+    line-height: 40px;
+}
+
+[type="file"]:hover + label:hover, .uploadFile:hover {
+    background-color: white;
+    color: #f93d7b;
+    transition: 0.3s;
+}
+
 /* Buttons css */
 
 
@@ -483,6 +511,3 @@ form input {
     width: 265px;
     margin: 0 auto;
 }
-
-
-
