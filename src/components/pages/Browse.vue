@@ -13,12 +13,33 @@
             </div>
         </nav>
         <div class="container">
-            <div>
-                <div class="imageContainer">
-                    <div class="imageHolder">
-                        <img class="profileImage" v-bind:src="pic"/>
+            <div id="demo" class="carousel slide" data-ride="carousel">
+                <!-- Indicators -->
+                <ul class="carousel-indicators">
+                    <li data-target="#demo" data-slide-to="0" class="active"></li>
+                    <li data-target="#demo" data-slide-to="1"></li>
+                    <li data-target="#demo" data-slide-to="2"></li>
+                </ul>
+                <!-- The slideshow -->
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <img class="profileImage" v-bind:src="pic" width="100">
+                    </div>
+                    <div class="carousel-item">
+                        <img class="profileImage" v-bind:src="pic" width="100">
+                    </div>
+                    <div class="carousel-item">
+                        <img class="profileImage" v-bind:src="pic" width="100">
                     </div>
                 </div>
+                <!-- Left and right controls -->
+                <a class="carousel-control-prev" href="#demo" data-slide="prev">
+                    <span class="carousel-control-prev-icon"></span>
+                </a>
+                <a class="carousel-control-next" href="#demo" data-slide="next">
+                    <span class="carousel-control-next-icon"></span>
+                </a>
+            </div>
                 <div class="info">
                     <table class="box">
                         <tr>
@@ -73,7 +94,6 @@
                         </tr>
                     </table>
                 </div>
-            </div>
             <div class="likeDislikeButtons">
                 <button class="dislike" >DISLIKE</button>
                 <button class="like" v-on:click="toLike">LIKE</button>

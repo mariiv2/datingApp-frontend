@@ -148,10 +148,11 @@ nav img {
 /* Container holding the image and the text */
 .container {
     position: relative;
-    width: 980px;
+    width: 90ch;
     margin: 0 auto;
-    background: #F4F4F4 repeat-y;
+    background: #F4F4F4;
     height: 100%;
+    text-align: center;
 }
 
 .beforeFooter {
@@ -436,8 +437,7 @@ th, td {
 }
 
 .profileImage {
-    width: 230px;
-    height: 300px;
+    width: 25ch;
     margin: 0;
     padding: 0;
     position: relative;
