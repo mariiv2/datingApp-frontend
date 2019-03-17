@@ -15,28 +15,23 @@
         <div class="container">
             <div id="demo" class="carousel slide" data-ride="carousel">
                 <!-- Indicators -->
-                <ul class="carousel-indicators">
-                    <li data-target="#demo" data-slide-to="0" class="active"></li>
-                    <li data-target="#demo" data-slide-to="1"></li>
-                    <li data-target="#demo" data-slide-to="2"></li>
-                </ul>
+                <ol class="carousel-indicators">
+                    <li data-target="#demo" v-for="(img, index) in user.image" data-slide-to="$index"></li>
+                </ol>
                 <!-- The slideshow -->
                 <div class="carousel-inner">
                     <div class="carousel-item active">
-                        <img class="profileImage" v-bind:src="pic" width="100">
+                        <img class="profileImage" v-bind:src="firstImg" width="100">
                     </div>
-                    <div class="carousel-item">
-                        <img class="profileImage" v-bind:src="pic" width="100">
-                    </div>
-                    <div class="carousel-item">
-                        <img class="profileImage" v-bind:src="pic" width="100">
+                    <div class="carousel-item" v-for="img in otherImg">
+                        <img class="profileImage" v-bind:src="img" width="100">
                     </div>
                 </div>
                 <!-- Left and right controls -->
-                <a class="carousel-control-prev" href="#demo" data-slide="prev">
+                <a class="carousel-control-prev" href="#demo" data-slide="prev" style="background: #f93d7b">
                     <span class="carousel-control-prev-icon"></span>
                 </a>
-                <a class="carousel-control-next" href="#demo" data-slide="next">
+                <a class="carousel-control-next" href="#demo" data-slide="next" style="background: #f93d7b">
                     <span class="carousel-control-next-icon"></span>
                 </a>
             </div>
@@ -126,7 +121,8 @@
                 info: [],
                 editMode: false,
                 user: {},
-                pic: {},
+                firstImg: {},
+                otherImg: [],
                 n: 0,
                 users: [],
                 id: 1
@@ -141,7 +137,10 @@
             getUser: function () {
                 this.user = this.users[this.n];
                 console.log(this.user);
-                this.pic = this.user.image[0].name;
+                this.firstImg = this.user.image[0].name;
+                for (let i=1; i<this.user.image.length; i++){
+                    this.otherImg.push(this.user.image[i].name);
+                }
 
                 // AXIOS.get('/users/' + this.id)
                 //     .then(response => {
