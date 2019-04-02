@@ -1,50 +1,12 @@
 /*General*/
 @import url('https://fonts.googleapis.com/css?family=Open+Sans:400,700');
+@import url('https://fonts.googleapis.com/css?family=Exo');
 
-*,
-*:before,
-*:after {
-    box-sizing: border-box;
-}
-
-html {
-    height: 100%;
-}
 
 body {
-    background: url("../images/bg.png") no-repeat center center/cover;
-    color: #1D1C1D;
-    font-family: 'Open Sans', sans-serif;
-    font-weight: 400;
-    height: 100%;
-    margin: 0;
-}
-
-h1 {
-    margin: 0;
-    padding: 40px 20px 20px 20px;
-    font-family: 'Open Sans', sans-serif;
-    text-align: center;
-    color: #1D1C1D;
-}
-
-h2 {
-    margin: 0;
-    padding: 0 20px 20px 20px;
-    font-family: 'Open Sans', sans-serif;
-    text-align: center;
-    color: #1D1C1D;
-}
-
-hr {
-    background: #f93d7b;
-}
-
-p {
-    text-align: center;
-    font-family: 'Open Sans', sans-serif;
-    color: #1D1C1D;
-    font-size: 14px;
+    color: #3b2b49;
+    background: #cfbad2;
+    font-family: 'Exo', serif;
 }
 
 a {
@@ -52,283 +14,48 @@ a {
 }
 
 #app {
+    font-family: 'Exo', fantasy;
     height: 100vh;
+    background-color: #cfbad2;
+    color: #3b2b49;
 }
 
-#page {
-    height: 100%;
+textarea:focus, input:focus{
+    outline: none;
 }
 
-.clearfix:before,
-.clearfix:after {
-    content: " ";
-    display: table;
-}
-
-.clearfix:after {
-    clear: both;
-}
-/* General */
-
-/*Navigation*/
-
-/*Home page*/
-.getStarted1 {
-    float: left;
-    width: 315px;
-    padding: 20px 10px 20px 40px;
-    text-align: center;
-}
-
-.getStarted2 {
-    float: left;
-    width: 315px;
-    padding: 20px 10px 20px 10px;
-    text-align: center;
-}
-
-.getStarted3 {
-    float: left;
-    width: 315px;
-    padding: 20px 40px 20px 10px;
-    text-align: center;
-}
-
-/*Home page*/
-nav {
-    position: relative;
-    display: block;
-    background: #f93d7b;
-    height: 60px;
-}
-
-nav .wrapper {
-    position: relative;
-    display: block;
-    width: 980px;
-    margin: 0 auto;
-}
-
-nav .menu {
-    float: right;
-    padding-right: 20px;
-}
-
-nav .link {
-    float: left;
-    display: block;
-    color: #ffffff;
-    text-transform: uppercase;
-    font-family: 'Open Sans', sans-serif;
-    text-align: center;
-    font-size: 14px;
-    height: 60px;
-    line-height: 60px;
-    padding: 0 10px;
-}
-
-#active {
-    font-weight: bold;
+.no-border {
+    border: 0;
+    box-shadow: none;
 }
 
 nav .link:hover {
     background-color: #EAE3EA;
     opacity: 0.8;
     transition: 0.3s;
-    color: #f93d7b;
+    color: #bd1651;
 }
 
-nav img {
-    width: 16px;
-    height: 16px;
-    margin: 22px 10px;
-}
 /*Navigation*/
 
-/* Container holding the image and the text */
 .container {
-    position: relative;
-    width: 90ch;
-    margin: 0 auto;
-    background: #F4F4F4;
-    height: 100%;
     text-align: center;
-    padding: 0;
 }
 
-.beforeFooter {
-    height: 80px;
-    background: #F4F4F4;
-}
-
-.container:after {
-    clear: both;
-    content: '';
-    display: table;
-}
-/* Container holding the image and the text */
-
-footer {
-    position: fixed;
-    right: 0;
-    left: 0;
-    display: block;
-    background: #f93d7b;
-    height: 50px;
-    bottom: 0;
-}
-
-footer .wrapper {
-    position: relative;
-    display: flex;
-    height: 100%;
-    width: 80%;
-    flex-flow: row-reverse;
-    align-items: center;
-}
-
-footer .menu {
-    padding-right: 20px;
-    color: white;
-    cursor: pointer;
-    font-size: 12px;
-}
-
-footer .footerLink {
-    padding: 0 10px;
-}
-
-footer .footerLink:hover {
-    text-decoration: underline;
-}
-/*Footer*/
-
-/* Users info box */
-.info {
-    float: left;
-    position: relative;
-    display: block;
-    padding: 40px 0 40px 0;
-}
-
-.box {
-    font-family: 'Open Sans', sans-serif;
-    font-size: 14px;
-}
-
-.box td {
-    width: 160px;
-    min-height: 25px;
-    padding: 2px;
-}
 
 input[type="text"], input[type="password"], input[type='date'], textarea {
-    font-family: 'Open Sans', sans-serif;
-    font-size: 14px;
-    width: 170px;
-    padding-left: 8px;
-    height: 24px;
-    color: #1D1C1D;
-    background-color: white;
     border: 1px solid #CDC0C0;
     border-radius: 4px;
 }
 
-#bio {
-    max-width: 320px;
-    min-height: 25px;
-    max-height: 185px;
-}
-
-.decorated {
-    font-family: 'Open Sans', sans-serif;
-    font-size: 20px;
-    font-weight: bold;
-    color: #CDC0C0;
-}
-
-
-.decoratedSmall {
-    font-family: 'Open Sans', sans-serif;
-    font-size: 14px;
-    font-weight: bold;
-    color: #CDC0C0;
-}
-/* Users info box */
-
-
-/* Users image container */
-.imageContainer {
-    position: relative;
-    display: block;
-    padding: 40px 20px 20px 40px;
-    float: left;
-}
-/* Users image container */
-
-/* Box for save and edit buttons */
-.infoChange {
-    position: relative;
-    float: right;
-    padding: 40px 40px 40px 20px;
-}
-/* Box for save and edit buttons */
-
-/* Icons */
-.heart {
-    width: 11px;
-    height: 11px;
-}
-
-.arrowImg {
-    position: absolute;
-    top: 3%;
-    left: 90%;
-    width: 5%;
-    padding: 0;
-}
-/* Icons */
-
-.likes {
-    font-family: 'Open Sans', sans-serif;
-    font-size: 15px;
-    color: #CDC0C0;
-    float: left;
-}
-
-/* Buttons css */
-
-button, .button {
-    position: relative;
+button{
+    outline: none;
     text-align: center;
-    background: #F4F4F4;
-    border: 2px solid #f93d7b;
     font-size: 20px;
     width: 120px;
-    color: #f93d7b;
+    color: #bd1651;
     height: 40px;
     margin: 5px;
-}
-
-.mainButton, .button {
-    display: block;
-    background: #f93d7b;
-    width: 200px;
-    color: #F4F4F4;
-    margin: 0 auto;
-}
-
-.changePhoto {
-    position: relative;
-    text-align: center;
-    width: 260px;
-    padding: 20px 0 20px 0;
-}
-
-.likeDislikeButtons{
-    position: relative;
-    padding: 20px 40px 20px 75px;
-    float: left;
 }
 
 .signUpLogIn {
@@ -354,87 +81,22 @@ button, .button {
 
 .login:active, .signup:active {
     background-color: #EAE3EA;
-    color: #f93d7b;
+    color: #bd1651;
     opacity: 0.8;
 }
 
 button:hover, .mainButton:hover, .button:hover {
+    outline: none;
     background-color: #EAE3EA;
     opacity: 0.8;
     transition: 0.3s;
-    color: #f93d7b;
-}
-
-.photoButton {
-    width: 200px;
-}
-
-.like {
-    margin-left: 10px;
-}
-
-.dislike {
-    margin-right: 10px;
+    color: #bd1651;
 }
 
 [type="file"] {
     height: 0;
     overflow: hidden;
     width: 0;
-}
-
-[type="file"] + label, .uploadFile {
-    background: #f93d7b;
-    border: none;
-    color: #fff;
-    cursor: pointer;
-    display: inline-block;
-    font-family: 'Open Sans', sans-serif;
-    font-size: 14px;
-    position: relative;
-    width: 150px;
-    height: 40px;
-    line-height: 40px;
-}
-
-[type="file"]:hover + label:hover, .uploadFile:hover {
-    background-color: white;
-    color: #f93d7b;
-    transition: 0.3s;
-}
-
-/* Buttons css */
-
-
-/* Stats css */
-.tableDesign {
-    border: 1px solid black;
-    border-collapse: collapse;
-}
-
-.thTdDesign {
-    text-align: center;
-}
-
-th, td {
-    padding: 5px;
-
-}
-/* Stats css */
-
-.capitalize {
-    text-transform: uppercase;
-    font-weight: bold;
-}
-
-.selectOption {
-    font-family: 'Open Sans', sans-serif;
-    font-size: 14px;
-    width: 170px;
-    padding: 0;
-    color: #1D1C1D;
-    background-color: white;
-    border: 1px solid #CDC0C0;
 }
 
 .profileImage {
@@ -444,71 +106,11 @@ th, td {
     position: relative;
 }
 
-.imageHolder {
-    height: 330px;
-    width: 260px;
-    border: 15px solid #f93d7b;
-}
+.favimg {
+    object-fit: cover;
+    object-position: 100% 0;
 
-.form {
-    width: 425px;
-    margin: 0 auto;
-    position: relative;
-}
+    width: 7ch;
+    height: 7ch;
 
-.firstName, .lastName, .country, .city {
-    width: 120px;
-    float: left;
-}
-
-.firstName input, .lastName input, .country select, .city select {
-    width: 120px;
-}
-
-.firstName, .country {
-    margin-right: 25px;
-}
-
-label {
-    display: block;
-}
-
-.gender {
-    width: 80px;
-    margin: 0 auto;
-    padding-top: 10px;
-}
-
-.input {
-    width: 265px;
-    margin: 0 auto;
-}
-form input {
-    margin-bottom: 5px;
-    margin-top: 5px;
-}
-
-.register {
-    width: 200px;
-    margin: 0 auto;
-    padding-top: 20px;
-}
-
-.form .smallInput {
-    width: 120px;
-    height: 24px;
-}
-.form .bigInput {
-    width: 265px;
-    height: 24px;
-}
-
-.form .selectOption .disabled .smallInput {
-    width: 120px;
-    height: 24px;
-}
-
-.nearFields {
-    width: 265px;
-    margin: 0 auto;
 }

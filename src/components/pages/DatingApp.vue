@@ -49,7 +49,7 @@
                           <label>Country</label>
                           <select v-model="userRegister.country" class="selectOption smallInput" >
                               <option class="disabled" value="" disabled selected>Select country</option>
-                              <option class="selectOption" v-for="(value, key) in Countries" :key="key">{{ key }} </option>
+                              <option cla ss="selectOption" v-for="(value, key) in Countries" :key="key">{{ key }} </option>
                           </select>
                       </div>
 

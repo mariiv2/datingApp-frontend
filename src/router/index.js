@@ -2,24 +2,20 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import DatingApp from '@/components/pages/DatingApp'
 import Profile from '@/components/pages/Profile'
-import Home from '@/components/pages/Home'
 import Chat from '@/components/pages/Chat'
 import Stats from '@/components/pages/Stats'
 import Browse from '@/components/pages/Browse'
+import Testpage from '@/components/pages/Testpage'
 
-Vue.use(Router)
 
-export default new Router({
+Vue.use(Router);
+
+const router =  new Router({
     routes: [
         {
             path: '/',
             name: 'DatingApp',
             component: DatingApp
-        },
-        {
-            path: '/home',
-            name: 'Home',
-            component: Home
         },
         {
             path: '/profile',
@@ -39,6 +35,22 @@ export default new Router({
             path: '/browse',
             name: 'Browse',
             component: Browse
+        }, {
+            path: '/testpage',
+            name: 'Testpage',
+            component: Testpage
         }
     ]
-})
+});
+
+router.beforeEach((to, from, next) => {
+    const publicPages = ['/testpage', '/'];
+    const authRequired = !publicPages.includes(to.path);
+    let token = localStorage.getItem('token');
+    if (authRequired && token === null) {
+        return next('/testpage');
+    }
+    next();
+});
+
+export default router;
