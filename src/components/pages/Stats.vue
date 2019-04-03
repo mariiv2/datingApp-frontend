@@ -21,7 +21,7 @@
                     </li>
                     <li>
                         <a>
-                            <font-awesome-icon icon="sign-out-alt" style="margin-top: 1.7vh; margin-left: 2ch"/>
+                            <font-awesome-icon icon="sign-out-alt" style="margin-top: 1.7vh; margin-left: 2ch" v-on:click="logOut()"/>
                         </a>
                     </li>
                 </ul>
@@ -215,6 +215,10 @@
                         }
                     ]
                 }
+            },
+            logOut: function() {
+                localStorage.removeItem("token");
+                this.$router.push("DatingApp");
             }
         }
     }
