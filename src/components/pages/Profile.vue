@@ -192,9 +192,7 @@
                 firstImg: {},
                 otherImg: [],
                 username: "",
-                pic: "",
                 file: "",
-                id: 2,
                 isModalVisible: false,
                 matchingPercentage: {},
                 Countries
@@ -203,13 +201,11 @@
         components:{
             modal
         },
-        watch: {
-            pic: function(val) {
-                this.pic = val;
-            }
-        },
         mounted: function() {
-            this.getUser();
+            if (localStorage.getItem('token')) {
+                AXIOS.defaults.headers.common['Authorization'] = localStorage.getItem('token');
+                this.getUser();
+            }
         },
         methods: {
             editHTML: function () {
@@ -234,21 +230,19 @@
                 }
             },
             getUser: function () {
-                console.log("i am here");
-                AXIOS.get('/users/' + this.id)
+                AXIOS.get('/users')
                     .then(response => {
                         this.user = response.data;
-                        this.pic = this.user.image[0].name;
                         this.firstImg = this.user.image[0].name;
                         this.otherImg = [];
                         for (let i=1; i<this.user.image.length; i++){
                             this.otherImg.push(this.user.image[i].name);
                         }
                         this.username = this.user.name;
-                    });
-                AXIOS.get('stats/matchPercentage/' + this.id )
-                    .then(response => {
-                        this.matchingPercentage = response.data;
+                        AXIOS.get('stats/matchPercentage/' + this.user.id )
+                            .then(response => {
+                                this.matchingPercentage = response.data;
+                            });
                     });
             },
             getCities: function() {

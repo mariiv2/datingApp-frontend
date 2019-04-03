@@ -75,12 +75,15 @@
         },
 
         mounted() {
-            this.getMatches();
+            if (localStorage.getItem('token')) {
+                AXIOS.defaults.headers.common['Authorization'] = localStorage.getItem('token');
+                this.getMatches();
+            }
         },
 
         methods: {
             getMatches: function () {
-                AXIOS.get('/match/all/1')
+                AXIOS.get('/match/all')
                     .then(response => {
                         this.matches = response.data;
                         console.log(response)

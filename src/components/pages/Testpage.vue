@@ -94,6 +94,7 @@
     import {AXIOS} from './http-config'
     import errorModal from './ErrorModal.vue'
     import Countries from '../resources/countries.json'
+    import {AUTH_REQUEST} from '../../store/constants.js'
 
     export default {
         // app initial state
@@ -132,13 +133,6 @@
 
 
         },
-
-        mounted() {
-            if (localStorage.getItem('token')) {
-                AXIOS.defaults.headers.common['Authorization'] = localStorage.getItem('token');
-            }
-        },
-
         methods: {
             getLogIn: function () {
                 this.logIn = true;

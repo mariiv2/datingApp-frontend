@@ -181,7 +181,6 @@
                 matchingPercentage: {},
                 noUsersLeft: false,
                 filter: {
-                    id: 1,
                     city: "Tallinn",
                     country: "Estonia",
                     gender: "MALE"
@@ -195,7 +194,10 @@
             }
         },
         mounted: function() {
-            this.getAllUsers();
+            if (localStorage.getItem('token')) {
+                AXIOS.defaults.headers.common['Authorization'] = localStorage.getItem('token');
+                this.getAllUsers();
+            }
         },
         methods: {
             getCities: function() {
@@ -232,10 +234,9 @@
                 }
             },
             getAllUsers: function () {
-                AXIOS.get('/browse/all?id=' + this.filter.id
-                    +'&city=' + this.filter.city
-                    +'&country='+ this.filter.country
-                    +'&gender=' + this.filter.gender)
+                AXIOS.get('/browse/all/?city=' + this.filter.city
+                + '&country=' + this.filter.country
+                + '&gender=' + this.filter.gender)
                     .then(response => {
                         this.users = response.data;
                         this.n = 0;
