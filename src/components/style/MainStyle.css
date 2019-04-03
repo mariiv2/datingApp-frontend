@@ -2,7 +2,6 @@
 @import url('https://fonts.googleapis.com/css?family=Open+Sans:400,700');
 @import url('https://fonts.googleapis.com/css?family=Exo');
 
-
 body {
     color: #3b2b49;
     background: #cfbad2;
@@ -101,6 +100,8 @@ button:hover, .mainButton:hover, .button:hover {
 
 .profileImage {
     width: 25ch;
+    height: 30ch;
+    object-fit: cover;
     margin: 0;
     padding: 0;
     position: relative;
