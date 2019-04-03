@@ -181,12 +181,13 @@
                 matchingPercentage: {},
                 noUsersLeft: false,
                 filter: {
+                    id: null,
                     city: "Tallinn",
                     country: "Estonia",
                     gender: "MALE"
                 },
                 choice: {
-                    fromUserId: 1,
+                    fromUserId: null,
                     toUserId: {},
                     likeValue: {}
                 },
@@ -196,7 +197,7 @@
         mounted: function() {
             if (localStorage.getItem('token')) {
                 AXIOS.defaults.headers.common['Authorization'] = localStorage.getItem('token');
-                this.getAllUsers();
+                this.getClientId();
             }
         },
         methods: {
@@ -234,7 +235,8 @@
                 }
             },
             getAllUsers: function () {
-                AXIOS.get('/browse/all/?city=' + this.filter.city
+                AXIOS.get('/browse/all/?id=' + this.filter.id
+                + '&city=' + this.filter.city
                 + '&country=' + this.filter.country
                 + '&gender=' + this.filter.gender)
                     .then(response => {
@@ -260,6 +262,15 @@
                 AXIOS.get('stats/matchPercentage/' + this.user.id )
                     .then(response => {
                         this.matchingPercentage = response.data;
+                    })
+            },
+            getClientId: function() {
+                AXIOS.get('/browse/id')
+                    .then(response => {
+                        console.log(response.data);
+                        this.choice.fromUserId = response.data;
+                        this.filter.id = response.data;
+                        this.getAllUsers();
                     })
             }
         }
