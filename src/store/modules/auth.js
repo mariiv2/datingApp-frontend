@@ -1,5 +1,6 @@
 import {AUTH_REQUEST} from "../constants";
 import {AXIOS} from '../../components/pages/http-config'
+import router from '../../router'
 
 const actions = {
     [AUTH_REQUEST]: ({commit, dispatch}, user) => {
@@ -22,6 +23,7 @@ const mutations = {
             .then(response => {
                 localStorage.setItem('token', response.headers.authorization);
                 AXIOS.defaults.headers.common['Authorization'] = response.headers.authorization;
+                router.push('Profile');
 
             }).catch(error => {
             localStorage.removeItem('token');
