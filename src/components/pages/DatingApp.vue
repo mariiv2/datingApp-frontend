@@ -160,7 +160,7 @@
                 AXIOS.post('/register', this.userRegister)
                     .then(response => {
                         this.user = response.data;
-                        this.$router.push('Profile')
+                        this.getLogIn();
                     }).catch(error => {
                     this.error = error.response.data.errors;
                     this.errorModal = true;
