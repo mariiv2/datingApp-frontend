@@ -157,7 +157,7 @@
             },
             register: function() {
                 this.error = [];
-                AXIOS.post('/', this.userRegister)
+                AXIOS.post('/register', this.userRegister)
                     .then(response => {
                         this.user = response.data;
                         this.$router.push('Profile')
