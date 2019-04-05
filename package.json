@@ -73,8 +73,5 @@
       "^.+\\.jsx$": "babel-jest",
       "^.+\\.js$": "babel-jest"
     }
-  },
-  "babel": {
-    "plugins": ["transform-es2015-modules-commonjs"]
   }
 }

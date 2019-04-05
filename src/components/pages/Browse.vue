@@ -27,7 +27,10 @@
                 </ul>
             </div>
         </nav>
-        <div class="container" style="margin-top: 5vh;">
+        <div v-if="!loaded" class="container align-items-center justify-content-center" style="margin-top: 5vh;">
+            <img src="../images/load.gif"/>
+        </div>
+        <div v-if="loaded" class="container" style="margin-top: 5vh;">
             <div class="row">
                 <div v-if="!noUsersLeft" class="col-sm-7 border" style="background-color: #F4F4F4; border-radius: 5px; border: #3b2b49">
                     <div class="row" style="margin-top: 5vh">
@@ -169,6 +172,7 @@
         name: "testpage",
         data() {
             return {
+                loaded:false,
                 users: [],
                 user: {},
                 images: [],
@@ -234,6 +238,9 @@
                     this.getUser();
                 }
             },
+            setLoaded: function() {
+                setTimeout(() => this.loaded= true, 500);
+            },
             getAllUsers: function () {
                 AXIOS.get('/browse/all/?id=' + this.filter.id
                 + '&city=' + this.filter.city
@@ -262,6 +269,7 @@
                 AXIOS.get('stats/matchPercentage/' + this.user.id )
                     .then(response => {
                         this.matchingPercentage = response.data;
+                        this.setLoaded();
                     })
             },
             getClientId: function() {

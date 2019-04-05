@@ -27,7 +27,10 @@
                 </ul>
             </div>
         </nav>
-        <div class="container align-items-center justify-content-center" style="margin-top: 5vh;">
+        <div v-if="!loaded" class="container align-items-center justify-content-center" style="margin-top: 5vh;">
+            <img src="../images/load.gif"/>
+        </div>
+        <div v-if="loaded" class="container align-items-center justify-content-center" style="margin-top: 5vh;">
             <div class="row">
                 <div class="col-sm-1"></div>
                 <div class="col-sm-10 border" style="background-color: #F4F4F4; border-radius: 5px; border: #3b2b49">
@@ -183,6 +186,7 @@
         name: "testpage",
         data() {
             return {
+                loaded:false,
                 editMode: false,
                 fileChosen: false,
                 changePhotoMode: false,
@@ -214,9 +218,6 @@
             changeMode: function () {
                 this.editMode = false
             },
-            profileHTML: function () {
-                this.editMode = false
-            },
             saveInfo: function () {
                 this.checkCity();
                 //Show popup if city does not match to selected country.
@@ -226,7 +227,15 @@
                 } else {
                     this.editMode = false;
                     console.log(this.user.name);
-                    AXIOS.put('/users', this.user);
+                    AXIOS.put('/users', this.user)
+                        .then(this.getUser)
+                        .catch(error => {
+                            this.error = error;
+                            console.log("------------------");
+                            console.log(this.error);
+                            console.log("------------------");
+
+                        });
                 }
             },
             getUser: function () {
@@ -242,8 +251,12 @@
                         AXIOS.get('stats/matchPercentage/' + this.user.id )
                             .then(response => {
                                 this.matchingPercentage = response.data;
+                                this.setLoaded();
                             });
                     });
+            },
+            setLoaded: function() {
+                setTimeout(() => this.loaded= true, 500);
             },
             getCities: function() {
                 let country = this.user.country;
