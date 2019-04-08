@@ -115,3 +115,7 @@ button:hover, .mainButton:hover, .button:hover {
     height: 7ch;
 
 }
+
+.small-text {
+    font-size: 12px;
+}

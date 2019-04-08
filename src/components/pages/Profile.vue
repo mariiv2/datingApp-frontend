@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div style="background-color: #cfbad2">
         <nav class="navbar navbar-expand-md navbar-dark fixed-top" style="background-color: #bd1651; color: white; ">
             <a class="navbar-brand" href="#">DatingApp</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
@@ -28,7 +28,7 @@
             </div>
         </nav>
         <div v-if="!loaded" class="container align-items-center justify-content-center" style="margin-top: 5vh;">
-            <img src="../images/load.gif"/>
+            <img src="../images/load3.gif"/>
         </div>
         <div v-if="loaded" class="container align-items-center justify-content-center" style="margin-top: 5vh;">
             <div class="row">
@@ -80,18 +80,21 @@
                                     <td class="capitalize">NAME:</td>
                                     <td>
                                         <input type="text" maxlength="20" v-model="user.name"/>
+                                        <span class="text-danger small-text">{{this.errorName}}</span>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td class="capitalize">SURNAME:</td>
                                     <td>
                                         <input type="text" maxlength="20" v-model="user.surname"/>
+                                        <span class="text-danger small-text">{{this.errorSurname}}</span>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td class="capitalize">EMAIL:</td>
                                     <td>
                                         <input type="text" maxlength="30" v-model="user.email"/>
+                                        <span class="text-danger small-text">{{this.errorEmail}}</span>
                                     </td>
                                 </tr>
                                 <tr>
@@ -101,6 +104,7 @@
                                             <option class="disabled" value="" disabled selected>Select country</option>
                                             <option class="selectOption" v-for="(value, key) in Countries" :key="key">{{ key }} </option>
                                         </select>
+                                        <span class="text-danger small-text">{{this.errorCountry}}</span>
                                     </td>
                                 </tr>
                                 <tr>
@@ -110,6 +114,7 @@
                                             <option class="disabled" value="" disabled selected>Select city</option>
                                             <option class="selectOption" v-for="cities in getCities()" :key="cities">{{ cities }} </option>
                                         </select>
+                                        <span class="text-danger small-text">{{this.errorCity}}</span>
                                     </td>
                                 </tr>
                                 <tr>
@@ -186,6 +191,11 @@
         name: "testpage",
         data() {
             return {
+                errorEmail: null,
+                errorName: null,
+                errorCity: null,
+                errorCountry: null,
+                errorSurname: null,
                 loaded:false,
                 editMode: false,
                 fileChosen: false,
@@ -219,22 +229,37 @@
                 this.editMode = false
             },
             saveInfo: function () {
+                this.updateErrors();
                 this.checkCity();
                 //Show popup if city does not match to selected country.
                 if (this.user.city === "Select city") {
                     this.showModal();
 
                 } else {
-                    this.editMode = false;
                     console.log(this.user.name);
                     AXIOS.put('/users', this.user)
                         .then(this.getUser)
                         .catch(error => {
-                            this.error = error;
-                            console.log("------------------");
+                            this.error = error.response.data;
                             console.log(this.error);
-                            console.log("------------------");
-
+                            for (let e in this.error) {
+                                if (this.error[e].field === "email") {
+                                    this.errorEmail = this.error[e].defaultMessage;
+                                    console.log(this.errorEmail);
+                                }
+                                else if (this.error[e].field === "name") {
+                                    this.errorName = this.error[e].defaultMessage;
+                                }
+                                else if (this.error[e].field === "surname") {
+                                    this.errorSurname = this.error[e].defaultMessage;
+                                }
+                                else if (this.error[e].field === "city") {
+                                    this.errorCity = this.error[e].defaultMessage;
+                                }
+                                else if (this.error[e].field === "country") {
+                                    this.errorCountry = this.error[e].defaultMessage;
+                                }
+                            }
                         });
                 }
             },
@@ -252,6 +277,7 @@
                             .then(response => {
                                 this.matchingPercentage = response.data;
                                 this.setLoaded();
+                                this.editMode = false;
                             });
                     });
             },
@@ -297,6 +323,13 @@
             logOut: function() {
                 localStorage.removeItem("token");
                 this.$router.push("DatingApp");
+            },
+            updateErrors: function () {
+                this.errorEmail = null;
+                this.errorName = null;
+                this.errorCity = null;
+                this.errorCountry = null;
+                this.errorSurname = null;
             }
         }
     }

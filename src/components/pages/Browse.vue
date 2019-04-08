@@ -28,7 +28,7 @@
             </div>
         </nav>
         <div v-if="!loaded" class="container align-items-center justify-content-center" style="margin-top: 5vh;">
-            <img src="../images/load.gif"/>
+            <img src="../images/load3.gif"/>
         </div>
         <div v-if="loaded" class="container" style="margin-top: 5vh;">
             <div class="row">
