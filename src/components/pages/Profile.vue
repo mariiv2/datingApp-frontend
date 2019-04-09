@@ -188,7 +188,7 @@
     import Countries from '../resources/countries.json'
 
     export default {
-        name: "testpage",
+        name: "Profile",
         data() {
             return {
                 errorEmail: null,
@@ -203,6 +203,7 @@
                 errorMode: false,
                 error: {},
                 user: {},
+                id: 1,
                 firstImg: {},
                 otherImg: [],
                 username: "",
@@ -321,8 +322,10 @@
                 this.fileChosen = false;
             },
             logOut: function() {
-                localStorage.removeItem("token");
-                this.$router.push("DatingApp");
+                this.$store.dispatch('logout')
+                    .then(() => {
+                        this.$router.push("DatingApp");
+                    })
             },
             updateErrors: function () {
                 this.errorEmail = null;

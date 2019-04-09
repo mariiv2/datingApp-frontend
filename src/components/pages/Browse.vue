@@ -281,9 +281,12 @@
                     })
             },
             logOut: function() {
-                localStorage.removeItem("token");
-                this.$router.push("DatingApp");
-            }
+                this.$store.dispatch('logout')
+                    .then(() => {
+                        this.$router.push("DatingApp");
+                    })
+            },
         }
     }
+
 </script>

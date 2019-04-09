@@ -96,10 +96,8 @@
     </div>
 </template>
 <script>
-    import {AXIOS} from './http-config'
     import errorModal from './ErrorModal.vue'
     import Countries from '../resources/countries.json'
-    import {AUTH_REQUEST} from '../../store/constants.js'
 
     export default {
         // app initial state
@@ -171,15 +169,15 @@
             register: function() {
                 this.updateErrors();
                 this.error = [];
-                AXIOS.post('/register', this.userRegister)
-                    .then(response => {
-                        this.user = response.data;
-                        console.log("--------------------");
-                        console.log(response);
-                        console.log("--------------------");
-                        this.getLogIn();
+                this.$store.dispatch('register', this.userRegister)
+                    .then(() => {
+                        this.userLogIn.username = this.userRegister.email;
+                        this.userLogIn.password = this.userRegister.password;
+                        this.enter();
+
                     }).catch(error => {
                     this.error = error.response.data;
+
                     for (let e in this.error){
                         console.log(this.error[e]);
                         if (this.error[e].field === "email") {
@@ -215,10 +213,11 @@
                 });
             },
             enter: function() {
-                this.$store.dispatch(AUTH_REQUEST, this.userLogIn)
-                    .then(() => {})
+                this.$store.dispatch('login', this.userLogIn)
+                    .then(() => {
+                        this.$router.push('Profile');
+                    })
                     .catch(error => {
-                        console.log("sign in");
                         this.error = error.response;
                         console.log(this.error);
                     });
