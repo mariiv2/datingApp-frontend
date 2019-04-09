@@ -45,12 +45,13 @@
             </div>
             <div class="col-sm-6" style="background-color: #F4F4F4">
                 <div class="row"><div class="col-sm">Chat</div></div>
+                <div class="row" v-for="m in messages"><span>{{m.message}}</span></div>
                 <div class="row" style="margin-top: 3ch">
                     <div class="col-11">
-                        <input type="text" class="form-control" placeholder="Enter your message">
+                        <input type="text" class="form-control" v-model="messageView.message" placeholder="Enter your message">
                     </div>
                     <div class="col-1">
-                        <a>
+                        <a v-on:click="sendMessage">
                             <font-awesome-icon  icon="paper-plane" class="fa-2x" style="color: #bd1651; float: right;"/>
                         </a>
                     </div>
@@ -70,7 +71,15 @@
         data(){
             return {
                 matches:[],
-                pic: 'http://localhost:8081/anonym'
+                pic: 'http://localhost:8081/anonym',
+                messages: [],
+                messageView: {
+                    fromUserId: 1,
+                    toUserId: 2,
+                    message: ''
+                },
+                user: {},
+                friend: {}
             }
         },
 
@@ -78,15 +87,21 @@
             if (localStorage.getItem('token')) {
                 AXIOS.defaults.headers.common['Authorization'] = localStorage.getItem('token');
                 this.getMatches();
+                this.getAllMessages();
             }
         },
 
         methods: {
+            getUser: function () {
+                AXIOS.get('/users')
+                    .then(response => {
+                        this.user = response.data;
+                    });
+            },
             getMatches: function () {
                 AXIOS.get('/match/all')
                     .then(response => {
                         this.matches = response.data;
-                        console.log(response)
                     })
             },
             logOut: function() {
@@ -95,6 +110,17 @@
                         this.$router.push("DatingApp");
                     })
             },
+            getAllMessages: function () {
+                AXIOS.get('messages/all/2')
+                    .then(response => {
+                    this.messages = response.data;
+                    console.log(this.messages);
+                })
+            },
+            sendMessage: function () {
+                AXIOS.post('/messages', this.messageView)
+                    .then(response => this.messageView.message = '');
+            }
         }
     }
 

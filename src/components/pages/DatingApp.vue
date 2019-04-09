@@ -23,6 +23,8 @@
                         <label>Password</label>
                         <input v-model="userLogIn.password" type="password" class="form-control" placeholder="Password">
                     </div>
+                    <span v-if="errorLogIn" class="text-danger small-text" style="margin-bottom: 1ch">Check your email and password</span>
+                    <div class="w-100"></div>
                     <button class="btn" v-on:click="enter" style="background-color: #bd1651; color: white; border-radius: 5px">Enter</button>
                 </form>
             </div>
@@ -111,6 +113,7 @@
         },
         data() {
             return {
+                errorLogIn: false,
                 logIn: false,
                 signUp: false,
                 error: [],
@@ -213,13 +216,13 @@
                 });
             },
             enter: function() {
+                this.errorLogIn = false;
                 this.$store.dispatch('login', this.userLogIn)
                     .then(() => {
                         this.$router.push('Profile');
                     })
                     .catch(error => {
-                        this.error = error.response;
-                        console.log(this.error);
+                        this.errorLogIn = true;
                     });
             },
             updateErrors: function() {

@@ -94,7 +94,6 @@
     import {AXIOS} from './http-config'
     import errorModal from './ErrorModal.vue'
     import Countries from '../resources/countries.json'
-    import {AUTH_REQUEST} from '../../store/constants.js'
 
     export default {
         // app initial state
