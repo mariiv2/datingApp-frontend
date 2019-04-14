@@ -251,6 +251,7 @@
                         this.n = 0;
                         if(this.users.length === 0){
                             this.noUsersLeft = true;
+                            this.setLoaded();
                         }
                         else{
                             this.noUsersLeft = false;

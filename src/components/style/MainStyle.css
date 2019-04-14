@@ -116,6 +116,15 @@ button:hover, .mainButton:hover, .button:hover {
 
 }
 
+.chatimg {
+    object-fit: cover;
+    object-position: 100% 0;
+
+    width: 6ch;
+    height: 6ch;
+
+}
+
 .small-text {
     font-size: 12px;
 }
