@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import {AXIOS} from "../components/pages/http-config";
+import {AXIOS} from "../components/resources/http.config";
 
 Vue.use(Vuex);
 

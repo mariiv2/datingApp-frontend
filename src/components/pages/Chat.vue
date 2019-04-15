@@ -99,18 +99,19 @@
 </template>
 
 <script>
-    import {AXIOS} from './http-config'
+    import {AXIOS} from '../resources/http.config'
 
     export default {
         data() {
             return {
+                interval: null,
                 matches: [],
                 chatSelected: false,
                 pic: 'http://localhost:8081/anonym',
                 messages: [],
                 messageView: {
-                    fromUserId: 1,
-                    toUserId: 2,
+                    fromUserId: {},
+                    toUserId: {},
                     message: ''
                 },
                 user: {},
@@ -125,7 +126,6 @@
                 this.getUser();
             }
         },
-
         methods: {
             getUser: function () {
                 AXIOS.get('/users')
@@ -147,16 +147,20 @@
             },
             getAllMessages: function (friend) {
                 this.friend = friend;
+                this.messageView.fromUserId = this.user.id;
+                this.messageView.toUserId = friend.id;
                 this.chatSelected = true;
-                AXIOS.get('messages/all/2')
+                AXIOS.get('messages/all/' + friend.id)
                     .then(response => {
                         this.messages = response.data;
                         console.log(this.messages);
+                        setTimeout(function () { this.getAllMessages(friend) }.bind(this), 100)
                     })
             },
             sendMessage: function () {
                 AXIOS.post('/messages', this.messageView)
-                    .then(response => this.messageView.message = '');
+                    .then(response =>
+                        this.messageView.message = '');
             }
         }
     }

@@ -91,7 +91,7 @@
     </div>
 </template>
 <script>
-    import {AXIOS} from './http-config'
+    import {AXIOS} from '../resources/http.config'
     import errorModal from './ErrorModal.vue'
     import Countries from '../resources/countries.json'
 

@@ -8,7 +8,7 @@
           <router-link to="/profile" class="link">My Profile</router-link>
           <router-link to="/browse" class="link">Browse</router-link>
           <router-link to="/stats" class="link">Stats</router-link>
-          <img src="../images/gear.png" />
+          <img src="../../assets/gear.png" />
         </div>
       </div>
     </nav>

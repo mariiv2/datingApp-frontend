@@ -28,7 +28,7 @@
             </div>
         </nav>
         <div v-if="!loaded" class="container align-items-center justify-content-center" style="margin-top: 5vh;">
-            <img src="../images/load3.gif"/>
+            <img src="../../assets/load3.gif"/>
         </div>
         <div v-if="loaded" class="container align-items-center justify-content-center" style="margin-top: 5vh;">
             <div class="row">
@@ -183,7 +183,7 @@
 </template>
 
 <script>
-    import {AXIOS} from './http-config'
+    import {AXIOS} from '../resources/http.config'
     import modal from './Modal.vue'
     import Countries from '../resources/countries.json'
 

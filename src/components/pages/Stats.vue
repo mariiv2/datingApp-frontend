@@ -83,9 +83,9 @@
 </template>
 
 <script>
-    import {AXIOS} from './http-config'
-    import PieChart from "./PieChart.js";
-    import LineChart from "./LineChart.js";
+    import {AXIOS} from '../resources/http.config'
+    import PieChart from "../resources/PieChart.js";
+    import LineChart from "../resources/LineChart.js";
 
     export default {
         components: {
