@@ -146,6 +146,9 @@
                     })
             },
             getAllMessages: function (friend) {
+                if (this.friend !== friend) {
+                    clearTimeout(this.interval);
+                }
                 this.friend = friend;
                 this.messageView.fromUserId = this.user.id;
                 this.messageView.toUserId = friend.id;
@@ -154,7 +157,7 @@
                     .then(response => {
                         this.messages = response.data;
                         console.log(this.messages);
-                        setTimeout(function () { this.getAllMessages(friend) }.bind(this), 100)
+                        this.interval = setTimeout(function () { this.getAllMessages(friend) }.bind(this), 100)
                     })
             },
             sendMessage: function () {

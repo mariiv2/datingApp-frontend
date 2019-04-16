@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div style="background-color: #cfbad2">
         <nav class="navbar navbar-expand-md navbar-dark fixed-top" style="background-color: #bd1651; color: white; ">
             <a class="navbar-brand" href="#">DatingApp</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
