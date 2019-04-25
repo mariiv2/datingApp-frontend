@@ -1,61 +1,34 @@
 <template>
-    <div style="background-color: #cfbad2">
-        <nav class="navbar navbar-expand-md navbar-dark fixed-top" style="background-color: #bd1651; color: white;">
-            <a class="navbar-brand" href="#">DatingApp</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="collapsibleNavbar" style="background-color: #bd1651">
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <router-link class="nav-link" to="/profile">MY PROFILE</router-link>
-                    </li>
-                    <li class="nav-item">
-                        <router-link class="nav-link" to="/browse">BROWSE</router-link>
-                    </li>
-                    <li class="nav-item">
-                        <router-link class="nav-link" to="/chat">CHATS</router-link>
-                    </li>
-                    <li class="nav-item">
-                        <router-link class="nav-link" to="/stats">STATS</router-link>
-                    </li>
-                    <li>
-                        <a>
-                            <font-awesome-icon icon="sign-out-alt" style="margin-top: 1.7vh; margin-left: 2ch"
-                                               v-on:click="logOut()"/>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </nav>
+    <div>
+        <Header></Header>
+
         <div class="container align-items-center justify-content-center text-center">
             <div class="row">
                 <div class="col-sm-1"></div>
-                <div class="col-sm-4" style="background-color: #DCDCDC; padding-right: 0; padding-left: 0">
+                <div class="col-sm-4 styled">
                     <a v-for="user in matches">
-                        <div class="row"
-                             style="max-width: 75rem; margin: 1.25rem auto; border-bottom: 1px solid #cacaca; "
+                        <div class="row rowStyle1"
                              v-on:click="getAllMessages(user)">
-                            <div class="col-4" style="margin-bottom: 1vh"><img v-bind:src="user.image[0].name"
+                            <div class="col-4 colStyle1"><img v-bind:src="user.image[0].name"
                                                                                class="favimg rounded-circle"></div>
                             <div class="col-8">
                                 <div class="row">{{user.name}} {{user.surname}}</div>
-                                <div class="row" style="margin-top: 2vh; color: grey">Hello! How are you?</div>
+                                <div class="row rowStyle2">Hello! How are you?</div>
                             </div>
                         </div>
                     </a>
                     <!--<hr v-for="user in matches">-->
                 </div>
-                <div v-if="chatSelected" class="col-sm-6" style="background-color: #F4F4F4">
+                <div v-if="chatSelected" class="col-sm-6 colored">
                     <div style="margin-top: 10px"></div>
                     <div v-for="m in messages">
                         <div v-if="m.fromUserId === user.id" class="row">
                             <div class="col-sm-6"></div>
                             <div class="col-sm-4">
-                                <div style="background: #DCDCDC; border-radius: 5px;">
+                                <div class="colStyle2">
                                     <span>{{m.message}}</span>
                                 </div>
-                                <span style="color: grey; font-size: 10px">{{m.dateSent}}</span>
+                                <span class="span">{{m.dateSent}}</span>
                             </div>
                             <div class="col-sm-2">
                                 <img v-bind:src="user.image[0].name" class="chatimg rounded-circle">
@@ -66,30 +39,29 @@
                                 <img v-bind:src="friend.image[0].name" class="chatimg rounded-circle">
                             </div>
                             <div class="col-sm-4">
-                                <div style="background: #DCDCDC; border-radius: 5px;">
+                                <div class="colStyle2">
                                     <span>{{m.message}}</span>
                                 </div>
-                                <span style="color: grey; font-size: 10px">{{m.dateSent}}</span>
+                                <span class="span">{{m.dateSent}}</span>
 
                             </div>
                             <div class="col-sm-6"></div>
                         </div>
                     </div>
-                    <div class="row" style="margin-top: 3ch">
+                    <div class="row rowStyle3">
                         <div class="col-11">
                             <input type="text" class="form-control" v-model="messageView.message"
                                    placeholder="Enter your message">
                         </div>
                         <div class="col-1">
                             <a v-on:click="sendMessage">
-                                <font-awesome-icon icon="paper-plane" class="fa-2x"
-                                                   style="color: #bd1651; float: right;"/>
+                                <font-awesome-icon icon="paper-plane" class="fa-2x"/>
                             </a>
                         </div>
 
                     </div>
                 </div>
-                <div v-else class="col-sm-6" style="background-color: #F4F4F4">
+                <div v-else class="col-sm-6 colored">
                     <span>SELECT CHAT</span>
                 </div>
                 <div class="col-sm-1"></div>
@@ -100,8 +72,12 @@
 
 <script>
     import {AXIOS} from '../resources/http.config'
+    import Header from '../navigation/Header.vue'
 
     export default {
+        components: {
+            Header
+        },
         data() {
             return {
                 interval: null,
@@ -169,3 +145,48 @@
     }
 
 </script>
+
+<style scoped>
+    .styled {
+        background-color: #DCDCDC;
+        padding-right: 0;
+        padding-left: 0
+    }
+
+    .rowStyle1 {
+        max-width: 75rem!important;
+        margin: 1.25rem auto!important;
+        border-bottom: 1px solid #cacaca;
+    }
+    .rowStyle2 {
+        margin-top: 2vh!important;
+        color: grey
+    }
+
+    .rowStyle3 {
+        margin-top: 3ch!important;
+    }
+
+    .colStyle1 {
+        margin-bottom: 1vh!important;
+    }
+
+    .colored {
+        background-color: #F4F4F4;
+    }
+
+    .colStyle2 {
+        background: #DCDCDC;
+        border-radius: 5px;
+    }
+
+    .fa-2x {
+        color: #bd1651;
+        float: right;
+    }
+
+    .span {
+        color: grey;
+        font-size: 10px
+    }
+</style>

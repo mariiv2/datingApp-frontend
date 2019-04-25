@@ -1,40 +1,15 @@
 <template>
-    <div style="background-color: #cfbad2">
-        <nav class="navbar navbar-expand-md navbar-dark fixed-top" style="background-color: #bd1651; color: white; ">
-            <a class="navbar-brand" href="#">DatingApp</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="collapsibleNavbar" style="background-color: #bd1651">
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <router-link class="nav-link" to="/profile">MY PROFILE</router-link>
-                    </li>
-                    <li class="nav-item">
-                        <router-link class="nav-link" to="/browse">BROWSE</router-link>
-                    </li>
-                    <li class="nav-item">
-                        <router-link class="nav-link" to="/chat">CHATS</router-link>
-                    </li>
-                    <li class="nav-item">
-                        <router-link class="nav-link" to="/stats">STATS</router-link>
-                    </li>
-                    <li>
-                        <a>
-                            <font-awesome-icon icon="sign-out-alt" style="margin-top: 1.7vh; margin-left: 2ch" v-on:click="logOut()"/>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </nav>
-        <div v-if="!loaded" class="container align-items-center justify-content-center" style="margin-top: 5vh;">
+    <div>
+        <Header></Header>
+
+        <div v-if="!loaded" class="container align-items-center justify-content-center fixed">
             <img src="../../assets/load3.gif"/>
         </div>
-        <div v-if="loaded" class="container align-items-center justify-content-center" style="margin-top: 5vh;">
+        <div v-if="loaded" class="container align-items-center justify-content-center fixed">
             <div class="row">
                 <div class="col-sm-1"></div>
-                <div class="col-sm-10 border" style="background-color: #F4F4F4; border-radius: 5px; border: #3b2b49">
-                    <div class="row" style="margin-top: 5vh; margin-bottom: 5vh">
+                <div class="col-sm-10 border styled">
+                    <div class="row margin">
                         <div class="col-sm">
                             <div id="demo" class="carousel slide" data-ride="carousel">
                                 <!-- Indicators -->
@@ -60,12 +35,10 @@
                             </div>
                             <div>
                                 <input class="no-border d-none" type="file" @change="onFileChanged" id="file"/>
-                                <label class="btn" style="background-color: #bd1651; color: white; border-radius: 5px; margin-top: 2vh"
-                                       for="file">CHANGE PHOTO</label>
-                                <p v-if="errorMode" style="color: red">{{error}}</p>
+                                <label class="btn" for="file">CHANGE PHOTO</label>
+                                <p v-if="errorMode" class="error">{{error}}</p>
                                 <p v-if="fileChosen">{{file.name}}</p>
-                                <button v-if="fileChosen" @click="onUpload" type="button" class="btn"
-                                        style="background-color: #bd1651; color: white; border-radius: 5px">UPLOAD</button>
+                                <button v-if="fileChosen" @click="onUpload" type="button" class="btn">UPLOAD</button>
                             </div>
                         </div>
                         <div class="col-sm text-left" v-if="editMode">
@@ -73,7 +46,7 @@
                                 <tr>
                                     <td></td>
                                     <td>
-                                        <a><font-awesome-icon v-on:click="changeMode" icon="chevron-right" class="fa-2x" style="color: #bd1651; float: right;"/></a>
+                                        <a><font-awesome-icon v-on:click="changeMode" icon="chevron-right" class="fa-2x aStyle"/></a>
                                     </td>
                                 </tr>
                                 <tr>
@@ -133,43 +106,42 @@
                                 </tr>
                                 <tr>
                                     <td class="text-center">
-                                        <button style="background-color: #bd1651; color: white; border-radius: 5px"
-                                                v-on:click="saveInfo">SAVE</button>
+                                        <button class="btn" v-on:click="saveInfo">SAVE</button>
                                     </td>
                                 </tr>
                             </table>
                         </div>
                         <div class="col-sm text-left" v-else>
                             <div class="row">
-                                <span style="font-weight: bold; font-size: 2ch">{{user.name}} {{user.surname}}, {{user.age}}</span>
+                                <span class="span1">{{user.name}} {{user.surname}}, {{user.age}}</span>
                                 <div class="w-100"></div>
-                                <span style="font-weight: bold"></span><span>{{user.city}}, {{user.country}}</span>
+                                <span class="bold"></span><span>{{user.city}}, {{user.country}}</span>
                             </div>
-                            <div class="row" style="margin-top: 3vh">
-                                <span style="color: #bd1651; font-size: 23px">{{user.likes}}</span>
-                                <font-awesome-icon icon="heart" class="fa-2x" style="color: #bd1651; margin-left: 1ch"/>
+                            <div class="row rowFix1">
+                                <span class="span2">{{user.likes}}</span>
+                                <font-awesome-icon icon="heart" class="fa-2x iconStyle"/>
                             </div>
-                            <div class="row" style="margin-top: 3vh">
-                                <span style="font-weight: bold">BIO</span>
+                            <div class="row rowFix1">
+                                <span class="bold">BIO</span>
                                 <div class="w-100"></div>
                                 <span>{{user.bio}}</span>
                             </div>
-                            <div class="row" style="margin-top: 3vh">
-                                <span style="background-color: #fbeeff; border-radius: 5px;">#photography</span>
-                                <span style="background-color: #fbeeff; border-radius: 5px;"> #animals</span>
-                                <span style="background-color: #fbeeff; border-radius: 5px;"> #travel</span>
+                            <div class="row rowFix1">
+                                <span class="hobby">#photography</span>
+                                <span class="hobby"> #animals</span>
+                                <span class="hobby"> #travel</span>
                             </div>
-                            <div class="row" style="margin-top: 3vh">
-                                <span style="font-weight: bold">MEMBER SINCE: </span><span>{{user.registerDate}}</span>
+                            <div class="row rowFix1">
+                                <span class="bold">MEMBER SINCE: </span><span>{{user.registerDate}}</span>
                             </div>
-                            <div class="row" style="margin-top: 2vh;" >
+                            <div class="row rowFix2" >
                                 <div class="col-sm">
-                                    <label style="font-weight: bold; color: #bd1651">{{matchingPercentage}}%</label>
-                                    <font-awesome-icon icon="hand-holding-heart" class="fa-2x" style="color: #bd1651"/>
+                                    <label class="label">{{matchingPercentage}}%</label>
+                                    <font-awesome-icon icon="hand-holding-heart" class="fa-2x"/>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-1" style="margin-right: 2ch">
+                        <div class="col-sm-1 rowFix2">
                             <a v-if="!editMode">
                                 <font-awesome-icon v-on:click = "editHTML" icon="user-edit" class="fa-2x"/>
                             </a>
@@ -184,11 +156,15 @@
 
 <script>
     import {AXIOS} from '../resources/http.config'
-    import modal from './Modal.vue'
     import Countries from '../resources/countries.json'
+    import Header from '../navigation/Header.vue'
 
     export default {
         name: "Profile",
+        components: {Header},
+        comments: {
+            Header
+        },
         data() {
             return {
                 errorEmail: null,
@@ -203,18 +179,13 @@
                 errorMode: false,
                 error: {},
                 user: {},
-                id: 1,
                 firstImg: {},
                 otherImg: [],
                 username: "",
                 file: "",
-                isModalVisible: false,
                 matchingPercentage: {},
                 Countries
             }
-        },
-        components:{
-            modal
         },
         mounted: function() {
             if (localStorage.getItem('token')) {
@@ -232,9 +203,7 @@
             saveInfo: function () {
                 this.updateErrors();
                 this.checkCity();
-                //Show popup if city does not match to selected country.
                 if (this.user.city === "Select city") {
-                    this.showModal();
 
                 } else {
                     console.log(this.user.name);
@@ -296,9 +265,6 @@
                     this.user.city = "Select city";
                 }
             },
-            showModal: function() {
-                this.isModalVisible = true;
-            },
             onFileChanged (event) {
                 this.file = event.target.files[0];
                 this.fileChosen= true;
@@ -321,12 +287,6 @@
 
                 this.fileChosen = false;
             },
-            logOut: function() {
-                this.$store.dispatch('logout')
-                    .then(() => {
-                        this.$router.push("DatingApp");
-                    })
-            },
             updateErrors: function () {
                 this.errorEmail = null;
                 this.errorName = null;
@@ -338,4 +298,70 @@
     }
 </script>
 
+<style scoped>
+    .fixed {
+        margin-top: 5vh!important;
+    }
 
+    .styled {
+        background-color: #F4F4F4;
+        border-radius: 5px;
+        border: #3b2b49
+    }
+    .margin {
+        margin-top: 5vh!important;
+        margin-bottom: 5vh!important;
+    }
+
+    .btn {
+        background-color: #bd1651;
+        color: white;
+        border-radius: 5px;
+        margin-top: 2vh
+    }
+    .error {
+        color: red;
+    }
+
+    .fa-2x {
+        color: #bd1651;
+    }
+
+    .aStyle {
+        float: right;
+    }
+    .iconStyle {
+        margin-left: 1ch
+    }
+    .hobby {
+        background-color: #fbeeff;
+        border-radius: 5px;
+    }
+
+    .bold {
+        font-weight: bold
+    }
+
+    .rowFix1 {
+        margin-top: 3vh
+    }
+
+    .rowFix2 {
+        margin-top: 2vh
+    }
+    .label {
+        font-weight: bold;
+        color: #bd1651;
+        background-color: transparent;
+    }
+
+    .span1 {
+        font-weight: bold;
+        font-size: 2ch
+    }
+
+    .span2 {
+        color: #bd1651;
+        font-size: 23px
+    }
+</style>

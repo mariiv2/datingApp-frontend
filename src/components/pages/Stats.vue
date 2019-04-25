@@ -1,32 +1,6 @@
 <template>
     <div style="background-color: #cfbad2">
-        <nav class="navbar navbar-expand-md navbar-dark fixed-top" style="background-color: #bd1651; color: white;">
-            <a class="navbar-brand" href="#">DatingApp</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="collapsibleNavbar" style="background-color: #bd1651">
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <router-link class="nav-link" to="/profile">MY PROFILE</router-link>
-                    </li>
-                    <li class="nav-item">
-                        <router-link class="nav-link" to="/browse">BROWSE</router-link>
-                    </li>
-                    <li class="nav-item">
-                        <router-link class="nav-link" to="/chat">CHATS</router-link>
-                    </li>
-                    <li class="nav-item">
-                        <router-link class="nav-link" to="/stats">STATS</router-link>
-                    </li>
-                    <li>
-                        <a>
-                            <font-awesome-icon icon="sign-out-alt" style="margin-top: 1.7vh; margin-left: 2ch" v-on:click="logOut()"/>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </nav>
+        <Header></Header>
         <div class="container align-items-center justify-content-center text-center" style="background-color: #F4F4F4">
             <div class="row">
                 <div class="col-sm" style="margin-top: 5vh">
@@ -86,11 +60,13 @@
     import {AXIOS} from '../resources/http.config'
     import PieChart from "../resources/PieChart.js";
     import LineChart from "../resources/LineChart.js";
+    import Header from '../navigation/Header.vue'
 
     export default {
         components: {
             PieChart,
-            LineChart
+            LineChart,
+            Header
         },
         // app initial state
         data() {
