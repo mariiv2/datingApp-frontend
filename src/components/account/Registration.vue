@@ -133,17 +133,6 @@
                     this.loaded = true;
                     console.log(this.errors['name'])
                 });
-            },
-            updateErrors: function () {
-                this.errorEmail = null;
-                this.errorName = null;
-                this.errorBirth = null;
-                this.errorCity = null;
-                this.errorCountry = null;
-                this.errorSurname = null;
-                this.errorPassword = null;
-                this.errorGender = null;
-                this.errorMain = null;
             }
         }
     }

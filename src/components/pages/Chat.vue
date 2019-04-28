@@ -13,7 +13,7 @@
                                                                                class="favimg rounded-circle"></div>
                             <div class="col-8">
                                 <div class="row">{{user.name}} {{user.surname}}</div>
-                                <div class="row rowStyle2">Hello! How are you?</div>
+                                <div class="row rowStyle2">{{user.lastMessage}}</div>
                             </div>
                         </div>
                     </a>
@@ -53,7 +53,7 @@
                             <input type="text" class="form-control" v-model="messageView.message"
                                    placeholder="Enter your message">
                         </div>
-                        <div class="col-1">
+                        <div class="col-1" v-if="messageView.message !== ''">
                             <a v-on:click="sendMessage">
                                 <font-awesome-icon icon="paper-plane" class="fa-2x"/>
                             </a>
