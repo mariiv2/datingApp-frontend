@@ -93,7 +93,7 @@
                                 <tr>
                                     <td class="capitalize">HOBBY:</td>
                                     <td>
-                                        <input v-model="user.hobby" class="input" type="text" placeholder="#photography"/>
+                                        <v-select v-model="hobbies" multiple :options="allHobbies"/>
                                     </td>
                                 </tr>
                                 <tr>
@@ -127,9 +127,7 @@
                                 <span>{{user.bio}}</span>
                             </div>
                             <div class="row rowFix1">
-                                <span class="hobby">#photography</span>
-                                <span class="hobby"> #animals</span>
-                                <span class="hobby"> #travel</span>
+                                <span v-for="hobby in user.hobbies" :key="hobby.id" class="hobby">#{{hobby.name}}</span>
                             </div>
                             <div class="row rowFix1">
                                 <span class="bold">MEMBER SINCE: </span><span>{{user.registerDate}}</span>
@@ -157,6 +155,7 @@
 <script>
     import {AXIOS} from '../resources/http.config'
     import Countries from '../resources/countries.json'
+    import Hobbies from '../resources/hobbies.json'
     import Header from '../navigation/Header.vue'
 
     export default {
@@ -184,6 +183,8 @@
                 username: "",
                 file: "",
                 matchingPercentage: {},
+                hobbies: [],
+                allHobbies: [],
                 Countries
             }
         },
@@ -192,20 +193,53 @@
                 AXIOS.defaults.headers.common['Authorization'] = localStorage.getItem('token');
                 this.getUser();
             }
+            this.collectHobbies()
         },
         methods: {
+            collectHobbies: function() {
+                for(let el in Hobbies['hobbies']){
+                    this.allHobbies.push(Hobbies['hobbies'][el])
+                }
+            },
             editHTML: function () {
                 this.editMode = true
             },
             changeMode: function () {
                 this.editMode = false
             },
+            saveHobbies: function() {
+                let dto = {
+                    'userId': this.user.id,
+                    'hobby': ""
+                };
+                for(let el in this.user.hobbies){
+                    if (!this.hobbies.includes(this.user.hobbies[el])) {
+                        console.log(this.hobbies);
+                        console.log(this.user.hobbies[el]);
+                        dto['hobby'] = this.user.hobbies[el];
+                        AXIOS.delete('/hobby', dto)
+                            .catch(error => {
+                                this.error = error.response.data;
+                                console.log(this.error);
+                            })
+                    }
+                }
+                for(let el in this.hobbies) {
+                    if(!this.user.hobbies.includes(this.hobbies[el])) {
+                        dto['hobby'] = this.hobbies[el];
+                        AXIOS.post('/hobby', dto)
+                            .catch(error => {
+                                this.error = error.response.data;
+                                console.log(this.error);
+                            })
+                    }
+                }
+            },
             saveInfo: function () {
                 this.updateErrors();
                 this.checkCity();
-                if (this.user.city === "Select city") {
-
-                } else {
+                this.saveHobbies();
+                if (this.user.city !== "Select city") {
                     console.log(this.user.name);
                     AXIOS.put('/users', this.user)
                         .then(this.getUser)
@@ -237,12 +271,17 @@
                 AXIOS.get('/users')
                     .then(response => {
                         this.user = response.data;
+                        console.log(response.data);
                         this.firstImg = this.user.image[0].name;
                         this.otherImg = [];
                         for (let i=1; i<this.user.image.length; i++){
                             this.otherImg.push(this.user.image[i].name);
                         }
                         this.username = this.user.name;
+                        this.hobbies = [];
+                        for (let el in this.user.hobbies) {
+                           this.hobbies.push(this.user.hobbies[el].name)
+                        }
                         AXIOS.get('stats/matchPercentage/' + this.user.id )
                             .then(response => {
                                 this.matchingPercentage = response.data;
