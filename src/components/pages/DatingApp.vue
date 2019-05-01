@@ -1,5 +1,5 @@
 <template>
-    <div style="background-color: #cfbad2">
+    <div class="bg">
         <div class="row">
             <div class="col-sm text-center" style="margin-top: 20px">
                 <span style="font-weight: bold">WELCOME TO DATING APP</span>

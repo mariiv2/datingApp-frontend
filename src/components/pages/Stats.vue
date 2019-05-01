@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="bg">
         <Header></Header>
         <div class="container align-items-center justify-content-center text-center color1">
             <div class="row">
