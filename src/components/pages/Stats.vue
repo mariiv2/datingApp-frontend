@@ -202,7 +202,8 @@
 
 <style scoped>
     .color1 {
-        background-color: #F4F4F4
+        background-color: #F4F4F4;
+        margin-top: 68px;
     }
 
     .bold {

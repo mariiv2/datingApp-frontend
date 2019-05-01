@@ -6,7 +6,7 @@
         </div>
         <div v-if="loaded" class="container container-fix">
             <div class="row">
-                <div v-if="!noUsersLeft" class="col-sm-7 border">
+                <div v-if="!noUsersLeft" class="col-sm-7 border base">
                     <div class="row container-fix">
                         <div class="col-sm">
                             <div id="demo" class="carousel slide" data-ride="carousel">
@@ -78,11 +78,11 @@
                         </div>
                     </div>
                 </div>
-                <div v-else class="col-sm-7">
+                <div v-else class="col-sm-7 base">
                     NO MORE USERS
                 </div>
                 <div class="col-sm-1"></div>
-                <div class="col-sm-4 colStyle1">
+                <div class="col-sm-4 colStyle1 base">
                     <div class="row margin4">
                         <div class="col-sm text-right">
                             <a>
@@ -273,6 +273,9 @@
 </script>
 
 <style scoped>
+    .base{
+        margin-top: 68px;
+    }
     .colored {
         background-color: #fbeeff
     }

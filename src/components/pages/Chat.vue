@@ -2,7 +2,7 @@
     <div>
         <Header></Header>
 
-        <div class="container align-items-center justify-content-center text-center">
+        <div class="container align-items-center justify-content-center text-center base">
             <div class="row">
                 <div class="col-sm-1"></div>
                 <div class="col-sm-4 styled">
@@ -167,6 +167,9 @@
 
 
 <style scoped>
+    .base{
+        margin-top: 68px;
+    }
     .styled {
         background-color: #DCDCDC;
         padding-right: 0;

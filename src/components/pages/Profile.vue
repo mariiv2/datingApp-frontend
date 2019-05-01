@@ -2,7 +2,7 @@
     <div>
         <Header></Header>
 
-        <div v-if="!loaded" class="container align-items-center justify-content-center fixed">
+        <div v-if="!loaded" class="container align-items-center justify-content-center base">
             <img src="../../assets/load3.gif"/>
         </div>
         <div v-if="loaded" class="container align-items-center justify-content-center fixed">
@@ -183,6 +183,7 @@
                 username: "",
                 file: "",
                 matchingPercentage: {},
+                userHobbies: [],
                 hobbies: [],
                 allHobbies: [],
                 Countries
@@ -212,26 +213,28 @@
                     'userId': this.user.id,
                     'hobby': ""
                 };
-                for(let el in this.user.hobbies){
-                    if (!this.hobbies.includes(this.user.hobbies[el])) {
+                /*for(let el in this.userHobbies){
+                    if (!this.hobbies.includes(this.userHobbies[el])) {
                         console.log(this.hobbies);
-                        console.log(this.user.hobbies[el]);
-                        dto['hobby'] = this.user.hobbies[el];
-                        AXIOS.delete('/hobby', dto)
+                        console.log(this.userHobbies[el]);
+                        dto['hobby'] = this.userHobbies[el];
+                        console.log(dto);
+                        AXIOS.delete('/hobby/delete', dto)
                             .catch(error => {
                                 this.error = error.response.data;
                                 console.log(this.error);
                             })
                     }
-                }
+                }*/
                 for(let el in this.hobbies) {
-                    if(!this.user.hobbies.includes(this.hobbies[el])) {
+                    if(!this.userHobbies.includes(this.hobbies[el])) {
                         dto['hobby'] = this.hobbies[el];
-                        AXIOS.post('/hobby', dto)
+                        AXIOS.post('/hobby', {'body': dto})
                             .catch(error => {
                                 this.error = error.response.data;
                                 console.log(this.error);
                             })
+
                     }
                 }
             },
@@ -282,6 +285,7 @@
                         for (let el in this.user.hobbies) {
                            this.hobbies.push(this.user.hobbies[el].name)
                         }
+                        this.userHobbies = this.hobbies;
                         AXIOS.get('stats/matchPercentage/' + this.user.id )
                             .then(response => {
                                 this.matchingPercentage = response.data;
@@ -338,6 +342,9 @@
 </script>
 
 <style scoped>
+    .base{
+        margin-top: 68px!important;
+    }
     .fixed {
         margin-top: 5vh!important;
     }
