@@ -13,17 +13,19 @@
                                                               class="favimg rounded-circle"></div>
                             <div class="col-8">
                                 <div class="row">{{user.name}} {{user.surname}}</div>
-                                <div class="row rowStyle2">{{user.lastMessage}}</div>
+                                <div class="row rowStyle2" v-if="user.lastMessage.messageSeen">{{user.lastMessage.message}}</div>
+                                <div class="row rowStyle2" style="font-weight: bold; color: black" v-else>{{user.lastMessage.message}}</div>
                             </div>
                         </div>
                         <div class="row rowStyle1" v-else
                              style="background-color: #FFFF99"
                              v-on:click="getAllMessages(user)">
-                            <div class="col colStyle1"><img v-bind:src="user.image[0].name"
+                            <div class="col-4 colStyle1"><img v-bind:src="user.image[0].name"
                                                             class="favimg rounded-circle"></div>
-                            <div class="col">
+                            <div class="col-8">
                                 <div class="row">{{user.name}} {{user.surname}}</div>
-                                <div class="row rowStyle2">{{user.lastMessage}}</div>
+                                <div class="row rowStyle2" v-if="user.lastMessage.messageSeen">{{user.lastMessage.message}}</div>
+                                <div class="row rowStyle2" style="font-weight: bold;  color: black" v-else>{{user.lastMessage.message}}</div>
                             </div>
                         </div>
                     </a>
@@ -33,8 +35,9 @@
                     <div style="margin-top: 10px"></div>
                     <div v-for="m in messages">
                         <div v-if="m.fromUserId === user.id" class="row">
+                            <div class="col-sm-6"></div>
                             <div class="col">
-                                <div class="colStyle2">
+                                <div class="colStyle3">
                                     <span>{{m.message}}</span>
                                 </div>
                                 <span class="span">{{m.dateSent}}</span>
@@ -52,7 +55,6 @@
                                     <span>{{m.message}}</span>
                                 </div>
                                 <span class="span">{{m.dateSent}}</span>
-
                             </div>
                             <div class="col-sm-6"></div>
                         </div>
@@ -141,7 +143,9 @@
                 AXIOS.get('messages/all/' + friend.id)
                     .then(response => {
                         this.messages = response.data;
-                        console.log(this.messages);
+                        for (let m in this.messages){
+                            this.messages[m].dateSent = this.parseDate(this.messages[m].dateSent)
+                        }
                         this.interval = setTimeout(function () {
                             this.getAllMessages(friend)
                         }.bind(this), 100)
@@ -151,6 +155,10 @@
                 AXIOS.post('/messages', this.messageView)
                     .then(response =>
                         this.messageView.message = '');
+            },
+            parseDate: function(date){
+                console.log(date);
+                return date
             }
         }
     }
@@ -189,7 +197,12 @@
     }
 
     .colStyle2 {
-        background: #DCDCDC;
+        background:  #b3ffd9;
+        border-radius: 5px;
+    }
+
+    .colStyle3 {
+        background: #b3ecff;
         border-radius: 5px;
     }
 
