@@ -111,7 +111,7 @@
                                 </tr>
                             </table>
                         </div>
-                        <div class="col-sm text-left" v-else>
+                        <div class="col-sm text-left margin1" v-else>
                             <div class="row">
                                 <span class="span1">{{user.name}} {{user.surname}}, {{user.age}}</span>
                                 <div class="w-100"></div>
@@ -313,6 +313,10 @@
         margin-bottom: 5vh!important;
     }
 
+    .margin1 {
+        margin: 0 20px;
+    }
+
     .btn {
         background-color: #bd1651;
         color: white;
@@ -347,7 +351,8 @@
     }
 
     .rowFix2 {
-        margin-top: 2vh
+        margin-top: 2vh;
+        margin-right: 3vh;
     }
     .label {
         font-weight: bold;

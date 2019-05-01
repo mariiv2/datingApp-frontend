@@ -9,9 +9,9 @@
                     <a v-for="user in matches">
                         <div class="row rowStyle1"
                              v-on:click="getAllMessages(user)">
-                            <div class="col-4 colStyle1"><img v-bind:src="user.image[0].name"
+                            <div class="col colStyle1"><img v-bind:src="user.image[0].name"
                                                               class="favimg rounded-circle"></div>
-                            <div class="col-8">
+                            <div class="col">
                                 <div class="row">{{user.name}} {{user.surname}}</div>
                                 <div class="row rowStyle2">{{user.lastMessage}}</div>
                             </div>
@@ -23,22 +23,21 @@
                     <div style="margin-top: 10px"></div>
                     <div v-for="m in messages">
                         <div v-if="m.fromUserId === user.id" class="row">
-                            <div class="col-sm-6"></div>
-                            <div class="col-sm-4">
+                            <div class="col">
                                 <div class="colStyle2">
                                     <span>{{m.message}}</span>
                                 </div>
                                 <span class="span">{{m.dateSent}}</span>
                             </div>
-                            <div class="col-sm-2">
+                            <div class="col">
                                 <img v-bind:src="user.image[0].name" class="chatimg rounded-circle">
                             </div>
                         </div>
                         <div v-else class="row">
-                            <div class="col-sm-2">
+                            <div class="col">
                                 <img v-bind:src="friend.image[0].name" class="chatimg rounded-circle">
                             </div>
-                            <div class="col-sm-4">
+                            <div class="col">
                                 <div class="colStyle2">
                                     <span>{{m.message}}</span>
                                 </div>

@@ -1,29 +1,29 @@
 <template>
-    <div style="background-color: #cfbad2">
+    <div>
         <Header></Header>
-        <div class="container align-items-center justify-content-center text-center" style="background-color: #F4F4F4">
+        <div class="container align-items-center justify-content-center text-center color1">
             <div class="row">
-                <div class="col-sm" style="margin-top: 5vh">
-                    <button v-on:click="getBasic" style="border: none; outline: none; font-weight:bold;" ref="basic">Basic</button>
-                    <button v-on:click="getActions" style="outline: none; border: none" ref="actions">Actions</button>
-                    <button v-on:click="getAudience" style="outline: none; border: none" ref="audience">Audience</button>
+                <div class="col-sm margin1">
+                    <button class="bold styled" v-on:click="getBasic" ref="basic">Basic</button>
+                    <button class="styled" v-on:click="getActions" ref="actions">Actions</button>
+                    <button class="styled" v-on:click="getAudience" ref="audience">Audience</button>
                 </div>
             </div><hr>
             <div class="container" v-if="basic">
                 <div class="row">
                     <div class="col-sm">
-                        <p style="font-weight:bold;"> GENDER PROPORTION</p>
-                        <pie-chart v-if="loaded" style="width: 300px; margin-left: 18%" :data="chartData"/>
+                        <p class="bold"> GENDER PROPORTION</p>
+                        <pie-chart class="chart" v-if="loaded" :data="chartData"/>
                     </div>
                     <div class="col-sm">
-                        <p style="font-weight:bold;"> COUNTRY PROPORTION</p>
-                        <pie-chart v-if="loaded" style="width: 300px; margin-left: 18%" :data="chartData1"/>
+                        <p class="bold"> COUNTRY PROPORTION</p>
+                        <pie-chart class="chart" v-if="loaded" :data="chartData1"/>
                         <div v-if="loaded1">test</div>
                     </div>
                 </div><hr>
-                <div class="row" style="width: 100%; margin-top: 5vh">
+                <div class="row margin2">
                     <div class="col-sm text-center">
-                        <p style="font-weight: bold;">MOST POPULAR USERS</p>
+                        <p class="bold">MOST POPULAR USERS</p>
                         <div class="table-responsive">
                             <table class="table">
                                 <thead>
@@ -199,3 +199,32 @@
         }
     }
 </script>
+
+<style scoped>
+    .color1 {
+        background-color: #F4F4F4
+    }
+
+    .bold {
+        font-weight: bold;
+    }
+
+    .styled {
+        border: none;
+        outline: none;
+    }
+
+    .chart {
+        width: 300px;
+        margin: auto;
+    }
+
+    .margin1 {
+        margin-top: 5vh;
+    }
+
+    .margin2 {
+        width: 100%;
+        margin-top: 5vh;
+    }
+</style>
