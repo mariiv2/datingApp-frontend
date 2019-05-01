@@ -13,19 +13,27 @@
                                                               class="favimg rounded-circle"></div>
                             <div class="col-8">
                                 <div class="row">{{user.name}} {{user.surname}}</div>
-                                <div class="row rowStyle2" v-if="user.lastMessage.messageSeen">{{user.lastMessage.message}}</div>
-                                <div class="row rowStyle2" style="font-weight: bold; color: black" v-else>{{user.lastMessage.message}}</div>
+                                <div class="row rowStyle2" v-if="user.lastMessage.messageSeen">
+                                    {{user.lastMessage.message}}
+                                </div>
+                                <div class="row rowStyle2" style="font-weight: bold; color: black" v-else>
+                                    {{user.lastMessage.message}}
+                                </div>
                             </div>
                         </div>
                         <div class="row rowStyle1" v-else
                              style="background-color: #FFFF99"
                              v-on:click="getAllMessages(user)">
                             <div class="col-4 colStyle1"><img v-bind:src="user.image[0].name"
-                                                            class="favimg rounded-circle"></div>
+                                                              class="favimg rounded-circle"></div>
                             <div class="col-8">
                                 <div class="row">{{user.name}} {{user.surname}}</div>
-                                <div class="row rowStyle2" v-if="user.lastMessage.messageSeen">{{user.lastMessage.message}}</div>
-                                <div class="row rowStyle2" style="font-weight: bold;  color: black" v-else>{{user.lastMessage.message}}</div>
+                                <div class="row rowStyle2" v-if="user.lastMessage.messageSeen">
+                                    {{user.lastMessage.message}}
+                                </div>
+                                <div class="row rowStyle2" style="font-weight: bold;  color: black" v-else>
+                                    {{user.lastMessage.message}}
+                                </div>
                             </div>
                         </div>
                     </a>
@@ -38,21 +46,25 @@
                             <div class="col-sm-6"></div>
                             <div class="col">
                                 <div class="colStyle3">
-                                    <span>{{m.message}}</span>
+                                    <span>{{m.message}} {{myPhoto}}</span>
                                 </div>
                                 <span class="span">{{m.dateSent}}</span>
                             </div>
-                            <div class="col">
-                                <img v-bind:src="user.image[0].name" class="chatimg rounded-circle">
+                            <div v-if="myPhoto" class="col">
+                                <img  v-bind:src="user.image[0].name" class="chatimg rounded-circle">
+                                <div>{{makeMyPicFalse()}}</div>
                             </div>
+                            <div class="col" v-else></div>
                         </div>
                         <div v-else class="row">
-                            <div class="col">
+                            <div class="col" v-if="friendPhoto">
                                 <img v-bind:src="friend.image[0].name" class="chatimg rounded-circle">
+                                <div>{{makeFriendPicFalse()}}</div>
                             </div>
+                            <div class="col" v-else></div>
                             <div class="col">
                                 <div class="colStyle2">
-                                    <span>{{m.message}}</span>
+                                    <span>{{m.message}} {{friendPhoto}}</span>
                                 </div>
                                 <span class="span">{{m.dateSent}}</span>
                             </div>
@@ -62,10 +74,10 @@
                     <div class="row rowStyle3">
                         <div class="col-11">
                             <input type="text" class="form-control" v-model="messageView.message"
-                                   placeholder="Enter your message">
+                                   placeholder="Enter your message" v-on:keyup.enter="sendMessage">
                         </div>
                         <div class="col-1" v-if="messageView.message !== ''">
-                            <a v-on:click="sendMessage">
+                            <a v-on:click="sendMessage" v-on:keyup.enter="sendMessage">
                                 <font-awesome-icon icon="paper-plane" class="fa-2x"/>
                             </a>
                         </div>
@@ -92,6 +104,9 @@
         data() {
             return {
                 interval: null,
+                intervalMain: null,
+                myPhoto: true,
+                friendPhoto: true,
                 matches: [],
                 chatSelected: false,
                 pic: 'http://localhost:8081/anonym',
@@ -124,6 +139,9 @@
                 AXIOS.get('/match/all')
                     .then(response => {
                         this.matches = response.data;
+                        this.intervalMain = setTimeout(function () {
+                            this.getMatches()
+                        }.bind(this), 100)
                     });
             },
             logOut: function () {
@@ -143,7 +161,7 @@
                 AXIOS.get('messages/all/' + friend.id)
                     .then(response => {
                         this.messages = response.data;
-                        for (let m in this.messages){
+                        for (let m in this.messages) {
                             this.messages[m].dateSent = this.parseDate(this.messages[m].dateSent)
                         }
                         this.interval = setTimeout(function () {
@@ -156,9 +174,21 @@
                     .then(response =>
                         this.messageView.message = '');
             },
-            parseDate: function(date){
+            parseDate: function (date) {
                 console.log(date);
+                date = date.toString();
+                console.log(date);
+                date = date.split('');
+                date = date[5] + date[6] + '.' + date[8] + date[9] + ' ' + date[11] + date[12] + ':' + date[14] + date[15]
                 return date
+            },
+            makeFriendPicFalse: function () {
+                this.myPhoto = true;
+                this.friendPhoto = false;
+            },
+            makeMyPicFalse: function () {
+                this.myPhoto = false;
+                this.friendPhoto = true;
             }
         }
     }
@@ -167,9 +197,10 @@
 
 
 <style scoped>
-    .base{
+    .base {
         margin-top: 68px;
     }
+
     .styled {
         background-color: #DCDCDC;
         padding-right: 0;
@@ -200,7 +231,7 @@
     }
 
     .colStyle2 {
-        background:  #b3ffd9;
+        background: #b3ffd9;
         border-radius: 5px;
     }
 
