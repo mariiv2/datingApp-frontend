@@ -1,7 +1,6 @@
 <template>
     <div class="bg">
         <Header></Header>
-
         <div class="container align-items-center justify-content-center text-center base">
             <div class="row">
                 <div class="col-sm-1"></div>
@@ -46,7 +45,7 @@
                             <div class="col-sm-6"></div>
                             <div class="col">
                                 <div class="colStyle3">
-                                    <span>{{m.message}} {{myPhoto}}</span>
+                                    <span>{{m.message}}</span>
                                 </div>
                                 <span class="span">{{m.dateSent}}</span>
                             </div>
@@ -64,7 +63,7 @@
                             <div class="col" v-else></div>
                             <div class="col">
                                 <div class="colStyle2">
-                                    <span>{{m.message}} {{friendPhoto}}</span>
+                                    <span>{{m.message}}</span>
                                 </div>
                                 <span class="span">{{m.dateSent}}</span>
                             </div>
