@@ -129,6 +129,20 @@
                             </div>
                         </div>
                     </div>
+                    <div class="row rowStyle1">
+                        <div class="col-sm">
+                            <div class="input-group colored">
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text colored">HOBBY</label>
+                                </div>
+                                <select class="custom-select" v-model="filter.hobby">
+                                    <option v-for="hobby in allHobbies" :key="hobby">
+                                        {{hobby}}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
                     <div class="row rowStyle1 margin5">
                         <div class="col-sm">
                             <button v-on:click="getAllUsers" type="button" class="btn btnStyle">GO!</button>
@@ -144,6 +158,7 @@
     import BContainer from "bootstrap-vue/src/components/layout/container";
     import Header from "../navigation/Header.vue"
     import {AXIOS} from '../resources/http.config'
+    import Hobbies from '../resources/hobbies.json'
 
     import Countries from '../resources/countries.json'
 
@@ -168,14 +183,16 @@
                     id: null,
                     city: "Tallinn",
                     country: "Estonia",
-                    gender: "MALE"
+                    gender: "MALE",
+                    hobby: null
                 },
                 choice: {
                     fromUserId: null,
                     toUserId: {},
                     likeValue: {}
                 },
-                Countries
+                Countries,
+                allHobbies: []
             }
         },
         mounted: function() {
@@ -183,8 +200,15 @@
                 AXIOS.defaults.headers.common['Authorization'] = localStorage.getItem('token');
                 this.getClientId();
             }
+            this.collectHobbies();
+
         },
         methods: {
+            collectHobbies: function() {
+                for(let el in Hobbies['hobbies']){
+                    this.allHobbies.push(Hobbies['hobbies'][el])
+                }
+            },
             getCities: function() {
                 let country = this.filter.country;
                 return Countries[country]
@@ -225,7 +249,8 @@
                 AXIOS.get('/browse/all/?id=' + this.filter.id
                 + '&city=' + this.filter.city
                 + '&country=' + this.filter.country
-                + '&gender=' + this.filter.gender)
+                + '&gender=' + this.filter.gender
+                + '&hobby=' + this.filter.hobby)
                     .then(response => {
                         this.users = response.data;
                         this.n = 0;
