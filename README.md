@@ -1,29 +1,35 @@
-# frontend
+# DatingApp; frontend
 
-## Project setup
-```
-npm install
-```
-
-### Compiles and hot-reloads for development
+To run
+---------
 ```
 npm run serve
 ```
 
-### Compiles and minifies for production
+To build
+---------
+
 ```
 npm run build
 ```
 
-### Run your tests
-```
-npm run test
-```
+Built with
+---------
 
-### Lints and fixes files
-```
-npm run lint
-```
+- Vue.js open-source JavaScript framework 
+- JavaScript charting for designers & developers chart.js
+- Bootstrap free open-source CSS framework
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+Tools used for better development proccess
+---------
+
+- Java integrated development environment IntelliJ
+  
+
+
+
+
+
+
+
+
