@@ -111,8 +111,7 @@ button:hover, .mainButton:hover, .button:hover {
     object-fit: cover;
     object-position: 100% 0;
 
-    width: 7ch;
-    height: 7ch;
+    width: 60px
 
 }
 
