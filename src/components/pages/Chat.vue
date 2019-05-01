@@ -7,10 +7,20 @@
                 <div class="col-sm-1"></div>
                 <div class="col-sm-4 styled">
                     <a v-for="user in matches">
-                        <div class="row rowStyle1"
+                        <div class="row rowStyle1" v-if="user.seen"
+                             v-on:click="getAllMessages(user)">
+                            <div class="col-4 colStyle1"><img v-bind:src="user.image[0].name"
+                                                              class="favimg rounded-circle"></div>
+                            <div class="col-8">
+                                <div class="row">{{user.name}} {{user.surname}}</div>
+                                <div class="row rowStyle2">{{user.lastMessage}}</div>
+                            </div>
+                        </div>
+                        <div class="row rowStyle1" v-else
+                             style="background-color: #FFFF99"
                              v-on:click="getAllMessages(user)">
                             <div class="col colStyle1"><img v-bind:src="user.image[0].name"
-                                                              class="favimg rounded-circle"></div>
+                                                            class="favimg rounded-circle"></div>
                             <div class="col">
                                 <div class="row">{{user.name}} {{user.surname}}</div>
                                 <div class="row rowStyle2">{{user.lastMessage}}</div>
@@ -81,7 +91,6 @@
             return {
                 interval: null,
                 matches: [],
-                unseen: [],
                 chatSelected: false,
                 pic: 'http://localhost:8081/anonym',
                 messages: [],
@@ -114,11 +123,6 @@
                     .then(response => {
                         this.matches = response.data;
                     });
-                AXIOS.get('/match/unseen')
-                    .then(response => {
-                        this.unseen = response.data();
-                        console.log(this.unseen)
-                    })
             },
             logOut: function () {
                 this.$store.dispatch('logout')
@@ -141,7 +145,7 @@
                         this.interval = setTimeout(function () {
                             this.getAllMessages(friend)
                         }.bind(this), 100)
-                    })
+                    });
             },
             sendMessage: function () {
                 AXIOS.post('/messages', this.messageView)
@@ -152,6 +156,7 @@
     }
 
 </script>
+
 
 <style scoped>
     .styled {
