@@ -10,7 +10,7 @@
                         <div class="row rowStyle1"
                              v-on:click="getAllMessages(user)">
                             <div class="col-4 colStyle1"><img v-bind:src="user.image[0].name"
-                                                                               class="favimg rounded-circle"></div>
+                                                              class="favimg rounded-circle"></div>
                             <div class="col-8">
                                 <div class="row">{{user.name}} {{user.surname}}</div>
                                 <div class="row rowStyle2">{{user.lastMessage}}</div>
@@ -82,6 +82,7 @@
             return {
                 interval: null,
                 matches: [],
+                unseen: [],
                 chatSelected: false,
                 pic: 'http://localhost:8081/anonym',
                 messages: [],
@@ -113,6 +114,11 @@
                 AXIOS.get('/match/all')
                     .then(response => {
                         this.matches = response.data;
+                    });
+                AXIOS.get('/match/unseen')
+                    .then(response => {
+                        this.unseen = response.data();
+                        console.log(this.unseen)
                     })
             },
             logOut: function () {
@@ -133,7 +139,9 @@
                     .then(response => {
                         this.messages = response.data;
                         console.log(this.messages);
-                        this.interval = setTimeout(function () { this.getAllMessages(friend) }.bind(this), 100)
+                        this.interval = setTimeout(function () {
+                            this.getAllMessages(friend)
+                        }.bind(this), 100)
                     })
             },
             sendMessage: function () {
@@ -154,21 +162,22 @@
     }
 
     .rowStyle1 {
-        max-width: 75rem!important;
-        margin: 1.25rem auto!important;
+        max-width: 75rem !important;
+        margin: 1.25rem auto !important;
         border-bottom: 1px solid #cacaca;
     }
+
     .rowStyle2 {
-        margin-top: 2vh!important;
+        margin-top: 2vh !important;
         color: grey
     }
 
     .rowStyle3 {
-        margin-top: 3ch!important;
+        margin-top: 3ch !important;
     }
 
     .colStyle1 {
-        margin-bottom: 1vh!important;
+        margin-bottom: 1vh !important;
     }
 
     .colored {
