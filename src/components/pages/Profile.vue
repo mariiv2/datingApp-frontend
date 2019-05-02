@@ -19,10 +19,10 @@
                                 <!-- The slideshow -->
                                 <div class="carousel-inner">
                                     <div class="carousel-item active">
-                                        <img class="profileImage" v-bind:src="'data:image/jpeg;base64,'+firstImg" width="100">
+                                        <img class="profileImage" v-bind:src="'data:image/jpeg;base64,'+ firstImg" width="100">
                                     </div>
                                     <div class="carousel-item" v-for="img in otherImg">
-                                        <img class="profileImage" v-bind:src="'data:image/jpeg;base64,'+img" width="100">
+                                        <img class="profileImage" v-bind:src="'data:image/jpeg;base64,'+ img" width="100">
                                     </div>
                                 </div>
                                 <!-- Left and right controls -->
@@ -272,7 +272,6 @@
                     .then(response => {
                         this.user = response.data;
                         this.firstImg = this.user.image[0].name;
-                        console.log(this.firstImg);
                         this.otherImg = [];
                         for (let i=1; i<this.user.image.length; i++){
                             this.otherImg.push(this.user.image[i].name);
