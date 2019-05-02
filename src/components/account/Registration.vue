@@ -139,5 +139,8 @@
 </script>
 
 <style scoped>
+    .needs-validation {
+        padding: 0 20px 20px 20px;
+    }
 
 </style>

@@ -164,7 +164,7 @@
 
     export default {
         components: {BContainer, Header},
-        name: "testpage",
+        name: "browse",
         data() {
             return {
                 loaded:false,

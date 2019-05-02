@@ -93,7 +93,7 @@
                                 <tr>
                                     <td class="capitalize">HOBBY:</td>
                                     <td>
-                                        <v-select v-model="hobbies" multiple :options="allHobbies"/>
+                                        <v-select class="selectOption" v-model="hobbies" multiple :options="allHobbies"/>
                                     </td>
                                 </tr>
                                 <tr>
@@ -213,35 +213,31 @@
                     'userId': this.user.id,
                     'hobby': ""
                 };
-                /*for(let el in this.userHobbies){
+                for(let el in this.userHobbies){
                     if (!this.hobbies.includes(this.userHobbies[el])) {
-                        console.log(this.hobbies);
-                        console.log(this.userHobbies[el]);
                         dto['hobby'] = this.userHobbies[el];
-                        console.log(dto);
-                        AXIOS.delete('/hobby/delete', dto)
+                        AXIOS.delete('/hobby', {'data': dto})
                             .catch(error => {
                                 this.error = error.response.data;
-                                console.log(this.error);
                             })
                     }
-                }*/
+                }
                 for(let el in this.hobbies) {
                     if(!this.userHobbies.includes(this.hobbies[el])) {
                         dto['hobby'] = this.hobbies[el];
-                        AXIOS.post('/hobby', {'body': dto})
+                        AXIOS.post('/hobby', dto)
                             .catch(error => {
                                 this.error = error.response.data;
-                                console.log(this.error);
                             })
 
                     }
                 }
+
             },
             saveInfo: function () {
+                this.saveHobbies();
                 this.updateErrors();
                 this.checkCity();
-                this.saveHobbies();
                 if (this.user.city !== "Select city") {
                     console.log(this.user.name);
                     AXIOS.put('/users', this.user)
@@ -274,7 +270,6 @@
                 AXIOS.get('/users')
                     .then(response => {
                         this.user = response.data;
-                        console.log(response.data);
                         this.firstImg = this.user.image[0].name;
                         this.otherImg = [];
                         for (let i=1; i<this.user.image.length; i++){
@@ -414,5 +409,23 @@
     .span2 {
         color: #bd1651;
         font-size: 23px
+    }
+    input, .selectOption {
+        max-width: 250px;
+    }
+
+    .selectOption .vs__selected {
+        max-width: 220px;
+    }
+
+    @media only screen and (max-width: 600px) {
+        input, .selectOption {
+            max-width: 130px;
+        }
+
+        .selectOption .vs__selected {
+            max-width: 120px;
+        }
+
     }
 </style>
