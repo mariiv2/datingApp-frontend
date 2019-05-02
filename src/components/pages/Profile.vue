@@ -290,7 +290,6 @@
                                 this.editMode = false;
                             });
                     });
-                this.getImage();
             },
             setLoaded: function() {
                 setTimeout(() => this.loaded= true, 500);
