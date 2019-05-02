@@ -5,7 +5,6 @@ import Profile from '@/components/pages/Profile'
 import Chat from '@/components/pages/Chat'
 import Stats from '@/components/pages/Stats'
 import Browse from '@/components/pages/Browse'
-import Testpage from '@/components/pages/Testpage'
 
 
 Vue.use(Router);
@@ -35,10 +34,6 @@ const router =  new Router({
             path: '/browse',
             name: 'Browse',
             component: Browse
-        }, {
-            path: '/testpage',
-            name: 'Testpage',
-            component: Testpage
         }
     ]
 });

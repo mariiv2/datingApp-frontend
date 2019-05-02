@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="bg">
         <Header></Header>
         <div v-if="!loaded" class="container align-items-center justify-content-center margin4">
             <img src="../../assets/load3.gif"/>

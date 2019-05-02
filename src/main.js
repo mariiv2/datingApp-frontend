@@ -16,14 +16,13 @@ import 'bootstrap-vue/dist/bootstrap-vue.css'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faCoffee, faSignOutAlt, faThumbsUp, faThumbsDown, faFilter, faHeart, faUserEdit, faChevronRight, faHandHoldingHeart, faPaperPlane } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import vSelect from 'vue-select'
-import 'vue-select/dist/vue-select.css';
+
 
 library.add(faCoffee, faSignOutAlt, faThumbsUp, faThumbsDown, faFilter, faHeart, faUserEdit, faChevronRight, faHandHoldingHeart, faPaperPlane);
 
 Vue.component('font-awesome-icon', FontAwesomeIcon);
 Vue.use(BootstrapVue);
-Vue.component('v-select', vSelect);
+
 
 
 
