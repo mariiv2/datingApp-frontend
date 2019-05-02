@@ -7,38 +7,38 @@
                 <div class="col-sm-4 styled">
                     <a v-for="user in matches">
                         <div class="row rowStyle1" v-if="user.seen"
-                             v-on:click="getAllMessages(user)">
+                             v-on:click="() => {getAllMessages(user); sendSeen(user);}">
                             <div class="col-4 colStyle1"><img v-bind:src="user.image[0].name"
                                                               class="favimg rounded-circle"></div>
                             <div class="col-8">
                                 <div class="row">{{user.name}} {{user.surname}}</div>
                                 <div class="row rowStyle2" v-if="user.lastMessage.messageSeen">
-                                    {{user.lastMessage.message}}
+                                    {{user.lastMessage}}
                                 </div>
                                 <div class="row rowStyle2" style="font-weight: bold; color: black" v-else>
-                                    {{user.lastMessage.message}}
+                                    {{user.lastMessage}}
                                 </div>
                             </div>
                         </div>
                         <div class="row rowStyle1" v-else
                              style="background-color: #FFFF99"
-                             v-on:click="getAllMessages(user)">
+                             v-on:click="() => {getAllMessages(user); sendSeen(user);}">
                             <div class="col-4 colStyle1"><img v-bind:src="user.image[0].name"
                                                               class="favimg rounded-circle"></div>
                             <div class="col-8">
                                 <div class="row">{{user.name}} {{user.surname}}</div>
                                 <div class="row rowStyle2" v-if="user.lastMessage.messageSeen">
-                                    {{user.lastMessage.message}}
+                                    {{user.lastMessage}}
                                 </div>
                                 <div class="row rowStyle2" style="font-weight: bold;  color: black" v-else>
-                                    {{user.lastMessage.message}}
+                                    {{user.lastMessage}}
                                 </div>
                             </div>
                         </div>
                     </a>
                     <!--<hr v-for="user in matches">-->
                 </div>
-                <div v-if="chatSelected" class="col-sm-6 colored">
+                <div ref="scroll" v-if="chatSelected" class="col-sm-6 colored my-custom-scrollbar my-custom-scrollbar-primary">
                     <div style="margin-top: 10px"></div>
                     <div v-for="m in messages">
                         <div v-if="m.fromUserId === user.id" class="row">
@@ -50,7 +50,7 @@
                                 <span class="span">{{m.dateSent}}</span>
                             </div>
                             <div v-if="myPhoto" class="col">
-                                <img  v-bind:src="user.image[0].name" class="chatimg rounded-circle">
+                                <img v-bind:src="user.image[0].name" class="chatimg rounded-circle">
                                 <div>{{makeMyPicFalse()}}</div>
                             </div>
                             <div class="col" v-else></div>
@@ -134,6 +134,11 @@
                         this.user = response.data;
                     });
             },
+            sendSeen: function (friend) {
+                AXIOS.get('/messages/' + friend.id).then(
+                    console.log("here")
+                )
+            },
             getMatches: function () {
                 AXIOS.get('/match/all')
                     .then(response => {
@@ -167,6 +172,8 @@
                             this.getAllMessages(friend)
                         }.bind(this), 100)
                     });
+                let scroll = this.$refs.scroll;
+                scroll.scrollTop = scroll.scrollHeight;
             },
             sendMessage: function () {
                 AXIOS.post('/messages', this.messageView)
@@ -174,9 +181,7 @@
                         this.messageView.message = '');
             },
             parseDate: function (date) {
-                console.log(date);
                 date = date.toString();
-                console.log(date);
                 date = date.split('');
                 date = date[5] + date[6] + '.' + date[8] + date[9] + ' ' + date[11] + date[12] + ':' + date[14] + date[15]
                 return date
@@ -188,6 +193,10 @@
             makeMyPicFalse: function () {
                 this.myPhoto = false;
                 this.friendPhoto = true;
+            },
+            gotoBottom: function (id) {
+                let element = document.getElementById(id);
+                element.scrollTop = element.scrollHeight - element.clientHeight;
             }
         }
     }

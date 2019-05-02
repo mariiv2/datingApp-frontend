@@ -4,11 +4,11 @@
         <div class="container align-items-center justify-content-center text-center color1">
             <div class="row">
                 <div class="col-sm margin1">
-                    <button class="bold styled" v-on:click="getBasic" ref="basic">Basic</button>
-                    <button class="styled" v-on:click="getActions" ref="actions">Actions</button>
-                    <button class="styled" v-on:click="getAudience" ref="audience">Audience</button>
+                    <button class="bold styled" v-on:click="getBasic" ref="basic">Proportions</button>
+                    <button class="styled" v-on:click="getActions" ref="actions">TOP-charts</button>
                 </div>
-            </div><hr>
+            </div>
+            <hr>
             <div class="container" v-if="basic">
                 <div class="row">
                     <div class="col-sm">
@@ -20,7 +20,17 @@
                         <pie-chart class="chart" v-if="loaded" :data="chartData1"/>
                         <div v-if="loaded1">test</div>
                     </div>
-                </div><hr>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-sm">
+                        <p class="bold"> HOBBY PROPORTION</p>
+                        <bar-chart class="chart" v-if="loaded" :options="options" :data="chartData2"/>
+                    </div>
+                </div>
+                <hr>
+            </div>
+            <div class="container" v-if="actions">
                 <div class="row margin2">
                     <div class="col-sm text-center">
                         <p class="bold">MOST POPULAR USERS</p>
@@ -43,12 +53,26 @@
                             </table>
                         </div>
                     </div>
-                </div>
-            </div>
-            <div class="container" v-if="actions">
-                <div class="row">
-                    <div class="col-sm">
-                        <line-chart :width="400" :height="100" :options="options" :data="lineChartData"/>
+                    <div class="col-sm text-center">
+                        <p class="bold">MOST TALKATIVE USERS</p>
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>NAME</th>
+                                    <th>AMOUNT OF MESSAGES</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr v-for="(messages, mostTalkativeUser, index) in mostTalkativeUsers">
+                                    <td>{{index}}</td>
+                                    <td>{{mostTalkativeUser}}</td>
+                                    <td>{{ messages}}</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -61,11 +85,13 @@
     import PieChart from "../resources/PieChart.js";
     import LineChart from "../resources/LineChart.js";
     import Header from '../navigation/Header.vue'
+    import BarChart from "../resources/BarChart.js";
 
     export default {
         components: {
             PieChart,
             LineChart,
+            BarChart,
             Header
         },
         // app initial state
@@ -73,9 +99,12 @@
             return {
                 info: [],
                 countries: [],
+                hobbies: [],
+                hobbiesAmount:[],
                 countriesAmount: [],
                 user: {},
                 mostLikeableUsers: [],
+                mostTalkativeUsers: [],
                 id: 1,
                 options: {
                     legend: {
@@ -84,6 +113,7 @@
                 },
                 loaded: false,
                 loaded1: false,
+                loaded2: false,
                 lineChartData: null,
                 chartData: {
                     labels: ["FEMALE", "MALE"],
@@ -100,25 +130,50 @@
                     datasets: [
                         {
                             label: "Data One",
-                            backgroundColor: ["red", "green", "blue", "yellow", "pink", "orange", "violet", "brown", "black"],
+                            backgroundColor: ["#DC143C", "#6495ED", "#8B008B", "#FF8C00", "#FFD700", "#FF69B4",
+                                "#C71585", "#FF4500", "#87CEEB", "#008080"],
                             data: []
                         }
                     ]
                 },
+                chartData2: {
+                    labels: [],
+                    datasets: [
+                        {
+                            backgroundColor: ["#DC143C", "#6495ED", "#8B008B", "#FF8C00", "#FFD700", "#FF69B4",
+                                "#C71585", "#FF4500", "#87CEEB", "#008080"],
+                            data: []
+                        }
+                    ],
+                    options: {
+                        legend: {
+                            display: false
+                        },
+                        tooltips: {
+                            callbacks: {
+                                label: function(tooltipItem) {
+                                    return tooltipItem.yLabel;
+                                }
+                            }
+                        }
+                    }
+
+                },
                 basic: true,
                 actions: false,
-                audience: false
             }
 
 
         },
         created: function () {
             this.getMostLikeableUsers();
+            this.getMostTalkativeUsers();
         },
 
-        mounted () {
+        mounted() {
             this.fillLineData();
             this.getUser();
+            BarChart.defaults.global.legend.display = false;
         },
         // methods that implement data logic.
         // note there's no DOM manipulation here at all.
@@ -126,26 +181,14 @@
             getBasic: function () {
                 this.basic = true;
                 this.actions = false;
-                this.audience = false;
                 this.$refs.basic.setAttribute("style", "font-weight:bold; outline: none; border: none");
                 this.$refs.actions.setAttribute("style", "font-weight:normal; outline: none; border: none");
-                this.$refs.audience.setAttribute("style", "font-weight:normal; outline: none; border: none");
             },
             getActions: function () {
                 this.basic = false;
                 this.actions = true;
-                this.audience = false;
                 this.$refs.basic.setAttribute("style", "font-weight:normal; outline: none; border: none");
                 this.$refs.actions.setAttribute("style", "font-weight:bold; outline: none; border: none");
-                this.$refs.audience.setAttribute("style", "font-weight:normal; outline: none; border: none");
-            },
-            getAudience: function () {
-                this.basic = false;
-                this.actions = false;
-                this.audience = true;
-                this.$refs.basic.setAttribute("style", "font-weight:normal; outline: none; border: none");
-                this.$refs.actions.setAttribute("style", "font-weight:normal; outline: none; border: none");
-                this.$refs.audience.setAttribute("style", "font-weight:bold; outline: none; border: none");
             },
 
             getUser: function () {
@@ -164,35 +207,52 @@
                         this.mostLikeableUsers = response.data;
                     })
             },
+            getMostTalkativeUsers: function () {
+                AXIOS.get('/stats/userByMessages')
+                    .then(response => {
+                        this.mostTalkativeUsers = response.data;
+                    })
+            },
             getCountryProportion: function () {
                 AXIOS.get('/stats/userByCountry').then(response => {
                     // this.countries = response.data;
-                    console.log(response.data);
-                    var countriesDict = response.data;
-                    for(var key in countriesDict){
-                        var value = countriesDict[key];
+                    let countriesDict = response.data;
+                    for (let key in countriesDict) {
+                        let value = countriesDict[key];
                         this.countries.push(key);
                         this.countriesAmount.push(value);
                     }
                     this.chartData1.labels = this.countries;
                     this.chartData1.datasets[0].data = this.countriesAmount;
-                    console.log(this.chartData1);
-                    this.loaded = true;
+                    this.getHobbyProportion();
 
                 });
             },
-            fillLineData () {
+            getHobbyProportion: function () {
+                AXIOS.get('/stats/userByHobby').then(response => {
+                    let hobbiesDict = response.data;
+                    for (let key in hobbiesDict){
+                        let value = hobbiesDict[key];
+                        this.hobbies.push(key);
+                        this.hobbiesAmount.push(value);
+                    }
+                    this.chartData2.labels = this.hobbies;
+                    this.chartData2.datasets[0].data = this.hobbiesAmount;
+                    this.loaded = true;
+                });
+            },
+            fillLineData() {
                 this.lineChartData = {
                     labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
                     datasets: [
                         {
                             backgroundColor: '#f87979',
-                            data: [1, 2,1,4,2,4,5,1,6,8,4,3]
+                            data: [1, 2, 1, 4, 2, 4, 5, 1, 6, 8, 4, 3]
                         }
                     ]
                 }
             },
-            logOut: function() {
+            logOut: function () {
                 localStorage.removeItem("token");
                 this.$router.push("DatingApp");
             }

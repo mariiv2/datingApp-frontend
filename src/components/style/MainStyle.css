@@ -131,3 +131,10 @@ button:hover, .mainButton:hover, .button:hover {
 .bg {
     background-color: #cfbad2;
 }
+
+.my-custom-scrollbar {
+    position: relative;
+    width: 800px;
+    height: 400px;
+    overflow: auto;
+}
