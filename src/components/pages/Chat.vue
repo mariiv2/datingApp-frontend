@@ -8,7 +8,7 @@
                     <a v-for="user in matches">
                         <div class="row rowStyle1" v-if="user.seen"
                              v-on:click="() => {getAllMessages(user); sendSeen(user);}">
-                            <div class="col-4 colStyle1"><img v-bind:src="user.image[0].name"
+                            <div class="col-4 colStyle1"><img v-bind:src="'data:image/jpeg;base64,' + user.image[0].name"
                                                               class="favimg rounded-circle"></div>
                             <div class="col-8">
                                 <div class="row">{{user.name}} {{user.surname}}</div>
@@ -23,7 +23,7 @@
                         <div class="row rowStyle1" v-else
                              style="background-color: #FFFF99"
                              v-on:click="() => {getAllMessages(user); sendSeen(user);}">
-                            <div class="col-4 colStyle1"><img v-bind:src="user.image[0].name"
+                            <div class="col-4 colStyle1"><img v-bind:src="'data:image/jpeg;base64,'+ user.image[0].name"
                                                               class="favimg rounded-circle"></div>
                             <div class="col-8">
                                 <div class="row">{{user.name}} {{user.surname}}</div>
@@ -50,14 +50,14 @@
                                 <span class="span">{{m.dateSent}}</span>
                             </div>
                             <div v-if="myPhoto" class="col">
-                                <img v-bind:src="user.image[0].name" class="chatimg rounded-circle">
+                                <img v-bind:src=" 'data:image/jpeg;base64,'+ user.image[0].name" class="chatimg rounded-circle">
                                 <div>{{makeMyPicFalse()}}</div>
                             </div>
                             <div class="col" v-else></div>
                         </div>
                         <div v-else class="row">
                             <div class="col" v-if="friendPhoto">
-                                <img v-bind:src="friend.image[0].name" class="chatimg rounded-circle">
+                                <img v-bind:src="'data:image/jpeg;base64,'+ friend.image[0].name" class="chatimg rounded-circle">
                                 <div>{{makeFriendPicFalse()}}</div>
                             </div>
                             <div class="col" v-else></div>
@@ -145,7 +145,7 @@
                         this.matches = response.data;
                         this.intervalMain = setTimeout(function () {
                             this.getMatches()
-                        }.bind(this), 100)
+                        }.bind(this), 2000)
                     });
             },
             logOut: function () {
@@ -170,7 +170,7 @@
                         }
                         this.interval = setTimeout(function () {
                             this.getAllMessages(friend)
-                        }.bind(this), 100)
+                        }.bind(this), 2000)
                     });
                 let scroll = this.$refs.scroll;
                 scroll.scrollTop = scroll.scrollHeight;

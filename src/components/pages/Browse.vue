@@ -17,10 +17,10 @@
                                 <!-- The slideshow -->
                                 <div class="carousel-inner">
                                     <div class="carousel-item active">
-                                        <img class="profileImage" v-bind:src="firstImg" width="100">
+                                        <img class="profileImage" v-bind:src="'data:image/jpeg;base64,'+ firstImg" width="100">
                                     </div>
                                     <div class="carousel-item" v-for="img in otherImg">
-                                        <img class="profileImage" v-bind:src="img" width="100">
+                                        <img class="profileImage" v-bind:src="'data:image/jpeg;base64,'+ img" width="100">
                                     </div>
                                 </div>
                                 <!-- Left and right controls -->
@@ -184,7 +184,7 @@
                     city: "Tallinn",
                     country: "Estonia",
                     gender: "MALE",
-                    hobby: null
+                    hobby: ""
                 },
                 choice: {
                     fromUserId: null,
