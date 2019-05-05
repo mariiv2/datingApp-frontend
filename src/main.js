@@ -18,11 +18,13 @@ import { faCoffee, faSignOutAlt, faThumbsUp, faThumbsDown, faFilter, faHeart, fa
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import VSelect from 'vue-select'
 import 'vue-select/dist/vue-select.css';
+import VueChatScroll from 'vue-chat-scroll'
 
 library.add(faCoffee, faSignOutAlt, faThumbsUp, faThumbsDown, faFilter, faHeart, faUserEdit, faChevronRight, faHandHoldingHeart, faPaperPlane);
 
 Vue.component('font-awesome-icon', FontAwesomeIcon);
 Vue.use(BootstrapVue);
+Vue.use(VueChatScroll)
 Vue.component('v-select', VSelect);
 
 Vue.config.productionTip = false;

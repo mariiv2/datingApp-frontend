@@ -8,15 +8,16 @@
                     <a v-for="user in matches">
                         <div class="row rowStyle1" v-if="user.seen"
                              v-on:click="() => {getAllMessages(user); sendSeen(user);}">
-                            <div class="col-4 colStyle1"><img v-bind:src="'data:image/jpeg;base64,' + user.image[0].name"
-                                                              class="favimg rounded-circle"></div>
+                            <div class="col-4 colStyle1"><img
+                                    v-bind:src="'data:image/jpeg;base64,' + user.image[0].name"
+                                    class="favimg rounded-circle"></div>
                             <div class="col-8">
                                 <div class="row">{{user.name}} {{user.surname}}</div>
                                 <div class="row rowStyle2" v-if="user.lastMessage.messageSeen">
-                                    {{user.lastMessage}}
+                                    {{user.lastMessage.message}}
                                 </div>
                                 <div class="row rowStyle2" style="font-weight: bold; color: black" v-else>
-                                    {{user.lastMessage}}
+                                    {{user.lastMessage.message}}
                                 </div>
                             </div>
                         </div>
@@ -28,17 +29,20 @@
                             <div class="col-8">
                                 <div class="row">{{user.name}} {{user.surname}}</div>
                                 <div class="row rowStyle2" v-if="user.lastMessage.messageSeen">
-                                    {{user.lastMessage}}
+                                    {{user.lastMessage.message}}
                                 </div>
                                 <div class="row rowStyle2" style="font-weight: bold;  color: black" v-else>
-                                    {{user.lastMessage}}
+                                    {{user.lastMessage.message}}
                                 </div>
                             </div>
                         </div>
                     </a>
                     <!--<hr v-for="user in matches">-->
                 </div>
-                <div ref="scroll" v-if="chatSelected" class="col-sm-6 colored my-custom-scrollbar my-custom-scrollbar-primary">
+                <div ref="scroll" v-if="chatSelected"
+                     class="col-sm-6 colored my-custom-scrollbar my-custom-scrollbar-primary
+scrollbar-ripe-malinka"
+                     v-chat-scroll="{always: false, smooth: true}">
                     <div style="margin-top: 10px"></div>
                     <div v-for="m in messages">
                         <div v-if="m.fromUserId === user.id" class="row">
@@ -49,16 +53,16 @@
                                 </div>
                                 <span class="span">{{m.dateSent}}</span>
                             </div>
-                            <div v-if="myPhoto" class="col">
-                                <img v-bind:src=" 'data:image/jpeg;base64,'+ user.image[0].name" class="chatimg rounded-circle">
-                                <div>{{makeMyPicFalse()}}</div>
+                            <div v-if="m.myPhoto" class="col">
+                                <img v-bind:src=" 'data:image/jpeg;base64,'+ user.image[0].name"
+                                     class="chatimg rounded-circle">
                             </div>
                             <div class="col" v-else></div>
                         </div>
                         <div v-else class="row">
-                            <div class="col" v-if="friendPhoto">
-                                <img v-bind:src="'data:image/jpeg;base64,'+ friend.image[0].name" class="chatimg rounded-circle">
-                                <div>{{makeFriendPicFalse()}}</div>
+                            <div class="col" v-if="m.friendPhoto">
+                                <img v-bind:src="'data:image/jpeg;base64,'+ friend.image[0].name"
+                                     class="chatimg rounded-circle">
                             </div>
                             <div class="col" v-else></div>
                             <div class="col">
@@ -106,9 +110,9 @@
                 intervalMain: null,
                 myPhoto: true,
                 friendPhoto: true,
-                matches: [],
                 chatSelected: false,
                 pic: 'http://localhost:8081/anonym',
+                matches: [],
                 messages: [],
                 messageView: {
                     fromUserId: {},
@@ -162,23 +166,35 @@
                 this.messageView.fromUserId = this.user.id;
                 this.messageView.toUserId = friend.id;
                 this.chatSelected = true;
+                this.friendPhoto = true;
+                this.myPhoto = true;
                 AXIOS.get('messages/all/' + friend.id)
                     .then(response => {
                         this.messages = response.data;
                         for (let m in this.messages) {
-                            this.messages[m].dateSent = this.parseDate(this.messages[m].dateSent)
+                            this.messages[m].dateSent = this.parseDate(this.messages[m].dateSent);
+                            if (friend.id === this.messages[m].fromUserId) {
+                                this.messages[m].friendPhoto = this.friendPhoto;
+                                this.friendPhoto = false;
+                                this.myPhoto = true;
+                            }
+                            else {
+                                this.messages[m].myPhoto = this.myPhoto;
+                                this.myPhoto = false;
+                                this.friendPhoto = true;
+                            }
                         }
                         this.interval = setTimeout(function () {
                             this.getAllMessages(friend)
                         }.bind(this), 2000)
                     });
-                let scroll = this.$refs.scroll;
-                scroll.scrollTop = scroll.scrollHeight;
             },
             sendMessage: function () {
-                AXIOS.post('/messages', this.messageView)
-                    .then(response =>
-                        this.messageView.message = '');
+                if (this.messageView.message !== '') {
+                    AXIOS.post('/messages', this.messageView)
+                        .then(response =>
+                            this.messageView.message = '');
+                }
             },
             parseDate: function (date) {
                 date = date.toString();
@@ -186,17 +202,9 @@
                 date = date[5] + date[6] + '.' + date[8] + date[9] + ' ' + date[11] + date[12] + ':' + date[14] + date[15]
                 return date
             },
-            makeFriendPicFalse: function () {
-                this.myPhoto = true;
-                this.friendPhoto = false;
-            },
-            makeMyPicFalse: function () {
-                this.myPhoto = false;
-                this.friendPhoto = true;
-            },
-            gotoBottom: function (id) {
-                let element = document.getElementById(id);
-                element.scrollTop = element.scrollHeight - element.clientHeight;
+            gotoBottom: function () {
+                let scroll = this.$refs.scroll;
+                scroll.scrollTop = scroll.scrollHeight;
             }
         }
     }
