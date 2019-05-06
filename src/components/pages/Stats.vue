@@ -244,8 +244,8 @@
                     let hobbies = response.data;
                     for (let i in hobbies) {
                         let hobby = hobbies[i];
-                        this.hobbies.push(hobby.hobbyName);
-                        this.hobbiesAmount.push(hobbyAmount);
+                        // this.hobbies.push(hobby.hobbyName);
+                        this.hobbiesAmount.push(hobby.hobbyAmount);
                     }
                     this.chartData2.labels = this.hobbies;
                     this.chartData2.datasets[0].data = this.hobbiesAmount;
