@@ -2,60 +2,60 @@
     <form class="needs-validation" novalidate>
         <div class="form-row">
             <div class="col-md-4 mb-3">
-                <label style="font-weight: bold">First name</label>
+                <label class="bold">First name</label>
                 <input type="text" class="form-control" placeholder="First name" v-model="userRegister.name" required>
-                <span class="text-danger small-text" v-if="loaded">{{this.errors['name']}}</span>
+                <p v-if="loaded" class="text-danger small-text">{{errors['name']}}</p>
             </div>
             <div class="col-md-4 mb-3">
-                <label style="font-weight: bold">Last name</label>
+                <label class="bold">Last name</label>
                 <input type="text" class="form-control" placeholder="Last name" v-model="userRegister.surname" required>
-                <span class="text-danger small-text">{{this.errors['surname']}}</span>
+                <p v-if="loaded" class="text-danger small-text">{{errors['surname']}}</p>
             </div>
             <div class="col-md-4 mb-3">
-                <label style="font-weight: bold">Email</label>
+                <label class="bold">Email</label>
                 <input type="email" class="form-control" placeholder="Email" v-model="userRegister.email" required>
-                <span class="text-danger small-text">{{this.errors['email']}}</span>
+                <p v-if="loaded" class="text-danger small-text">{{errors['email']}}</p>
             </div>
         </div>
         <div class="form-row">
             <div class="col-md-4 mb-3">
-                <label style="font-weight: bold">Your birthday</label>
+                <label class="bold">Your birthday</label>
                 <input type="date" data-date-format="YYYY-MM-DD" placeholder="yyyy-mm-dd" v-model="userRegister.birth"
                        required>
-                <span class="text-danger small-text">{{this.errors['birth']}}</span>
+                <p v-if="loaded" class="text-danger small-text">{{errors['birth']}}</p>
             </div>
             <div class="col-md-4 mb-3">
-                <label style="font-weight: bold">Gender</label>
+                <label class="bold">Gender</label>
                 <input type="radio" value="FEMALE" v-model="userRegister.gender">Female
                 <input type="radio" value="MALE" v-model="userRegister.gender">Male<br>
-                <span class="text-danger small-text">{{this.errors['gender']}}</span>
+                <span v-if="loaded" class="text-danger small-text">{{errors['gender']}}</span>
             </div>
         </div>
         <div class="form-row">
             <div class="col-md-4 mb-3">
-                <label style="font-weight: bold">Country</label>
+                <label class="bold">Country</label>
                 <select v-model="userRegister.country">
                     <option class="disabled" value="" disabled selected>Select country</option>
                     <option class="selectOption" v-for="(value, key) in Countries" :key="key">{{ key }}</option>
                 </select>
-                <span class="text-danger small-text">{{this.errors['country']}}</span>
+                <span v-if="loaded" class="text-danger small-text">{{errors['country']}}</span>
             </div>
             <div class="col-md-4 mb-3">
-                <label style="font-weight: bold">City</label>
+                <label class="bold">City</label>
                 <select v-model="userRegister.city" class="selectOption smallInput">
                     <option class="disabled" value="" disabled selected>Select city</option>
                     <option class="selectOption" v-for="cities in getCities()" :key="cities" v-on:click="checkCity()">{{
                         cities }}
                     </option>
                 </select>
-                <span class="text-danger small-text">{{this.errors['city']}}</span>
+                <span v-if="loaded" class="text-danger small-text">{{errors['city']}}</span>
             </div>
         </div>
         <div class="form-row">
             <div class="col-md-4 mb-3">
                 <label style="font-weight: bold">Password</label>
                 <input type="password" v-model="userRegister.password" placeholder="Your password">
-                <span class="text-danger small-text">{{this.errors['password']}}</span>
+                <span v-if="loaded" class="text-danger small-text">{{errors['password']}}</span>
             </div>
             <div class="col-md-4 mb-3">
                 <label style="font-weight: bold">Repeat password</label>
@@ -64,7 +64,7 @@
         </div>
         <span class="text-danger small-text"></span>
         <div class="w-100"></div>
-        <button class="btn" v-on:click="register" style="background-color: #bd1651; color: white; border-radius: 5px">
+        <button class="btn btn-styles" v-on:click="register">
             Register
         </button>
     </form>
@@ -97,6 +97,10 @@
                     country: "",
                     birth: "",
                 },
+                userLogIn: {
+                    username: "",
+                    password: ""
+                },
                 Countries
             }
 
@@ -113,8 +117,6 @@
                 if (!Countries[country].includes(city)) this.userRegister.city = "";
             },
             register: function () {
-                this.error = [];
-                this.errors = [];
                 this.$store.dispatch('register', this.userRegister)
                     .then(() => {
                         this.userLogIn.username = this.userRegister.email;
@@ -122,18 +124,25 @@
                         this.enter();
 
                     }).catch(error => {
-                        console.log(error.response)
-                    this.error = error.response.data;
-                    console.log(this.error)
-                    for (let e in this.error) {
-                        this.errors[this.error[e].field] = this.error[e].defaultMessage;
+                        this.loaded = true;
+                        this.error = error.response.data;
+                        this.errors = {};
+                        for (let e in this.error) {
+                            this.errors[this.error[e].field] = this.error[e].defaultMessage;
 
-                    }
-                    console.log(this.errors);
-                    this.loaded = true;
-                    console.log(this.errors['name'])
+                        }
+                        console.log(this.errors);
+                        console.log(this.loaded)
                 });
-            }
+            },
+            enter: function() {
+                this.$store.dispatch('login', this.userLogIn)
+                    .then(() => {
+                        this.$router.push('Profile');
+                    })
+                    .catch(error => {
+                    });
+            },
         }
     }
 </script>
@@ -141,6 +150,15 @@
 <style scoped>
     .needs-validation {
         padding: 0 20px 20px 20px;
+    }
+    .bold {
+        font-weight: bold;
+    }
+
+    .btn-styles {
+        background-color: #bd1651;
+        color: white;
+        border-radius: 5px
     }
 
 </style>
