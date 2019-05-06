@@ -97,6 +97,10 @@
                     country: "",
                     birth: "",
                 },
+                userLogIn: {
+                    username: "",
+                    password: ""
+                },
                 Countries
             }
 
@@ -117,23 +121,33 @@
                 this.errors = [];
                 this.$store.dispatch('register', this.userRegister)
                     .then(() => {
+                        console.log('here');
                         this.userLogIn.username = this.userRegister.email;
                         this.userLogIn.password = this.userRegister.password;
                         this.enter();
 
                     }).catch(error => {
-                        console.log(error.response)
-                    this.error = error.response.data;
-                    console.log(this.error)
-                    for (let e in this.error) {
-                        this.errors[this.error[e].field] = this.error[e].defaultMessage;
+                        console.log(error);
+                        console.log(error.response);
+                        this.error = error.response.data;
+                        console.log(this.error);
+                        for (let e in this.error) {
+                            this.errors[this.error[e].field] = this.error[e].defaultMessage;
 
-                    }
-                    console.log(this.errors);
-                    this.loaded = true;
-                    console.log(this.errors['name'])
+                        }
+                        console.log(this.errors);
+                        this.loaded = true;
+                        console.log(this.errors['name'])
                 });
-            }
+            },
+            enter: function() {
+                this.$store.dispatch('login', this.userLogIn)
+                    .then(() => {
+                        this.$router.push('Profile');
+                    })
+                    .catch(error => {
+                    });
+            },
         }
     }
 </script>
