@@ -65,10 +65,10 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr v-for="(messages, mostTalkativeUser, index) in mostTalkativeUsers">
+                                <tr v-for="(mostTalkativeUser, index) in mostTalkativeUsers">
                                     <td>{{index}}</td>
-                                    <td>{{mostTalkativeUser}}</td>
-                                    <td>{{ messages}}</td>
+                                    <td>{{mostTalkativeUser.name}}</td>
+                                    <td>{{ mostTalkativeUser.amountOfMessages}}</td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -100,7 +100,7 @@
                 info: [],
                 countries: [],
                 hobbies: [],
-                hobbiesAmount:[],
+                hobbiesAmount: [],
                 countriesAmount: [],
                 user: {},
                 mostLikeableUsers: [],
@@ -109,7 +109,20 @@
                 options: {
                     legend: {
                         display: false
-                    }
+                    },
+                    scales:
+                        {
+                            yAxes:
+                                [{
+
+                                    stacked: true,
+                                    ticks: {
+                                        min: 0,
+                                        stepSize: 1,
+                                    }
+
+                                }]
+                        }
                 },
                 loaded: false,
                 loaded1: false,
@@ -145,22 +158,12 @@
                             data: []
                         }
                     ],
-                    options: {
-                        legend: {
-                            display: false
-                        },
-                        tooltips: {
-                            callbacks: {
-                                label: function(tooltipItem) {
-                                    return tooltipItem.yLabel;
-                                }
-                            }
-                        }
-                    }
+                    options:{}
 
                 },
                 basic: true,
-                actions: false,
+                actions:
+                    false,
             }
 
 
@@ -168,13 +171,15 @@
         created: function () {
             this.getMostLikeableUsers();
             this.getMostTalkativeUsers();
-        },
+        }
+        ,
 
         mounted() {
             this.fillLineData();
             this.getUser();
             BarChart.defaults.global.legend.display = false;
-        },
+        }
+        ,
         // methods that implement data logic.
         // note there's no DOM manipulation here at all.
         methods: {
@@ -183,13 +188,15 @@
                 this.actions = false;
                 this.$refs.basic.setAttribute("style", "font-weight:bold; outline: none; border: none");
                 this.$refs.actions.setAttribute("style", "font-weight:normal; outline: none; border: none");
-            },
+            }
+            ,
             getActions: function () {
                 this.basic = false;
                 this.actions = true;
                 this.$refs.basic.setAttribute("style", "font-weight:normal; outline: none; border: none");
                 this.$refs.actions.setAttribute("style", "font-weight:bold; outline: none; border: none");
-            },
+            }
+            ,
 
             getUser: function () {
                 AXIOS.get('/stats/')
@@ -200,19 +207,22 @@
                         this.chartData.datasets[0].data = [this.user[0], this.user[1]];
                         this.getCountryProportion();
                     })
-            },
+            }
+            ,
             getMostLikeableUsers: function () {
                 AXIOS.get('/stats/likes')
                     .then(response => {
                         this.mostLikeableUsers = response.data;
                     })
-            },
+            }
+            ,
             getMostTalkativeUsers: function () {
                 AXIOS.get('/stats/userByMessages')
                     .then(response => {
                         this.mostTalkativeUsers = response.data;
                     })
-            },
+            }
+            ,
             getCountryProportion: function () {
                 AXIOS.get('/stats/userByCountry').then(response => {
                     // this.countries = response.data;
@@ -227,20 +237,22 @@
                     this.getHobbyProportion();
 
                 });
-            },
+            }
+            ,
             getHobbyProportion: function () {
                 AXIOS.get('/stats/userByHobby').then(response => {
-                    let hobbiesDict = response.data;
-                    for (let key in hobbiesDict){
-                        let value = hobbiesDict[key];
-                        this.hobbies.push(key);
-                        this.hobbiesAmount.push(value);
+                    let hobbies = response.data;
+                    for (let i in hobbies) {
+                        let hobby = hobbies[i];
+                        this.hobbies.push(hobby.hobbyName);
+                        this.hobbiesAmount.push(hobbyAmount);
                     }
                     this.chartData2.labels = this.hobbies;
                     this.chartData2.datasets[0].data = this.hobbiesAmount;
                     this.loaded = true;
                 });
-            },
+            }
+            ,
             fillLineData() {
                 this.lineChartData = {
                     labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
@@ -251,7 +263,8 @@
                         }
                     ]
                 }
-            },
+            }
+            ,
             logOut: function () {
                 localStorage.removeItem("token");
                 this.$router.push("DatingApp");
