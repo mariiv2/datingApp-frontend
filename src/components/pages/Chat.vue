@@ -39,52 +39,67 @@
                     </a>
                     <!--<hr v-for="user in matches">-->
                 </div>
-                <div ref="scroll" v-if="chatSelected"
-                     class="col-sm-6 colored my-custom-scrollbar my-custom-scrollbar-primary
-scrollbar-ripe-malinka"
-                     v-chat-scroll="{always: false, smooth: true}">
-                    <div style="margin-top: 10px"></div>
-                    <div v-for="m in messages">
-                        <div v-if="m.fromUserId === user.id" class="row">
-                            <div class="col-sm-6"></div>
-                            <div class="col">
-                                <div class="colStyle3">
-                                    <span>{{m.message}}</span>
+                <div v-if="chatSelected" class="col-sm-6 ">
+                    <div class="row">
+                        <div ref="scroll"
+                             class=" col-sm-12
+                             colored my-custom-scrollbar
+                             my-custom-scrollbar-primary scrollbar-ripe-malinka"
+                             v-chat-scroll="{always: false, smooth: true}">
+                            <div style="margin-top: 50px"></div>
+                            <div v-for="m in messages">
+                                <div v-if="m.fromUserId === user.id" class="row">
+                                    <div class="col-sm-6"></div>
+                                    <div class="col">
+                                        <div class="colStyle3">
+                                            <span>{{m.message}}</span>
+                                        </div>
+                                        <span class="span">{{m.dateSent}}</span>
+                                    </div>
+                                    <div v-if="m.myPhoto" class="col">
+                                        <img v-bind:src=" 'data:image/jpeg;base64,'+ user.image[0].name"
+                                             class="chatimg rounded-circle">
+                                    </div>
+                                    <div class="col" v-else></div>
                                 </div>
-                                <span class="span">{{m.dateSent}}</span>
-                            </div>
-                            <div v-if="m.myPhoto" class="col">
-                                <img v-bind:src=" 'data:image/jpeg;base64,'+ user.image[0].name"
-                                     class="chatimg rounded-circle">
-                            </div>
-                            <div class="col" v-else></div>
-                        </div>
-                        <div v-else class="row">
-                            <div class="col" v-if="m.friendPhoto">
-                                <img v-bind:src="'data:image/jpeg;base64,'+ friend.image[0].name"
-                                     class="chatimg rounded-circle">
-                            </div>
-                            <div class="col" v-else></div>
-                            <div class="col">
-                                <div class="colStyle2">
-                                    <span>{{m.message}}</span>
+                                <div v-else class="row">
+                                    <div class="col" v-if="m.friendPhoto">
+                                        <img v-bind:src="'data:image/jpeg;base64,'+ friend.image[0].name"
+                                             class="chatimg rounded-circle">
+                                    </div>
+                                    <div class="col" v-else></div>
+                                    <div class="col">
+                                        <div class="colStyle2">
+                                            <span>{{m.message}}</span>
+                                        </div>
+                                        <span class="span">{{m.dateSent}}</span>
+                                    </div>
+                                    <div class="col-sm-6"></div>
                                 </div>
-                                <span class="span">{{m.dateSent}}</span>
                             </div>
-                            <div class="col-sm-6"></div>
                         </div>
                     </div>
-                    <div class="row rowStyle3">
-                        <div class="col-11">
+                    <div class="row rowStyle3 desktopVersion" style="vertical-align: bottom;">
+                        <div class="col-md-10 " style="margin-left: 10px; margin-right: 10px">
                             <input type="text" class="form-control" v-model="messageView.message"
                                    placeholder="Enter your message" v-on:keyup.enter="sendMessage">
                         </div>
-                        <div class="col-1" v-if="messageView.message !== ''">
+                        <div class="col-md-1 " v-if="messageView.message !== ''">
                             <a v-on:click="sendMessage" v-on:keyup.enter="sendMessage">
                                 <font-awesome-icon icon="paper-plane" class="fa-2x"/>
                             </a>
                         </div>
-
+                    </div>
+                    <div class="row rowStyle3 mobileVersion" style="vertical-align: bottom;">
+                        <div class="col-xs-10 " style="margin-left: 10px; margin-right: 10px">
+                            <input type="text" class="form-control" v-model="messageView.message"
+                                   placeholder="Enter your message" v-on:keyup.enter="sendMessage">
+                        </div>
+                        <div class="col-xs-1 " v-if="messageView.message !== ''">
+                            <a v-on:click="sendMessage" v-on:keyup.enter="sendMessage">
+                                <font-awesome-icon icon="paper-plane" class="fa-2x"/>
+                            </a>
+                        </div>
                     </div>
                 </div>
                 <div v-else class="col-sm-6 colored">
@@ -111,7 +126,6 @@ scrollbar-ripe-malinka"
                 myPhoto: true,
                 friendPhoto: true,
                 chatSelected: false,
-                pic: 'http://localhost:8081/anonym',
                 matches: [],
                 messages: [],
                 messageView: {
@@ -149,7 +163,7 @@ scrollbar-ripe-malinka"
                         this.matches = response.data;
                         this.intervalMain = setTimeout(function () {
                             this.getMatches()
-                        }.bind(this), 2000)
+                        }.bind(this), 200)
                     });
             },
             logOut: function () {
@@ -186,7 +200,7 @@ scrollbar-ripe-malinka"
                         }
                         this.interval = setTimeout(function () {
                             this.getAllMessages(friend)
-                        }.bind(this), 2000)
+                        }.bind(this), 200)
                     });
             },
             sendMessage: function () {
@@ -201,10 +215,6 @@ scrollbar-ripe-malinka"
                 date = date.split('');
                 date = date[5] + date[6] + '.' + date[8] + date[9] + ' ' + date[11] + date[12] + ':' + date[14] + date[15]
                 return date
-            },
-            gotoBottom: function () {
-                let scroll = this.$refs.scroll;
-                scroll.scrollTop = scroll.scrollHeight;
             }
         }
     }
@@ -265,4 +275,24 @@ scrollbar-ripe-malinka"
         color: grey;
         font-size: 10px
     }
+
+    .mobileVersion{
+        display: none;
+    }
+
+    @media only screen and (max-width: 400px){
+        .chatimg{
+            display: none;
+        }
+
+        .desktopVersion{
+            display: none;
+        }
+
+        .mobileVersion{
+            display: flex;
+        }
+    }
+
+
 </style>
