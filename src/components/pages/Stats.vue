@@ -25,7 +25,7 @@
                 <div class="row">
                     <div class="col-sm">
                         <p class="bold"> HOBBY PROPORTION</p>
-                        <bar-chart class="chart" v-if="loaded" :options="options" :data="chartData2"/>
+                        <bar-chart class="chart hobby-chart" v-if="loaded" :options="options" :data="chartData2"/>
                     </div>
                 </div>
                 <hr>
@@ -121,7 +121,12 @@
                                         stepSize: 1,
                                     }
 
-                                }]
+                                }],
+                            xAxes:[{
+                                ticks: {
+                                    autoSkip: false
+                                }
+                            }]
                         }
                 },
                 loaded: false,
@@ -244,7 +249,7 @@
                     let hobbies = response.data;
                     for (let i in hobbies) {
                         let hobby = hobbies[i];
-                        // this.hobbies.push(hobby.hobbyName);
+                        this.hobbies.push(hobby.hobbyName);
                         this.hobbiesAmount.push(hobby.hobbyAmount);
                     }
                     this.chartData2.labels = this.hobbies;
@@ -305,4 +310,5 @@
         .chart {
         width: 250px}
     }
+
 </style>
