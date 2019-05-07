@@ -91,8 +91,8 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td class="capitalize">HOBBY:</td>
-                                    <td>
+                                    <td colspan="2">
+                                        <label class="capitalize">HOBBY:</label>
                                         <v-select class="selectOption" v-model="hobbies" multiple :options="allHobbies"/>
                                         <span v-if="errorMode" class="text-danger small-text">{{this.hobbyError}}</span>
                                     </td>
@@ -426,5 +426,9 @@
     .span2 {
         color: #bd1651;
         font-size: 23px
+    }
+
+    .selectOption{
+        margin-bottom: 10px;
     }
 </style>
