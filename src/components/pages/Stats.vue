@@ -276,8 +276,8 @@
     }
 
     .chart {
-        width: 300px;
         margin: auto;
+        width: 300px;
     }
 
     .margin1 {
@@ -287,5 +287,9 @@
     .margin2 {
         width: 100%;
         margin-top: 5vh;
+    }
+    @media  {
+        .chart {
+        width: 250px}
     }
 </style>
