@@ -36,7 +36,7 @@
                             <div>
                                 <input class="no-border d-none" type="file" @change="onFileChanged" id="file"/>
                                 <label class="btn" for="file">CHANGE PHOTO</label>
-                                <p v-if="errorMode" class="error">{{error}}</p>
+                                <p v-if="errorMode" class="error">{{photoError}}</p>
                                 <p v-if="fileChosen">{{file.name}}</p>
                                 <button v-if="fileChosen" @click="onUpload" type="button" class="btn">UPLOAD</button>
                             </div>
@@ -52,48 +52,49 @@
                                 <tr>
                                     <td class="capitalize">NAME:</td>
                                     <td>
-                                        <input type="text" maxlength="20" v-model="user.name"/>
-                                        <span class="text-danger small-text">{{this.errorName}}</span>
+                                        <input type="text" maxlength="20" v-model="editUser.name"/>
+                                        <span v-if="errorMode" class="text-danger small-text">{{this.errorName}}</span>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td class="capitalize">SURNAME:</td>
                                     <td>
-                                        <input type="text" maxlength="20" v-model="user.surname"/>
-                                        <span class="text-danger small-text">{{this.errorSurname}}</span>
+                                        <input type="text" maxlength="20" v-model="editUser.surname"/>
+                                        <span v-if="errorMode" class="text-danger small-text">{{this.errorSurname}}</span>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td class="capitalize">EMAIL:</td>
                                     <td>
-                                        <input type="text" maxlength="30" v-model="user.email"/>
-                                        <span class="text-danger small-text">{{this.errorEmail}}</span>
+                                        <input type="text" maxlength="30" v-model="editUser.email"/>
+                                        <span v-if="errorMode" class="text-danger small-text">{{this.errorEmail}}</span>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td class="capitalize">COUNTRY:</td>
                                     <td>
-                                        <select v-model="user.country" class="selectOption" v-on:click="checkCity">
+                                        <select v-model="editUser.country" class="selectOption" v-on:click="checkCity">
                                             <option class="disabled" value="" disabled selected>Select country</option>
                                             <option class="selectOption" v-for="(value, key) in Countries" :key="key">{{ key }} </option>
                                         </select>
-                                        <span class="text-danger small-text">{{this.errorCountry}}</span>
+                                        <span v-if="errorMode" class="text-danger small-text">{{this.errorCountry}}</span>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td class="capitalize">CITY:</td>
                                     <td>
-                                        <select v-model="user.city" class="selectOption" v-on:click="checkCity">
+                                        <select v-model="editUser.city" class="selectOption" v-on:click="checkCity">
                                             <option class="disabled" value="" disabled selected>Select city</option>
                                             <option class="selectOption" v-for="cities in getCities()" :key="cities">{{ cities }} </option>
                                         </select>
-                                        <span class="text-danger small-text">{{this.errorCity}}</span>
+                                        <span v-if="errorMode" class="text-danger small-text">{{this.errorCity}}</span>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td class="capitalize">HOBBY:</td>
                                     <td>
                                         <v-select class="selectOption" v-model="hobbies" multiple :options="allHobbies"/>
+                                        <span v-if="errorMode" class="text-danger small-text">{{this.hobbyError}}</span>
                                     </td>
                                 </tr>
                                 <tr>
@@ -101,7 +102,7 @@
                                 </tr>
                                 <tr>
                                     <td colspan="2">
-                                        <textarea v-model="user.bio" id="bio"></textarea>
+                                        <textarea v-model="editUser.bio" id="bio"></textarea>
                                     </td>
                                 </tr>
                                 <tr>
@@ -171,13 +172,16 @@
                 errorCity: null,
                 errorCountry: null,
                 errorSurname: null,
+                hobbyError: null,
                 loaded:false,
                 editMode: false,
                 fileChosen: false,
                 changePhotoMode: false,
                 errorMode: false,
+                photoError: null,
                 error: {},
                 user: {},
+                editUser: {},
                 firstImg: {},
                 otherImg: [],
                 username: "",
@@ -204,10 +208,11 @@
                 }
             },
             editHTML: function () {
-                this.editMode = true
+                this.editMode = true;
             },
             changeMode: function () {
-                this.editMode = false
+                this.editMode = false;
+                this.setEditUser();
             },
             saveHobbies: function() {
                 let dto = {
@@ -219,7 +224,8 @@
                         dto['hobby'] = this.userHobbies[el];
                         AXIOS.delete('/hobby', {'data': dto})
                             .catch(error => {
-                                this.error = error.response.data;
+                                this.hobbyError = error.response.data;
+                                this.errorMode = true
                             })
                     }
                 }
@@ -228,7 +234,8 @@
                         dto['hobby'] = this.hobbies[el];
                         AXIOS.post('/hobby', dto)
                             .catch(error => {
-                                this.error = error.response.data;
+                                this.hobbyError = error.response.data;
+                                this.errorMode = true
                             })
 
                     }
@@ -239,13 +246,11 @@
                 this.saveHobbies();
                 this.updateErrors();
                 this.checkCity();
-                if (this.user.city !== "Select city") {
-                    console.log(this.user.name);
-                    AXIOS.put('/users', this.user)
+                if (this.editUser.city !== "Select city") {
+                    AXIOS.put('/users', this.editUser)
                         .then(this.getUser)
                         .catch(error => {
                             this.error = error.response.data;
-                            console.log(this.error);
                             for (let e in this.error) {
                                 if (this.error[e].field === "email") {
                                     this.errorEmail = this.error[e].defaultMessage;
@@ -264,6 +269,8 @@
                                     this.errorCountry = this.error[e].defaultMessage;
                                 }
                             }
+                            console.log(this.errorSurname);
+                            this.errorMode = true;
                         });
                 }
             },
@@ -271,6 +278,7 @@
                 AXIOS.get('/users')
                     .then(response => {
                         this.user = response.data;
+                        this.setEditUser();
                         this.firstImg = this.user.image[0].name;
                         this.otherImg = [];
                         for (let i=1; i<this.user.image.length; i++){
@@ -289,6 +297,12 @@
                                 this.editMode = false;
                             });
                     });
+            },
+            setEditUser: function(){
+                for (let i in this.user) {
+                    this.editUser[i] = this.user[i]
+                }
+
             },
             setLoaded: function() {
                 setTimeout(() => this.loaded= true, 500);
@@ -318,7 +332,7 @@
                 AXIOS.post('/users/images', fd, config)
                     .then(this.getUser)
                     .catch(error => {
-                        this.error = error.response.data[0].defaultMessage;
+                        this.photoError = error.response.data[0].defaultMessage;
                         console.log(JSON.stringify(error.response.data[0].defaultMessage));
                         console.log(this.error);
                         this.errorMode = true;
@@ -332,12 +346,8 @@
                 this.errorCity = null;
                 this.errorCountry = null;
                 this.errorSurname = null;
-            },
-            getImage: function() {
-                AXIOS.get('/users/imagesTest')
-                    .then(response => {
-                        this.image = response.data['content'];
-                    });
+                this.photoError = null;
+                this.hobbyError = null
             }
         }
     }
@@ -416,23 +426,5 @@
     .span2 {
         color: #bd1651;
         font-size: 23px
-    }
-   input, .selectOption {
-        max-width: 250px;
-    }
-
-    .selectOption .vs__selected {
-        max-width: 220px;
-    }
-
-    @media only screen and (max-width: 600px) {
-        input, .selectOption {
-            max-width: 130px;
-        }
-
-        .selectOption .vs__selected {
-            max-width: 120px;
-        }
-
     }
 </style>

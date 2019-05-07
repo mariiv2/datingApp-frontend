@@ -244,8 +244,8 @@
                     let hobbies = response.data;
                     for (let i in hobbies) {
                         let hobby = hobbies[i];
-                        this.hobbies.push(hobby.hobbyName);
-                        this.hobbiesAmount.push(hobbyAmount);
+                        // this.hobbies.push(hobby.hobbyName);
+                        this.hobbiesAmount.push(hobby.hobbyAmount);
                     }
                     this.chartData2.labels = this.hobbies;
                     this.chartData2.datasets[0].data = this.hobbiesAmount;
@@ -289,8 +289,8 @@
     }
 
     .chart {
-        width: 300px;
         margin: auto;
+        width: 300px;
     }
 
     .margin1 {
@@ -300,5 +300,9 @@
     .margin2 {
         width: 100%;
         margin-top: 5vh;
+    }
+    @media  {
+        .chart {
+        width: 250px}
     }
 </style>
