@@ -1,80 +1,85 @@
 <template>
     <div class="bg">
         <Header></Header>
-        <div class="container align-items-center justify-content-center text-center base">
+        <div class="container align-items-center justify-content-center text-center base" v-if="loaded3">
             <div class="row">
                 <div class="col-sm-1"></div>
-                <div class="col-sm-4 styled">
-                    <a v-for="user in matches">
-                        <div class="row rowStyle1" v-if="user.seen"
-                             v-on:click="() => {getAllMessages(user); sendSeen(user);}">
+                <div class="col-sm-4 styled" v-if="isMatches">
+                    <a v-for="match in matches">
+                        <div class="row rowStyle1" v-if="match.seen"
+                             v-on:click="() => {getAllMessages(match); sendSeen(match);}">
                             <div class="col-4 colStyle1"><img
-                                    v-bind:src="'data:image/jpeg;base64,' + user.image[0].name"
+                                    v-bind:src="'data:image/jpeg;base64,' + match.image[0].name"
                                     class="favimg rounded-circle"></div>
                             <div class="col-8">
-                                <div class="row">{{user.name}} {{user.surname}}</div>
-                                <div class="row rowStyle2" v-if="user.lastMessage.messageSeen">
-                                    {{user.lastMessage.message}}
+                                <div class="row">{{match.name}} {{match.surname}}</div>
+                                <div class="row rowStyle2" v-if="match.lastMessage.messageSeen">
+                                    <label>{{match.lastMessage.message}}</label>
                                 </div>
-                                <div class="row rowStyle2" style="font-weight: bold; color: black" v-else>
-                                    {{user.lastMessage.message}}
+                                <div class="row rowStyle2" v-else>
+                                    <label v-if="match.lastMessage.fromUserId !== user.id"
+                                           style="font-weight: bold; color: #1D1C1D">{{match.lastMessage.message}}
+                                    </label>
+                                    <label v-else>{{match.lastMessage.message}}</label>
                                 </div>
                             </div>
                         </div>
                         <div class="row rowStyle1" v-else
                              style="background-color: #FFFF99"
-                             v-on:click="() => {getAllMessages(user); sendSeen(user);}">
-                            <div class="col-4 colStyle1"><img v-bind:src="'data:image/jpeg;base64,'+ user.image[0].name"
+                             v-on:click="() => {getAllMessages(match); sendSeen(match);}">
+                            <div class="col-4 colStyle1"><img v-bind:src="'data:image/jpeg;base64,'+ match.image[0].name"
                                                               class="favimg rounded-circle"></div>
                             <div class="col-8">
-                                <div class="row">{{user.name}} {{user.surname}}</div>
-                                <div class="row rowStyle2" v-if="user.lastMessage.messageSeen">
-                                    {{user.lastMessage.message}}
+                                <div class="row">{{match.name}} {{match.surname}}</div>
+                                <div class="row rowStyle2" v-if="match.lastMessage.messageSeen">
+                                    {{match.lastMessage.message}}
                                 </div>
                                 <div class="row rowStyle2" style="font-weight: bold;  color: black" v-else>
-                                    {{user.lastMessage.message}}
+                                    {{match.lastMessage.message}}
                                 </div>
                             </div>
                         </div>
                     </a>
                     <!--<hr v-for="user in matches">-->
                 </div>
-                <div v-if="chatSelected" class="col-sm-6 ">
+                <div v-if="chatSelected" class="col-sm-6">
                     <div class="row">
-                        <div ref="scroll"
-                             class=" col-sm-12
+                        <a v-on:click="goBack()"> <- CLOSE CHAT</a>
+                    </div>
+                    <div class="row">
+                        <div class=" col-sm-12
                              colored my-custom-scrollbar
                              my-custom-scrollbar-primary scrollbar-ripe-malinka"
                              v-chat-scroll="{always: false, smooth: true}">
                             <div style="margin-top: 50px"></div>
                             <div v-for="m in messages">
                                 <div v-if="m.fromUserId === user.id" class="row">
-                                    <div class="col-sm-6"></div>
-                                    <div class="col">
+                                    <div class="col-md-6 col-sm-6"></div>
+                                    <div class="col-md-4 col-sm-4">
                                         <div class="colStyle3">
                                             <span>{{m.message}}</span>
                                         </div>
                                         <span class="span">{{m.dateSent}}</span>
                                     </div>
-                                    <div v-if="m.myPhoto" class="col">
+                                    <div v-if="m.myPhoto" class="col-md-2 col-sm-2">
                                         <img v-bind:src=" 'data:image/jpeg;base64,'+ user.image[0].name"
                                              class="chatimg rounded-circle">
                                     </div>
-                                    <div class="col" v-else></div>
+                                    <div class="col-md-2 col-sm-2" v-else></div>
                                 </div>
                                 <div v-else class="row">
-                                    <div class="col" v-if="m.friendPhoto">
+                                    <div class="col-md-2 col-xs-2" v-if="m.friendPhoto">
                                         <img v-bind:src="'data:image/jpeg;base64,'+ friend.image[0].name"
                                              class="chatimg rounded-circle">
                                     </div>
-                                    <div class="col" v-else></div>
-                                    <div class="col">
+                                    <div class="col-md-2 col-xs-2" v-else></div>
+                                    <div class="col-md-4 col-xs-4">
                                         <div class="colStyle2">
                                             <span>{{m.message}}</span>
                                         </div>
                                         <span class="span">{{m.dateSent}}</span>
                                     </div>
-                                    <div class="col-sm-6"></div>
+                                    <div class="col-md-6 col-xs-6"></div>
                                 </div>
                             </div>
                         </div>
@@ -102,7 +107,7 @@
                         </div>
                     </div>
                 </div>
-                <div v-else class="col-sm-6 colored">
+                <div v-else class="col-sm-6 colored" v-if="isNoChat">
                     <span>SELECT CHAT</span>
                 </div>
                 <div class="col-sm-1"></div>
@@ -121,11 +126,15 @@
         },
         data() {
             return {
+                id: 0,
+                loaded3: false,
                 interval: null,
                 intervalMain: null,
                 myPhoto: true,
                 friendPhoto: true,
                 chatSelected: false,
+                isMatches: true,
+                isNoChat: true,
                 matches: [],
                 messages: [],
                 messageView: {
@@ -144,18 +153,41 @@
                 this.getMatches();
                 this.getUser();
             }
+            if (this.isMobile()){
+                this.isMatches = true;
+                this.chatSelected = false;
+                this.isNoChat = false;
+            }
         },
         methods: {
+            isMobile() {
+                return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+            },
+            goBack: function () {
+                this.isMatches = true;
+                this.chatSelected = false;
+                this.isNoChat = false;
+                clearTimeout(this.interval);
+                if (!this.isMobile()){
+                    this.isNoChat = true;
+                }
+            },
             getUser: function () {
                 AXIOS.get('/users')
                     .then(response => {
                         this.user = response.data;
+                        this.id = this.user.id;
+                        this.loaded3 = true;
                     });
             },
             sendSeen: function (friend) {
                 AXIOS.get('/messages/' + friend.id).then(
                     console.log("here")
-                )
+                );
+                if (this.isMobile()){
+                    console.log("in method and setting");
+                    this.isMatches = false;
+                }
             },
             getMatches: function () {
                 AXIOS.get('/match/all')
@@ -180,6 +212,7 @@
                 this.messageView.fromUserId = this.user.id;
                 this.messageView.toUserId = friend.id;
                 this.chatSelected = true;
+                this.isNoChat = false;
                 this.friendPhoto = true;
                 this.myPhoto = true;
                 AXIOS.get('messages/all/' + friend.id)

@@ -417,7 +417,7 @@
         color: #bd1651;
         font-size: 23px
     }
-/*    input, .selectOption {
+   input, .selectOption {
         max-width: 250px;
     }
 
@@ -434,5 +434,5 @@
             max-width: 120px;
         }
 
-    }*/
+    }
 </style>
