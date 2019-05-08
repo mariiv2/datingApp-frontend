@@ -128,7 +128,13 @@
                         this.error = error.response.data;
                         this.errors = {};
                         for (let e in this.error) {
-                            this.errors[this.error[e].field] = this.error[e].defaultMessage;
+                            if(this.error[e].defaultMessage.includes('age')) {
+                                this.errors['birth'] = this.error[e].defaultMessage;
+                            } else if (this.error[e].defaultMessage.includes('Passwords')){
+                                this.errors['password'] = this.error[e].defaultMessage;
+                            } else {
+                                this.errors[this.error[e].field] = this.error[e].defaultMessage;
+                            }
 
                         }
                 });
