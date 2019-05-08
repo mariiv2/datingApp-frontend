@@ -254,7 +254,6 @@
                             for (let e in this.error) {
                                 if (this.error[e].field === "email") {
                                     this.errorEmail = this.error[e].defaultMessage;
-                                    console.log(this.errorEmail);
                                 }
                                 else if (this.error[e].field === "name") {
                                     this.errorName = this.error[e].defaultMessage;
@@ -269,7 +268,6 @@
                                     this.errorCountry = this.error[e].defaultMessage;
                                 }
                             }
-                            console.log(this.errorSurname);
                             this.errorMode = true;
                         });
                 }
@@ -333,8 +331,6 @@
                     .then(this.getUser)
                     .catch(error => {
                         this.photoError = error.response.data[0].defaultMessage;
-                        console.log(JSON.stringify(error.response.data[0].defaultMessage));
-                        console.log(this.error);
                         this.errorMode = true;
                 });
 

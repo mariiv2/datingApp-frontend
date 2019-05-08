@@ -182,10 +182,8 @@
             },
             sendSeen: function (friend) {
                 AXIOS.get('/messages/' + friend.id).then(
-                    console.log("here")
                 );
                 if (this.isMobile()){
-                    console.log("in method and setting");
                     this.isMatches = false;
                 }
             },

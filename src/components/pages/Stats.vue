@@ -306,7 +306,7 @@
         width: 100%;
         margin-top: 5vh;
     }
-    @media  {
+    @media only screen and (max-width: 350px)  {
         .chart {
         width: 250px}
     }

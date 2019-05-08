@@ -131,8 +131,6 @@
                             this.errors[this.error[e].field] = this.error[e].defaultMessage;
 
                         }
-                        console.log(this.errors);
-                        console.log(this.loaded)
                 });
             },
             enter: function() {
