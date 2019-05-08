@@ -136,6 +136,7 @@
                                     <label class="input-group-text colored">HOBBY</label>
                                 </div>
                                 <select class="custom-select" v-model="filter.hobby">
+                                    <option class="disabled" value=""selected>Choose hobby</option>
                                     <option v-for="hobby in allHobbies" :key="hobby">
                                         {{hobby}}
                                     </option>
@@ -245,7 +246,7 @@
             setLoaded: function() {
                 setTimeout(() => this.loaded= true, 500);
             },
-            getAllUsers: function () {
+                getAllUsers: function () {
                 AXIOS.get('/browse/all/?id=' + this.filter.id
                 + '&city=' + this.filter.city
                 + '&country=' + this.filter.country

@@ -224,7 +224,7 @@
                         dto['hobby'] = this.userHobbies[el];
                         AXIOS.delete('/hobby', {'data': dto})
                             .catch(error => {
-                                this.hobbyError = error.response.data;
+                                this.hobbyError = error.response.data[0].defaultMessage;
                                 this.errorMode = true
                             })
                     }
@@ -234,7 +234,7 @@
                         dto['hobby'] = this.hobbies[el];
                         AXIOS.post('/hobby', dto)
                             .catch(error => {
-                                this.hobbyError = error.response.data;
+                                this.hobbyError = error.response.data[0].defaultMessage;
                                 this.errorMode = true
                             })
 
@@ -297,6 +297,7 @@
                     });
             },
             setEditUser: function(){
+                this.hobbies = this.userHobbies;
                 for (let i in this.user) {
                     this.editUser[i] = this.user[i]
                 }
