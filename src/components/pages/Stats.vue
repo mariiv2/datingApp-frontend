@@ -149,7 +149,7 @@
                         {
                             label: "Data One",
                             backgroundColor: ["#DC143C", "#6495ED", "#8B008B", "#FF8C00", "#FFD700", "#FF69B4",
-                                "#C71585", "#FF4500", "#87CEEB", "#008080"],
+                                "#C71585", "#FF4500", "#87CEEB", "#008080", 'pink'],
                             data: []
                         }
                     ]
@@ -159,7 +159,7 @@
                     datasets: [
                         {
                             backgroundColor: ["#DC143C", "#6495ED", "#8B008B", "#FF8C00", "#FFD700", "#FF69B4",
-                                "#C71585", "#FF4500", "#87CEEB", "#008080"],
+                                "#C71585", "#FF4500", "#87CEEB", "#008080", 'red', 'yellow'],
                             data: []
                         }
                     ],

@@ -54,9 +54,7 @@
                                 <span>{{user.bio}}</span>
                             </div>
                             <div class="row margin2">
-                                <span class="span2">#photography</span>
-                                <span class="span2"> #animals</span>
-                                <span class="span2"> #travel</span>
+                                <span v-for="hobby in user.hobbies" class="span2" :key="hobby.id">#{{hobby.name}}</span>
                             </div>
                         </div>
                     </div>
